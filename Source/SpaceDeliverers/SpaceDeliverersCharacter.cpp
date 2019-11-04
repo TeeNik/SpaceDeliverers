@@ -86,14 +86,11 @@ void ASpaceDeliverersCharacter::MoveRight(float Value)
 }
 
 void ASpaceDeliverersCharacter::OnFire() {
-	GLog->Log("Fire");
 	if (ProjectileBase != NULL)
 	{
-		GLog->Log("ProjectileBase");
 		UWorld* const World = GetWorld();
 		if (World != NULL)
 		{
-			GLog->Log("World");
 			const FRotator SpawnRotation = GetControlRotation();
 			const FVector SpawnLocation = GetActorLocation();
 			FActorSpawnParameters ActorSpawnParams;

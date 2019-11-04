@@ -23,6 +23,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	UPROPERTY(EditAnywhere)
+	bool HasWeapon;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> ProjectileBase;
 

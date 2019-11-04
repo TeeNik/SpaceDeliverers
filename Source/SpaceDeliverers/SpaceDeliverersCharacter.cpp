@@ -46,6 +46,7 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("TurnRate", this, &ASpaceDeliverersCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASpaceDeliverersCharacter::LookUpAtRate);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
 
 }
 
@@ -76,13 +77,28 @@ void ASpaceDeliverersCharacter::MoveRight(float Value)
 {
 	if ( (Controller != NULL) && (Value != 0.0f) )
 	{
-		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 	
-		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
 		AddMovementInput(Direction, Value);
+	}
+}
+
+void ASpaceDeliverersCharacter::OnFire() {
+	GLog->Log("Fire");
+	if (ProjectileBase != NULL)
+	{
+		GLog->Log("ProjectileBase");
+		UWorld* const World = GetWorld();
+		if (World != NULL)
+		{
+			GLog->Log("World");
+			const FRotator SpawnRotation = GetControlRotation();
+			const FVector SpawnLocation = GetActorLocation();
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
+		}
 	}
 }

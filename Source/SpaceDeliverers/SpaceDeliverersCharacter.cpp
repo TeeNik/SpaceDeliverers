@@ -6,6 +6,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Instruments/Instrument.h"
+#include "Components/SkeletalMeshComponent.h"
 
 ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
 {
@@ -48,11 +50,12 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASpaceDeliverersCharacter::LookUpAtRate);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
 
+	TakeInstrument();
+
 }
 
 void ASpaceDeliverersCharacter::TurnAtRate(float Rate)
 {
-	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
@@ -86,7 +89,7 @@ void ASpaceDeliverersCharacter::MoveRight(float Value)
 }
 
 void ASpaceDeliverersCharacter::OnFire() {
-	if (ProjectileBase != NULL)
+	/*if (ProjectileBase != NULL)
 	{
 		UWorld* const World = GetWorld();
 		if (World != NULL)
@@ -97,5 +100,18 @@ void ASpaceDeliverersCharacter::OnFire() {
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
+	}*/
+
+	if (Instrument != NULL) {
+		Instrument->Use();
 	}
+}
+
+void ASpaceDeliverersCharacter::TakeInstrument()
+{
+
+	Instrument = GetWorld()->SpawnActor<AInstrument>(WrenchBase);
+	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
+	Instrument->AttachToComponent(GetMesh(), rules, FName("InstrumentSocket"));
+	IsProducingAction = true;
 }

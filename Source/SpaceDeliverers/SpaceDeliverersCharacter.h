@@ -23,11 +23,21 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	//TODO Remove weapon later
 	UPROPERTY(EditAnywhere)
 	bool HasWeapon;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> ProjectileBase;
+
+	UPROPERTY()
+	class AInstrument* Instrument;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<AInstrument> WrenchBase;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsProducingAction;
 
 protected:
 
@@ -36,6 +46,8 @@ protected:
 	void TurnAtRate(float Rate);
 	void LookUpAtRate(float Rate);
 	void OnFire();
+
+	void TakeInstrument();
 
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

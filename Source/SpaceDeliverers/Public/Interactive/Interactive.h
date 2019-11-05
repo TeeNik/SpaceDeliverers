@@ -1,21 +1,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Interface.h"
+#include "GameFramework/Actor.h"
 #include "Interactive.generated.h"
 
 UINTERFACE(MinimalAPI, meta = (CannotImplementInterfaceInBlueprint))
-class UInteractive : public UInterface
+class AInteractive : public AActor
 {
 	GENERATED_BODY()
-};
 
-class IInteractive {
-
-	GENERATED_BODY()
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Instrument, meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* Mesh;
 
 public:
+	AInteractive();
 
-	virtual void OnInteract(class AInstrument* inHand) {}
-
+	virtual void Interact(class AInstrument* inHand, class ACharacter* character) {}
+	virtual void OnSelect();
+	virtual void OnDeselect();
 };

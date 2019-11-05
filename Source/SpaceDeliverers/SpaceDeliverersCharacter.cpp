@@ -7,7 +7,9 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Instruments/Instrument.h"
+#include "Interactive.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/BoxComponent.h"
 
 ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
 {
@@ -33,7 +35,13 @@ ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+
+	InteractionBox = CreateDefaultSubobject<UBoxComponent >(TEXT("InteractionBox"));
+	InteractionBox->SetupAttachment(RootComponent);
+	InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &ASpaceDeliverersCharacter::OnOverlapBegin);
+	InteractionBox->OnComponentEndOverlap.AddDynamic(this, &ASpaceDeliverersCharacter::OnOverlapEnd);
 }
+
 
 void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
@@ -49,9 +57,6 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASpaceDeliverersCharacter::LookUpAtRate);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
-
-	TakeInstrument();
-
 }
 
 void ASpaceDeliverersCharacter::TurnAtRate(float Rate)
@@ -102,16 +107,26 @@ void ASpaceDeliverersCharacter::OnFire() {
 		}
 	}*/
 
+
+
 	if (Instrument != NULL) {
 		Instrument->Use();
 	}
+
+	if (Interactive != NULL) {
+		Interactive->OnInteract(Instrument, this);
+	}
 }
 
-void ASpaceDeliverersCharacter::TakeInstrument()
+void ASpaceDeliverersCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	IInteractive* inter = Cast<IInteractive>(OtherActor);
+	if (inter != NULL) {
+		Interactive = (OtherActor);
+	}
+}
 
-	Instrument = GetWorld()->SpawnActor<AInstrument>(WrenchBase);
-	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
-	Instrument->AttachToComponent(GetMesh(), rules, FName("InstrumentSocket"));
-	IsProducingAction = true;
+void ASpaceDeliverersCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	Interactive = NULL;
 }

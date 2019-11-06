@@ -4,8 +4,8 @@
 #include "GameFramework/Actor.h"
 #include "Interactive.generated.h"
 
-UINTERFACE(MinimalAPI, meta = (CannotImplementInterfaceInBlueprint))
-class AInteractive : public AActor
+UCLASS()
+class SPACEDELIVERERS_API AInteractive : public AActor
 {
 	GENERATED_BODY()
 

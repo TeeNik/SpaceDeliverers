@@ -41,7 +41,7 @@ public:
 	class AInstrument* Instrument;
 
 	UPROPERTY()
-	TScriptInterface<class IInteractive> Interactive;
+	class AInteractive* Interactive;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsProducingAction;

@@ -8,10 +8,12 @@ AInteractive::AInteractive()
 
 void AInteractive::OnSelect()
 {
+	GLog->Log("OnSelect");
 	Mesh->SetRenderCustomDepth(true);
 }
 
 void AInteractive::OnDeselect()
 {
+	GLog->Log("OnDeselect");
 	Mesh->SetRenderCustomDepth(false);
 }

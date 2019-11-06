@@ -107,26 +107,30 @@ void ASpaceDeliverersCharacter::OnFire() {
 		}
 	}*/
 
-
-
 	if (Instrument != NULL) {
 		Instrument->Use();
 	}
 
 	if (Interactive != NULL) {
-		Interactive->OnInteract(Instrument, this);
+		Interactive->Interact(Instrument, this);
 	}
 }
 
 void ASpaceDeliverersCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	IInteractive* inter = Cast<IInteractive>(OtherActor);
+	AInteractive* inter = Cast<AInteractive>(OtherActor);
 	if (inter != NULL) {
-		Interactive = (OtherActor);
+		GLog->Log("OnOverlapBegin");
+		Interactive = inter;
+		Interactive->OnSelect();
 	}
 }
 
 void ASpaceDeliverersCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	Interactive = NULL;
+	if (Interactive != NULL) {
+		GLog->Log("OnOverlapEnd");
+		Interactive->OnDeselect();
+		Interactive = NULL;
+	}
 }

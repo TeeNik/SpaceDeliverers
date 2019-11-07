@@ -16,3 +16,8 @@ void AInstrument::BeginPlay()
 void AInstrument::Use()
 {
 }
+
+InstrumentType AInstrument::GetType() const
+{
+	return InstrumentType::None;
+}

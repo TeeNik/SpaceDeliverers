@@ -11,5 +11,6 @@ class SPACEDELIVERERS_API AWrench : public AInstrument
 
 public:
 	virtual void Use() override;
+	virtual InstrumentType GetType() const override;
 	
 };

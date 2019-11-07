@@ -4,6 +4,12 @@
 #include "GameFramework/Actor.h"
 #include "Instrument.generated.h"
 
+UENUM()
+enum class InstrumentType {
+	None,
+	Wrench,
+};
+
 UCLASS()
 class SPACEDELIVERERS_API AInstrument : public AActor
 {
@@ -20,4 +26,6 @@ protected:
 
 public:
 	virtual void Use();
+
+	virtual InstrumentType GetType() const;
 };

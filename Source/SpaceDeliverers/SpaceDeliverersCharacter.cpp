@@ -94,7 +94,7 @@ void ASpaceDeliverersCharacter::MoveRight(float Value)
 }
 
 void ASpaceDeliverersCharacter::OnFire() {
-	/*if (ProjectileBase != NULL)
+	if (ProjectileBase != NULL)
 	{
 		UWorld* const World = GetWorld();
 		if (World != NULL)
@@ -105,7 +105,7 @@ void ASpaceDeliverersCharacter::OnFire() {
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
-	}*/
+	}
 
 	if (Instrument != NULL) {
 		Instrument->Use();

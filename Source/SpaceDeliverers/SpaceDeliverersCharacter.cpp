@@ -6,10 +6,11 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Instruments/Instrument.h"
 #include "Interactive.h"
+#include "Instrument.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/InteractionComponent.h"
 
 ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
 {
@@ -40,6 +41,8 @@ ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
 	InteractionBox->SetupAttachment(RootComponent);
 	InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &ASpaceDeliverersCharacter::OnOverlapBegin);
 	InteractionBox->OnComponentEndOverlap.AddDynamic(this, &ASpaceDeliverersCharacter::OnOverlapEnd);
+
+	InteractionComponent = CreateDefaultSubobject<UInteractionComponent>(TEXT("InteractionComponent"));
 }
 
 
@@ -69,6 +72,11 @@ void ASpaceDeliverersCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
+void ASpaceDeliverersCharacter::OnFireBP_Implementation(InstrumentType type)
+{
+
+}
+
 void ASpaceDeliverersCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -94,7 +102,8 @@ void ASpaceDeliverersCharacter::MoveRight(float Value)
 }
 
 void ASpaceDeliverersCharacter::OnFire() {
-	if (ProjectileBase != NULL)
+	
+	/*if (ProjectileBase != NULL)
 	{
 		UWorld* const World = GetWorld();
 		if (World != NULL)
@@ -105,32 +114,27 @@ void ASpaceDeliverersCharacter::OnFire() {
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
+	}*/
+	GLog->Log("Fire");
+	if (InteractionComponent->GetInstrument() != NULL) {
+		GLog->Log("OnFireBP");
+		OnFireBP(InteractionComponent->GetInstrument()->GetType());
 	}
-
-	if (Instrument != NULL) {
-		Instrument->Use();
+	else {
+		GLog->Log("InteractionComponent->GetInstrument() = NULL");
 	}
-
-	if (Interactive != NULL) {
-		Interactive->Interact(Instrument, this);
-	}
+	InteractionComponent->OnFire();
 }
 
 void ASpaceDeliverersCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	AInteractive* inter = Cast<AInteractive>(OtherActor);
 	if (inter != NULL) {
-		GLog->Log("OnOverlapBegin");
-		Interactive = inter;
-		Interactive->OnSelect();
+		InteractionComponent->OnSelect(inter);
 	}
 }
 
 void ASpaceDeliverersCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (Interactive != NULL) {
-		GLog->Log("OnOverlapEnd");
-		Interactive->OnDeselect();
-		Interactive = NULL;
-	}
+	InteractionComponent->OnDeselect();
 }

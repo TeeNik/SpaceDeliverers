@@ -7,7 +7,7 @@ AToolbox::AToolbox()
 {
 }
 
-void AToolbox::Interact(AInstrument* inHand, const ACharacter* character)
+void AToolbox::Interact(AInstrument*& inHand, const ACharacter* character)
 {
 	if (inHand == NULL) {
 		inHand = GetWorld()->SpawnActor<AInstrument>(WrenchBase);

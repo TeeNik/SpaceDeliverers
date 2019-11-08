@@ -4,6 +4,8 @@
 #include "GameFramework/Character.h"
 #include "SpaceDeliverersCharacter.generated.h"
 
+enum InstrumentType;
+
 UCLASS(config=Game)
 class ASpaceDeliverersCharacter : public ACharacter
 {
@@ -38,13 +40,13 @@ public:
 	TSubclassOf<AActor> ProjectileBase;
 
 	UPROPERTY()
-	class AInstrument* Instrument;
-
-	UPROPERTY()
-	class AInteractive* Interactive;
+	class UInteractionComponent* InteractionComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsProducingAction;
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Character")
+	void OnFireBP(InstrumentType type);
 
 protected:
 

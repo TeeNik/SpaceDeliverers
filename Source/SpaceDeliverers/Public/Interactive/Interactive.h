@@ -16,7 +16,7 @@ protected:
 public:
 	AInteractive();
 
-	virtual void Interact(class AInstrument * inHand, const class ACharacter* character) {}
+	virtual void Interact(class AInstrument*& inHand, const class ACharacter* character) {}
 	virtual void OnSelect();
 	virtual void OnDeselect();
 };

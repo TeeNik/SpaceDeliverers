@@ -4,8 +4,8 @@
 #include "GameFramework/Actor.h"
 #include "Instrument.generated.h"
 
-UENUM()
-enum class InstrumentType {
+UENUM(Blueprintable)
+enum InstrumentType {
 	None,
 	Wrench,
 };

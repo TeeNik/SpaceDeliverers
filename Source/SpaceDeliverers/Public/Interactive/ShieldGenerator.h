@@ -13,13 +13,16 @@ class SPACEDELIVERERS_API AShieldGenerator : public AInteractive
 public:
 
 	FORCEINLINE const float GetCurrentValue() const { return CurrentEnergy / MaxEnergy; }
-	virtual void Interact(class AInstrument * inHand, const class ACharacter* character) override;
+	virtual void Interact(class AInstrument*& inHand, const class ACharacter* character) override;
 
 	FEnergyUpdate OnEnergyUpdate;
 
+	UPROPERTY(EditDefaultsOnly)
+	int MaxEnergy = 10;
+
+
 private:
 	int CurrentEnergy;
-	const int MaxEnergy = 10;
 
 	void UpdateMaterial();
 };

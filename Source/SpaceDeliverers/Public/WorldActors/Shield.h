@@ -12,8 +12,7 @@ class SPACEDELIVERERS_API AShield : public AActor
 public:	
 	AShield();
 
-	UPROPERTY(BlueprintReadWrite, Category = Shield)
-	class AShieldGenerator* Generators;
+	
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Instrument, meta = (AllowPrivateAccess = "true"))
@@ -23,4 +22,7 @@ protected:
 
 	UFUNCTION()
 	void OnShieldUpdate();
+
+	UPROPERTY()
+	TArray<class AShieldGenerator*> Generators;
 };

@@ -18,6 +18,9 @@ protected:
 	UPROPERTY()
 	class UBoxComponent* BoxCollider;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = WeaponProjectile, meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* Mesh;
+
 	UPROPERTY(EditDefaultsOnly)
 	FName TargetTag;
 

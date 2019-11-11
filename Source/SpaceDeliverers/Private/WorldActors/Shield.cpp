@@ -1,10 +1,12 @@
 #include "Shield.h"
 #include "ShieldGenerator.h"
 #include "System/SpaceLevelScript.h"
+#include "HealthComponent.h"
 
 AShield::AShield()
 {
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 }
 
 void AShield::BeginPlay()
@@ -20,9 +22,16 @@ void AShield::BeginPlay()
 			generator->OnEnergyUpdate.AddDynamic(this, &AShield::OnShieldUpdate);
 		}
 	}
+
+	HealthComponent->OnTakeDamage.AddDynamic(this, &AShield::OnTakeDamage);
 }
 
 void AShield::OnShieldUpdate()
+{
+
+}
+
+void AShield::OnTakeDamage_Implementation(int health)
 {
 
 }

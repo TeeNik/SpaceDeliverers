@@ -8,6 +8,7 @@ UHealthComponent::UHealthComponent()
 void UHealthComponent::TakeDamage(int damage)
 {
 	CurrentHealth -= damage;
+	OnTakeDamage.Broadcast(CurrentHealth);
 	if (CurrentHealth <= 0) {
 		
 	}

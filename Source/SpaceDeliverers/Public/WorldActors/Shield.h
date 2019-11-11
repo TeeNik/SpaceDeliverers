@@ -12,17 +12,21 @@ class SPACEDELIVERERS_API AShield : public AActor
 public:	
 	AShield();
 
-	
-
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Instrument, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* Mesh;
 
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
+	class UHealthComponent* HealthComponent;
+
 	UFUNCTION()
 	void OnShieldUpdate();
 
 	UPROPERTY()
 	TArray<class AShieldGenerator*> Generators;
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Character")
+	void OnTakeDamage(int health);
 };

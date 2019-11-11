@@ -23,8 +23,11 @@ protected:
 	UPROPERTY()
 	UHealthComponent* HealthComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Instrument, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* Mesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* Box;
 
 	UPROPERTY(EditDefaultsOnly, Category = EnemyShip)
 	TSubclassOf<AWeaponProjectile> ProjectileBase;

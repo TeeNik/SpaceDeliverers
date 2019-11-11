@@ -21,6 +21,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = WeaponProjectile, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* Mesh;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = WeaponProjectile, meta = (AllowPrivateAccess = "true"))
+	class UProjectileMovementComponent* ProjectileMovement;
+
 	UPROPERTY(EditDefaultsOnly)
 	FName TargetTag;
 

@@ -2,14 +2,18 @@
 #include "Components/BoxComponent.h"
 #include "Components/HealthComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 AWeaponProjectile::AWeaponProjectile()
 {
 	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	RootComponent = BoxCollider;
 	Mesh->SetupAttachment(RootComponent);
-
+	ProjectileMovement->ProjectileGravityScale = 0;
+	ProjectileMovement->InitialSpeed = 3000;
+	ProjectileMovement->MaxSpeed = 3000;
 	BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &AWeaponProjectile::OnOverlapBegin);
 }
 

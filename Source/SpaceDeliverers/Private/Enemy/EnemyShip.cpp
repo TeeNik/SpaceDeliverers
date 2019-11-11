@@ -8,6 +8,7 @@
 
 AEnemyShip::AEnemyShip()
 {
+	PrimaryActorTick.bCanEverTick = true;
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	RootComponent = Box;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
@@ -22,20 +23,34 @@ void AEnemyShip::BeginPlay()
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AEnemyShip::ShootByTimer, FireRate, true);
 }
 
+void AEnemyShip::Tick(float DeltaTime)
+{
+
+	Super::Tick(DeltaTime);
+
+	FVector newLocation = GetActorLocation();
+	float deltaHeight = FMath::Sin(RunningTime + DeltaTime) - FMath::Sin(RunningTime);
+	newLocation.X += deltaHeight * XValue;
+	newLocation.Y += deltaHeight * YValue;
+	newLocation.Z += deltaHeight * ZValue;
+	RunningTime += DeltaTime;
+	SetActorLocation(newLocation);
+}
+
 void AEnemyShip::ShootByTimer()
 {
 	GLog->Log("Enemy Fire");
 
-	if (ProjectileBase != NULL)
+	if (ProjectileBase != NULL && FireRate != 0)
 	{
 		UWorld* const World = GetWorld();
 		if (World != NULL)
 		{
-			/*const FRotator SpawnRotation = GetActorRotation();
+			const FRotator SpawnRotation = GetActorRotation();
 			const FVector SpawnLocation = Mesh->GetSocketLocation(TEXT("Muzzle_1"));
 			FActorSpawnParameters ActorSpawnParams;
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);*/
+			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
 	}
 }

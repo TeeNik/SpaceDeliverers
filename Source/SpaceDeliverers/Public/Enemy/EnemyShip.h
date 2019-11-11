@@ -17,9 +17,11 @@ public:
 
 	FORCEINLINE const UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
+
 protected:
 	virtual void BeginPlay() override;
-	
+	virtual void Tick(float DeltaTime) override;
+
 	UPROPERTY()
 	UHealthComponent* HealthComponent;
 
@@ -35,7 +37,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = EnemyShip)
 	float FireRate;
 
+	UPROPERTY(EditDefaultsOnly, Category = EnemyShip)
+	float XValue;
+
+	UPROPERTY(EditDefaultsOnly, Category = EnemyShip)
+	float YValue;
+
+	UPROPERTY(EditDefaultsOnly, Category = EnemyShip)
+	float ZValue;
+
 private:
+
+	float RunningTime;
 
 	struct FTimerHandle TimerHandle;
 

@@ -6,7 +6,7 @@
 
 class AShieldGenerator;
 
-UCLASS()
+UCLASS(Blueprintable)
 class SPACEDELIVERERS_API ASpaceLevelScript : public ALevelScriptActor
 {
 	GENERATED_BODY()

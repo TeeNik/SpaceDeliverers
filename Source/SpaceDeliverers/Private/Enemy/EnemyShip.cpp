@@ -39,8 +39,6 @@ void AEnemyShip::Tick(float DeltaTime)
 
 void AEnemyShip::ShootByTimer()
 {
-	GLog->Log("Enemy Fire");
-
 	if (ProjectileBase != NULL && FireRate != 0)
 	{
 		UWorld* const World = GetWorld();

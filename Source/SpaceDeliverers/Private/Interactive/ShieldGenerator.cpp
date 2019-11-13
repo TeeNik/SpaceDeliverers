@@ -4,6 +4,11 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Components/StaticMeshComponent.h"
 
+void AShieldGenerator::BeginPlay()
+{
+	CurrentEnergy = MaxEnergy;
+}
+
 void AShieldGenerator::Interact(class AInstrument *& inHand, const class ACharacter* character) {
 
 	if (inHand != NULL) {
@@ -15,7 +20,6 @@ void AShieldGenerator::Interact(class AInstrument *& inHand, const class ACharac
 			}
 		}
 	}
-
 }
 
 void AShieldGenerator::UpdateMaterial()
@@ -31,3 +35,10 @@ void AShieldGenerator::UpdateMaterial()
 		matInstance->SetVectorParameterValue("Color", color);
 	}
 }
+
+void AShieldGenerator::ReduceEnergy()
+{
+	--CurrentEnergy;
+}
+
+

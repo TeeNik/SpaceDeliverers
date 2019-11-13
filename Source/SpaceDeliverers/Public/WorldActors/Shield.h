@@ -29,4 +29,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Character")
 	void OnTakeDamage(int health);
+
+	int Energy;
 };

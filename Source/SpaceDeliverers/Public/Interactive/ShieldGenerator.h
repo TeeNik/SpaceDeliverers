@@ -20,6 +20,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	int MaxEnergy = 10;
 
+	void ReduceEnergy();
+
+	virtual void BeginPlay() override;
 
 private:
 	int CurrentEnergy;

@@ -15,6 +15,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	void Fire();
+
+	UPROPERTY(EditDefaultsOnly)
+	float FireRate;
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 

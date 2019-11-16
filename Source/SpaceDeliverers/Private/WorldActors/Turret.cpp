@@ -24,3 +24,7 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATurret::Fire()
+{
+}
+

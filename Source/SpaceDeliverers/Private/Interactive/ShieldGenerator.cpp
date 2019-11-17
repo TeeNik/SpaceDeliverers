@@ -40,5 +40,3 @@ void AShieldGenerator::ReduceEnergy()
 {
 	--CurrentEnergy;
 }
-
-

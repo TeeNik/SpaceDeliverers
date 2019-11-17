@@ -2,11 +2,12 @@
 
 #include "CoreMinimal.h"
 #include "Interactive.h"
+#include "Actor.h"
 #include "Toolbox.generated.h"
 
 
 UCLASS()
-class SPACEDELIVERERS_API AToolbox : public AInteractive
+class SPACEDELIVERERS_API AToolbox : public AActor, public AInteractive
 {
 	GENERATED_BODY()
 	

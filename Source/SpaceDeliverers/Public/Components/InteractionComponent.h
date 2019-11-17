@@ -34,6 +34,6 @@ protected:
 	class AInstrument* Instrument;
 
 	UPROPERTY()
-	class AInteractive* Interactive;
+	class TScriptInterface<AInteractive> Interactive;
 		
 };

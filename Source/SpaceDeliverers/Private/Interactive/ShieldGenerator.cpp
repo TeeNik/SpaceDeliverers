@@ -4,6 +4,10 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Components/StaticMeshComponent.h"
 
+AShieldGenerator::AShieldGenerator() {
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+}
+
 void AShieldGenerator::BeginPlay()
 {
 	CurrentEnergy = MaxEnergy;

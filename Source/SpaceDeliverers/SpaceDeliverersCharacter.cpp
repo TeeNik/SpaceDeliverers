@@ -128,7 +128,7 @@ void ASpaceDeliverersCharacter::OnFire() {
 
 void ASpaceDeliverersCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AInteractive* inter = Cast<AInteractive>(OtherActor);
+	IInteractive* inter = Cast<IInteractive>(OtherActor);
 	if (inter != NULL) {
 		InteractionComponent->OnSelect(inter);
 	}

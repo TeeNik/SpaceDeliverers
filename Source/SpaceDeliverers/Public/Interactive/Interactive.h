@@ -27,8 +27,8 @@ public:
 #include "UObject/Interface.h"
 #include "Interactive.generated.h"
 
-UINTERFACE(MinimalAPI, meta = (CannotImplementInterfaceInBlueprint))
-class SPACEDELIVERERS_API UInteractive : public UInterface
+UINTERFACE()
+class UInteractive : public UInterface
 {
 	GENERATED_BODY()
 };

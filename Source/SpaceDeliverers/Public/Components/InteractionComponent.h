@@ -5,7 +5,7 @@
 #include "InteractionComponent.generated.h"
 
 class AInstrument;
-class AInteractive;
+class IInteractive;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UInteractionComponent : public UActorComponent
@@ -17,11 +17,11 @@ public:
 
 	FORCEINLINE const AInstrument* GetInstrument() { return Instrument; }
 	FORCEINLINE void SetInstrument(AInstrument* instrument) { Instrument = instrument; }
-	FORCEINLINE const AInteractive* GetInteractive() { return Interactive; }
-	FORCEINLINE void SetInteractive(AInteractive* interactive) { Interactive = interactive; }
+	//FORCEINLINE const TScriptInterface<IInteractive> GetInteractive() { return Interactive; }
+	//FORCEINLINE void SetInteractive(IInteractive* interactive) {/* Interactive = interactive;*/ }
 
 	void OnFire();
-	void OnSelect(AInteractive* interactive);
+	void OnSelect(IInteractive* interactive);
 	void OnDeselect();
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
@@ -33,7 +33,7 @@ protected:
 	UPROPERTY()
 	class AInstrument* Instrument;
 
-	UPROPERTY()
-	class TScriptInterface<AInteractive> Interactive;
+	/*UPROPERTY()
+	class TScriptInterface<IInteractive> Interactive;*/
 		
 };

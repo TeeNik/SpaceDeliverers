@@ -18,25 +18,25 @@ void UInteractionComponent::OnFire()
 		Instrument->Use();
 	}
 
-	if (Interactive != NULL) {
+	/*if (Interactive != NULL) {
 		Interactive->Interact(Instrument, Cast<ACharacter>(GetOwner()));
-	}
+	}*/
 }
 
-void UInteractionComponent::OnSelect(AInteractive * interactive)
+void UInteractionComponent::OnSelect(IInteractive * interactive)
 {
 	GLog->Log("OnOverlapBegin");
-	Interactive = interactive;
-	Interactive->OnSelect();
+	/*Interactive = interactive;
+	Interactive->OnSelect();*/
 }
 
 void UInteractionComponent::OnDeselect()
 {
-	if (Interactive != NULL) {
+	/*if (Interactive != NULL) {
 		GLog->Log("OnOverlapEnd");
 		Interactive->OnDeselect();
 		Interactive = NULL;
-	}
+	}*/
 }
 
 void UInteractionComponent::OnEnterInventory_Implementation()

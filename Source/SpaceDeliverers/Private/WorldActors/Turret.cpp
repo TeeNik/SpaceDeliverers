@@ -24,6 +24,18 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATurret::OnSelect()
+{
+}
+
+void ATurret::OnDeselect()
+{
+}
+
+void ATurret::Interact(AInstrument*& inHand, const ACharacter* character)
+{
+}
+
 void ATurret::Fire()
 {
 }

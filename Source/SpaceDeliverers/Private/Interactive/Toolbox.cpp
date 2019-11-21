@@ -5,7 +5,6 @@
 
 AToolbox::AToolbox()
 {
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 }
 
 void AToolbox::Interact(AInstrument*& inHand, const ACharacter* character)

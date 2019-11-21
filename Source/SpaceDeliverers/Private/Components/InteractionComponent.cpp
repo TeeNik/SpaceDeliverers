@@ -26,7 +26,7 @@ void UInteractionComponent::OnFire()
 void UInteractionComponent::OnSelect(IInteractive * interactive)
 {
 	GLog->Log("OnOverlapBegin");
-	Interactive.SetInterface(interactive);
+	Interactive = interactive;
 	Interactive->OnSelect();
 }
 

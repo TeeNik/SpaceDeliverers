@@ -17,8 +17,8 @@ public:
 
 	FORCEINLINE const AInstrument* GetInstrument() { return Instrument; }
 	FORCEINLINE void SetInstrument(AInstrument* instrument) { Instrument = instrument; }
-	FORCEINLINE const TScriptInterface<IInteractive> GetInteractive() { return Interactive; }
-	FORCEINLINE void SetInteractive(IInteractive* interactive) {/* Interactive = interactive;*/ }
+	FORCEINLINE const IInteractive* GetInteractive() { return Interactive; }
+	FORCEINLINE void SetInteractive(IInteractive* interactive) { Interactive = interactive; }
 
 	void OnFire();
 	void OnSelect(IInteractive* interactive);
@@ -33,7 +33,6 @@ protected:
 	UPROPERTY()
 	class AInstrument* Instrument;
 
-	UPROPERTY()
-	class TScriptInterface<IInteractive> Interactive;
+	class IInteractive* Interactive;
 		
 };

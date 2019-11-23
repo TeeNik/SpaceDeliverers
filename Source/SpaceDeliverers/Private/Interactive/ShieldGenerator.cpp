@@ -12,7 +12,7 @@ void AShieldGenerator::BeginPlay()
 	CurrentEnergy = MaxEnergy;
 }
 
-void AShieldGenerator::Interact(class AInstrument *& inHand, const class ACharacter* character) {
+void AShieldGenerator::Interact(class AInstrument *& inHand, class ACharacter* character) {
 
 	if (inHand != NULL) {
 		if (inHand->GetType() == InstrumentType::Wrench) {

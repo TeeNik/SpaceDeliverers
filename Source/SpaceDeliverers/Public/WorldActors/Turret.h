@@ -15,16 +15,18 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
 	void Fire();
 
 	UPROPERTY(EditDefaultsOnly)
 	float FireRate;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* Mesh;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void OnSelect() override;
 	virtual void OnDeselect() override;
-	void Interact(class AInstrument*& inHand, const class ACharacter* character) override;
+	void Interact(class AInstrument*& inHand, class ACharacter* character) override;
 };

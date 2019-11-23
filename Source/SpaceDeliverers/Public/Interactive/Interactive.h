@@ -39,7 +39,7 @@ class IInteractive {
 
 public:
 
-	virtual void Interact(class AInstrument*& inHand, const class ACharacter* character) {}
+	virtual void Interact(class AInstrument*& inHand, class ACharacter* character) {}
 	virtual void OnSelect() {};
 	virtual void OnDeselect() {};
 };

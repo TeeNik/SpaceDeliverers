@@ -15,7 +15,7 @@ public:
 	AShieldGenerator();
 	FORCEINLINE const float GetCurrentValue() const { return CurrentEnergy / MaxEnergy; }
 
-	virtual void Interact(class AInstrument*& inHand, const class ACharacter* character) override;
+	virtual void Interact(class AInstrument*& inHand, class ACharacter* character) override;
 
 	FEnergyUpdate OnEnergyUpdate;
 

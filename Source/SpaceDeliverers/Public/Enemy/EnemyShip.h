@@ -22,7 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
@@ -54,4 +54,7 @@ private:
 
 	UFUNCTION()
 	void ShootByTimer();
+
+	UFUNCTION()
+	void OnTakeDamage(int health);
 };

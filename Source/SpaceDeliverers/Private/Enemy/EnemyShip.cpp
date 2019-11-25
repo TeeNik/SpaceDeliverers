@@ -14,6 +14,7 @@ AEnemyShip::AEnemyShip()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Box);
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	HealthComponent->OnTakeDamage.AddDynamic(this, &AEnemyShip::OnTakeDamage);
 }
 
 void AEnemyShip::BeginPlay()
@@ -51,4 +52,9 @@ void AEnemyShip::ShootByTimer()
 			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
 	}
+}
+
+void AEnemyShip::OnTakeDamage(int health)
+{
+	GLog->Log("AEnemyShip::OnTakeDamage");
 }

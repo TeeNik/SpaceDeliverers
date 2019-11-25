@@ -12,6 +12,8 @@ class SPACEDELIVERERS_API AWeaponProjectile : public AActor
 public:	
 	AWeaponProjectile();
 
+	FORCEINLINE void SetTargetTag(const FName& tag) { TargetTag = tag; }
+
 protected:
 	virtual void BeginPlay() override;
 

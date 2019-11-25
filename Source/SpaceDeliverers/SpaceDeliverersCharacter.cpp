@@ -59,7 +59,7 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("TurnRate", this, &ASpaceDeliverersCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASpaceDeliverersCharacter::LookUpAtRate);
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
+	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
 }
 
 void ASpaceDeliverersCharacter::TurnAtRate(float Rate)

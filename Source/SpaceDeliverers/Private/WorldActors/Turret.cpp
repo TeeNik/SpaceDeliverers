@@ -2,11 +2,17 @@
 #include "Engine/World.h"
 #include "GameFramework/Character.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/InputComponent.h"
+#include "WeaponProjectile.h"
 
 ATurret::ATurret()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
+	RootComponent = Box;
+	Mesh->SetupAttachment(Box);
 }
 
 void ATurret::BeginPlay()
@@ -25,6 +31,8 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ATurret::Fire);
+	PlayerInputComponent->BindAction("RMB", IE_Pressed, this, &ATurret::Fire);
 }
 
 void ATurret::OnSelect()
@@ -43,10 +51,29 @@ void ATurret::Interact(AInstrument*& inHand, ACharacter* character)
 		GetWorld()->GetFirstPlayerController()->Possess(this);
 		Mesh->SetRenderCustomDepth(false);
 		character->SetActorHiddenInGame(true);
+		ShootingPerson = character;
 	}
 }
 
 void ATurret::Fire()
 {
+	UWorld* const World = GetWorld();
+	if (World != NULL && ProjectileBase != NULL)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		const FVector SpawnLocation = GetActorLocation();
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AWeaponProjectile* shot = World->SpawnActor<AWeaponProjectile>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
+		shot->SetTargetTag(TargetTag);
+	}
 }
 
+void ATurret::Release()
+{
+	if (ShootingPerson != NULL) {
+		ShootingPerson->SetActorHiddenInGame(false);
+		GetWorld()->GetFirstPlayerController()->Possess(ShootingPerson);
+		ShootingPerson = NULL;
+	}
+}

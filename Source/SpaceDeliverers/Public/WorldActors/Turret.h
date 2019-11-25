@@ -15,7 +15,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	void Fire();
 
 	UPROPERTY(EditDefaultsOnly)
 	float FireRate;
@@ -23,10 +22,23 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* Mesh;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* Box;
+
+	UPROPERTY(EditDefaultsOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf <class AWeaponProjectile> ProjectileBase;
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void OnSelect() override;
 	virtual void OnDeselect() override;
 	void Interact(class AInstrument*& inHand, class ACharacter* character) override;
+
+private:
+	void Fire();
+	void Release();
+	APawn* ShootingPerson;
+
+	const FName TargetTag = "EnemyShip";
 };

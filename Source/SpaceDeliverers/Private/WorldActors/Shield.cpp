@@ -17,9 +17,9 @@ void AShield::BeginPlay()
 
 	auto level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
 	if (IsValid(level)) {
-		Generators = level->GetGenerators();
-		UE_LOG(LogTemp, Log, TEXT("Generators: %d"), Generators.Num());
-		for (auto generator : Generators)
+		Generators = &level->GetGenerators();
+		UE_LOG(LogTemp, Log, TEXT("Generators: %d"), Generators->Num());
+		for (auto generator : *Generators)
 		{
 			generator->OnEnergyUpdate.AddDynamic(this, &AShield::OnShieldUpdate);
 		}
@@ -33,7 +33,7 @@ void AShield::BeginPlay()
 void AShield::OnShieldUpdate()
 {
 	Energy = 0;
-	for (auto generator : Generators) {
+	for (auto generator : *Generators) {
 		Energy += generator->GetCurrentValue();
 		UE_LOG(LogTemp, Log, TEXT("generator->GetCurrentValue(): %d"), generator->GetCurrentValue());
 		UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
@@ -45,8 +45,8 @@ void AShield::OnShieldUpdate()
 
 void AShield::OnTakeDamage_Implementation(int health)
 {
-	for (int i = 0; i < Generators.Num(); ++i) {
-		auto generator = Generators[i];
+	for (int i = 0; i < Generators->Num(); ++i) {
+		auto generator = (*Generators)[i];
 		if (generator->GetCurrentValue() > 0) {
 			generator->ReduceEnergy();
 			--Energy;

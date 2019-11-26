@@ -39,6 +39,7 @@ private:
 	void Fire();
 	void Release();
 	APawn* ShootingPerson;
-
+	FRotator InitialRotation;
+	float LastFire;
 	const FName TargetTag = "EnemyShip";
 };

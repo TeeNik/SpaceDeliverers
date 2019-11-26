@@ -24,8 +24,7 @@ protected:
 	UFUNCTION()
 	void OnShieldUpdate();
 
-	UPROPERTY()
-	TArray<class AShieldGenerator*> Generators;
+	TArray<class AShieldGenerator*>* Generators;
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Character")
 	void OnTakeDamage(int health);

@@ -12,7 +12,7 @@ class SPACEDELIVERERS_API ASpaceLevelScript : public ALevelScriptActor
 	GENERATED_BODY()
 	
 public:
-	FORCEINLINE TArray<AShieldGenerator*> GetGenerators() { return Generators; }
+	FORCEINLINE TArray<AShieldGenerator*>& GetGenerators() { return Generators; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

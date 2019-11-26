@@ -57,4 +57,7 @@ private:
 
 	UFUNCTION()
 	void OnTakeDamage(int health);
+
+	UFUNCTION()
+	void OnDeath();
 };

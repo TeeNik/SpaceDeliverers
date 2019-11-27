@@ -22,11 +22,10 @@ void AShield::BeginPlay()
 		for (auto generator : *Generators)
 		{
 			generator->OnEnergyUpdate.AddDynamic(this, &AShield::OnShieldUpdate);
+			Energy += generator->GetMaxValue();
 		}
 	}
-
-	OnShieldUpdate();
-
+	UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
 	HealthComponent->OnTakeDamage.AddDynamic(this, &AShield::OnTakeDamage);
 }
 
@@ -36,20 +35,24 @@ void AShield::OnShieldUpdate()
 	for (auto generator : *Generators) {
 		Energy += generator->GetCurrentValue();
 		UE_LOG(LogTemp, Log, TEXT("generator->GetCurrentValue(): %d"), generator->GetCurrentValue());
-		UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
 	}
-
-	//GLog->Log("Energy: " + Energy);
 	UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
 }
 
-void AShield::OnTakeDamage_Implementation(int health)
+void AShield::OnTakeDamage(int health)
 {
+	UE_LOG(LogTemp, Log, TEXT("OnTakeDamage_Implementation"));
 	for (int i = 0; i < Generators->Num(); ++i) {
 		auto generator = (*Generators)[i];
 		if (generator->GetCurrentValue() > 0) {
 			generator->ReduceEnergy();
 			--Energy;
+			UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
+			return;
 		}
 	}
+}
+
+void AShield::OnTakeDamageBP_Implementation(int health)
+{
 }

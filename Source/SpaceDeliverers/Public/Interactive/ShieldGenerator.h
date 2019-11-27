@@ -13,7 +13,8 @@ class SPACEDELIVERERS_API AShieldGenerator : public AInteractiveActor
 public:
 
 	AShieldGenerator();
-	FORCEINLINE const float GetCurrentValue() const { return CurrentEnergy / MaxEnergy; }
+	FORCEINLINE const int GetCurrentValue() const { return CurrentEnergy; }
+	FORCEINLINE const int GetMaxValue() const { return MaxEnergy; }
 
 	virtual void Interact(class AInstrument*& inHand, class ACharacter* character) override;
 

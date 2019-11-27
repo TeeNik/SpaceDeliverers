@@ -27,6 +27,9 @@ protected:
 	TArray<class AShieldGenerator*>* Generators;
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Character")
+	void OnTakeDamageBP(int health);
+
+	UFUNCTION()
 	void OnTakeDamage(int health);
 
 	int Energy;

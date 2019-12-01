@@ -41,6 +41,7 @@ void AShield::OnShieldUpdate()
 
 void AShield::OnTakeDamage(int health)
 {
+	OnTakeDamageBP(health);
 	UE_LOG(LogTemp, Log, TEXT("OnTakeDamage_Implementation"));
 	for (int i = 0; i < Generators->Num(); ++i) {
 		auto generator = (*Generators)[i];

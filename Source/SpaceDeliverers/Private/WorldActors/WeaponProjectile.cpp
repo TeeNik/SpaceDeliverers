@@ -28,7 +28,7 @@ void AWeaponProjectile::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 		auto health = Cast<UHealthComponent>(OtherActor->GetComponentByClass(UHealthComponent::StaticClass()));
 		if (IsValid(health)) {
 			health->TakeDamage(Damage);
+			Destroy();
 		}
 	}
-
 }

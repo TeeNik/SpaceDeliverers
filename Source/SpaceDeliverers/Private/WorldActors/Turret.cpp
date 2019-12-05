@@ -53,6 +53,8 @@ void ATurret::Interact(AInstrument*& inHand, ACharacter* character)
 		Mesh->SetRenderCustomDepth(false);
 		character->SetActorHiddenInGame(true);
 		ShootingPerson = character;
+		CharacterPos = ShootingPerson->GetActorLocation();
+		ShootingPerson->SetActorLocation(FVector(10000, 10000, 10000));
 	}
 }
 
@@ -80,6 +82,7 @@ void ATurret::Release()
 		ShootingPerson->SetActorHiddenInGame(false);
 		GetWorld()->GetFirstPlayerController()->Possess(ShootingPerson);
 		SetActorRotation(InitialRotation);
+		ShootingPerson->SetActorLocation(CharacterPos);
 		ShootingPerson = NULL;
 	}
 }

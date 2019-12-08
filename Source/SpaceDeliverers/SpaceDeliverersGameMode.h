@@ -1,10 +1,10 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "SpaceDeliverersGameMode.generated.h"
+
+class UBaseController;
 
 UCLASS(minimalapi)
 class ASpaceDeliverersGameMode : public AGameModeBase
@@ -13,6 +13,12 @@ class ASpaceDeliverersGameMode : public AGameModeBase
 
 public:
 	ASpaceDeliverersGameMode();
+
+	FORCEINLINE UBaseController* GetBaseController() { return BaseController; }
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+	UBaseController* BaseController;
 };
 
 

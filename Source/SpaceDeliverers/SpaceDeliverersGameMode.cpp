@@ -1,6 +1,7 @@
 #include "SpaceDeliverersGameMode.h"
 #include "SpaceDeliverersCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "BaseController.h"
 
 ASpaceDeliverersGameMode::ASpaceDeliverersGameMode()
 {
@@ -9,4 +10,6 @@ ASpaceDeliverersGameMode::ASpaceDeliverersGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+
+	BaseController = CreateDefaultSubobject<UBaseController>(TEXT("BaseController"));
 }

@@ -36,6 +36,7 @@ void AShield::OnShieldUpdate()
 		Energy += generator->GetCurrentValue();
 		UE_LOG(LogTemp, Log, TEXT("generator->GetCurrentValue(): %d"), generator->GetCurrentValue());
 	}
+	OnEnergyUpdate.Broadcast(Energy);
 	UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
 }
 
@@ -48,6 +49,7 @@ void AShield::OnTakeDamage(int health)
 		if (generator->GetCurrentValue() > 0) {
 			generator->ReduceEnergy();
 			--Energy;
+			OnEnergyUpdate.Broadcast(Energy);
 			UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
 			return;
 		}

@@ -4,7 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "Shield.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FShieldUpdate, int, Shield);
+DECLARE_MULTICAST_DELEGATE_OneParam(FShieldUpdate, float );
 
 UCLASS()
 class SPACEDELIVERERS_API AShield : public AActor
@@ -25,15 +25,19 @@ protected:
 	class UHealthComponent* HealthComponent;
 
 	UFUNCTION()
-	void OnShieldUpdate();
-
-	TArray<class AShieldGenerator*>* Generators;
+	void OnGeneratorEnergyUpdate();
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Character")
 	void OnTakeDamageBP(int health);
 
+private:
+	void BroadcastShieldPercent();
+
+	TArray<class AShieldGenerator*>* Generators;
+
 	UFUNCTION()
 	void OnTakeDamage(int health);
 
-	int Energy;
+	float CurrentEnergy;
+	float MaxEnergy;
 };

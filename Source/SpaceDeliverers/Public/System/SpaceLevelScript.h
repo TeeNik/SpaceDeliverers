@@ -5,6 +5,7 @@
 #include "SpaceLevelScript.generated.h"
 
 class AShieldGenerator;
+class AShield;
 
 UCLASS(Blueprintable)
 class SPACEDELIVERERS_API ASpaceLevelScript : public ALevelScriptActor
@@ -13,9 +14,13 @@ class SPACEDELIVERERS_API ASpaceLevelScript : public ALevelScriptActor
 	
 public:
 	FORCEINLINE TArray<AShieldGenerator*>& GetGenerators() { return Generators; }
+	FORCEINLINE AShield* GetShield() { return Shield; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<AShieldGenerator*> Generators;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	AShield* Shield;
 
 };

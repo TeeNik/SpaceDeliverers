@@ -11,6 +11,8 @@ class SPACEDELIVERERS_API UMainWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	void UpdateShield(const float& value);
 
 protected:
 	UPROPERTY(meta = (BindWidget))
@@ -18,6 +20,5 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* ShieldBar;
-
 
 };

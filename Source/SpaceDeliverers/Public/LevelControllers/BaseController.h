@@ -31,5 +31,8 @@ private:
 	int Shield;
 	int Health;
 
+	UFUNCTION()
+	void OnShieldUpdate(float value);
+
 
 };

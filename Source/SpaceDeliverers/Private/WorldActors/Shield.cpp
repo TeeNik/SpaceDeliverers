@@ -21,23 +21,32 @@ void AShield::BeginPlay()
 		UE_LOG(LogTemp, Log, TEXT("Generators: %d"), Generators->Num());
 		for (auto generator : *Generators)
 		{
-			generator->OnEnergyUpdate.AddDynamic(this, &AShield::OnShieldUpdate);
-			Energy += generator->GetMaxValue();
+			generator->OnEnergyUpdate.AddDynamic(this, &AShield::OnGeneratorEnergyUpdate);
+			CurrentEnergy += generator->GetMaxValue();
+			UE_LOG(LogTemp, Log, TEXT("CurrenGetMaxValuetEnergy: %d"), generator->GetMaxValue());
+			UE_LOG(LogTemp, Log, TEXT("CurrentEnergy: %d"), CurrentEnergy);
+
 		}
 	}
-	UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
+	UE_LOG(LogTemp, Log, TEXT("CurrentEnergy: %d"), CurrentEnergy);
 	HealthComponent->OnTakeDamage.AddDynamic(this, &AShield::OnTakeDamage);
 }
 
-void AShield::OnShieldUpdate()
+void AShield::OnGeneratorEnergyUpdate()
 {
-	Energy = 0;
+	CurrentEnergy = 0;
 	for (auto generator : *Generators) {
-		Energy += generator->GetCurrentValue();
+		CurrentEnergy += generator->GetCurrentValue();
 		UE_LOG(LogTemp, Log, TEXT("generator->GetCurrentValue(): %d"), generator->GetCurrentValue());
 	}
-	OnEnergyUpdate.Broadcast(Energy);
-	UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
+	BroadcastShieldPercent();
+	UE_LOG(LogTemp, Log, TEXT("Energy: %d"), CurrentEnergy);
+}
+
+void AShield::BroadcastShieldPercent()
+{
+	float percent = CurrentEnergy / MaxEnergy;
+	OnShieldUpdate.Broadcast(percent);
 }
 
 void AShield::OnTakeDamage(int health)
@@ -48,9 +57,9 @@ void AShield::OnTakeDamage(int health)
 		auto generator = (*Generators)[i];
 		if (generator->GetCurrentValue() > 0) {
 			generator->ReduceEnergy();
-			--Energy;
-			OnEnergyUpdate.Broadcast(Energy);
-			UE_LOG(LogTemp, Log, TEXT("Energy: %d"), Energy);
+			--CurrentEnergy;
+			BroadcastShieldPercent();
+			UE_LOG(LogTemp, Log, TEXT("Energy: %d"), CurrentEnergy);
 			return;
 		}
 	}

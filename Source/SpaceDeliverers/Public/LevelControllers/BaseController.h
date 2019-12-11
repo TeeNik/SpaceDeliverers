@@ -17,6 +17,8 @@ public:
 	FORCEINLINE int GetHealth() { return Health; }
 	FORCEINLINE int GetShield() { return Shield; }
 
+	void Initialize();
+
 protected:
 	virtual void BeginPlay() override;
 

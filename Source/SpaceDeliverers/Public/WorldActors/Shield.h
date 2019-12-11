@@ -4,7 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "Shield.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FShieldUpdate, float );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FShieldUpdate, float, Shield);
 
 UCLASS()
 class SPACEDELIVERERS_API AShield : public AActor
@@ -14,6 +14,8 @@ class SPACEDELIVERERS_API AShield : public AActor
 public:	
 	AShield();
 	FShieldUpdate OnShieldUpdate;
+
+	void Initialize();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Instrument, meta = (AllowPrivateAccess = "true"))

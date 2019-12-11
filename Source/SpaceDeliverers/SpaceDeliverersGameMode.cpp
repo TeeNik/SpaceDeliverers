@@ -2,6 +2,9 @@
 #include "SpaceDeliverersCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "BaseController.h"
+#include "EnemyController.h"
+#include "SpaceLevelScript.h"
+#include "Shield.h"
 
 ASpaceDeliverersGameMode::ASpaceDeliverersGameMode()
 {
@@ -12,4 +15,13 @@ ASpaceDeliverersGameMode::ASpaceDeliverersGameMode()
 	}
 
 	BaseController = CreateDefaultSubobject<UBaseController>(TEXT("BaseController"));
+	EnemyController = CreateDefaultSubobject<UEnemyController>(TEXT("EnemyController"));
+}
+
+void ASpaceDeliverersGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
+	BaseController->Initialize();
+	level->GetShield()->Initialize();
 }

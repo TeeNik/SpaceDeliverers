@@ -13,22 +13,22 @@ class SPACEDELIVERERS_API AShieldGenerator : public AInteractiveActor
 public:
 
 	AShieldGenerator();
-	FORCEINLINE const int GetCurrentValue() const { return CurrentEnergy; }
-	FORCEINLINE const int GetMaxValue() const { return MaxEnergy; }
+	FORCEINLINE const float GetCurrentValue() const { return CurrentEnergy; }
+	FORCEINLINE const float GetMaxValue() const { return MaxEnergy; }
 
 	virtual void Interact(class AInstrument*& inHand, class ACharacter* character) override;
 
 	FEnergyUpdate OnEnergyUpdate;
 
 	UPROPERTY(EditDefaultsOnly)
-	int MaxEnergy = 10;
+	float MaxEnergy = 10;
 
 	void ReduceEnergy();
 
 	virtual void BeginPlay() override;
 
 private:
-	int CurrentEnergy;
+	float CurrentEnergy;
 
 	void UpdateMaterial();
 };

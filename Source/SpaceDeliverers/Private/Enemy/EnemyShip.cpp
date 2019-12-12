@@ -21,8 +21,7 @@ AEnemyShip::AEnemyShip()
 void AEnemyShip::BeginPlay()
 {
 	Super::BeginPlay();
-
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AEnemyShip::ShootByTimer, FireRate, true);
+	//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AEnemyShip::ShootByTimer, FireRate, true);
 }
 
 void AEnemyShip::Tick(float DeltaTime)
@@ -41,17 +40,25 @@ void AEnemyShip::Tick(float DeltaTime)
 
 void AEnemyShip::ShootByTimer()
 {
-	if (ProjectileBase != NULL && FireRate != 0)
+	/*if ( && FireRate != 0)
 	{
-		UWorld* const World = GetWorld();
+		UWorld* const World = ;
 		if (World != NULL)
 		{
-			const FRotator SpawnRotation = GetActorRotation();
-			const FVector SpawnLocation = Mesh->GetSocketLocation(TEXT("Muzzle_1"));
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			
 		}
+	}*/
+}
+
+void AEnemyShip::Shoot()
+{
+	if (ProjectileBase != NULL)
+	{
+		const FRotator SpawnRotation = GetActorRotation();
+		const FVector SpawnLocation = Mesh->GetSocketLocation(TEXT("Muzzle_1"));
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		GetWorld()->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 	}
 }
 

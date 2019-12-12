@@ -17,6 +17,7 @@ public:
 
 	FORCEINLINE const UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
+	void Shoot();
 
 protected:
 	virtual void BeginPlay() override;

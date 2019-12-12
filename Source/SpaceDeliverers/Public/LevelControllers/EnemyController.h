@@ -22,11 +22,20 @@ protected:
 	float SpawnRate;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class AEnemyShip> EnemeShipBase;
+	float ShootRate;
+
+	UPROPERTY(EditDefaultsOnly)
+	float StartDelay;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class AEnemyShip> EnemyShipBase;
 
 private:
 	TArray<AActor*>* SpawnPoints;
+	TArray<AEnemyShip*> Ships;
+	int NumberOfEnemies;
 	TArray<bool> SpawnInfo;
-	float LastSpawnTime;
 		
+	float SpawnTime;
+	float ShootTime;
 };

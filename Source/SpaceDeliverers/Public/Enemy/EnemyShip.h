@@ -15,7 +15,7 @@ class SPACEDELIVERERS_API AEnemyShip : public AActor
 public:	
 	AEnemyShip();
 
-	FORCEINLINE const UHealthComponent* GetHealthComponent() { return HealthComponent; }
+	FORCEINLINE UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 	void Shoot();
 

@@ -38,4 +38,7 @@ private:
 		
 	float SpawnTime;
 	float ShootTime;
+
+	UFUNCTION()
+	void OnShipTakeDamage(int health);
 };

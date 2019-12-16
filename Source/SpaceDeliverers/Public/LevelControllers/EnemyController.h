@@ -14,6 +14,7 @@ public:
 	UEnemyController();
 	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void Initialize();
 
 protected:
 	virtual void BeginPlay() override;
@@ -37,7 +38,11 @@ private:
 		
 	float SpawnTime;
 	float ShootTime;
+	bool IsShieldActive;
 
 	UFUNCTION()
 	void OnShipDeath(class UHealthComponent* hc);
+
+	UFUNCTION()
+	void OnShieldUpdate(float shield);
 };

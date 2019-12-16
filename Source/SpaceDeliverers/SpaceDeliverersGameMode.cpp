@@ -23,5 +23,6 @@ void ASpaceDeliverersGameMode::BeginPlay()
 	Super::BeginPlay();
 	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
 	BaseController->Initialize();
+	EnemyController->Initialize();
 	level->GetShield()->Initialize();
 }

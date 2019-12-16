@@ -3,6 +3,7 @@
 #include "Components/HealthComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AWeaponProjectile::AWeaponProjectile()
 {
@@ -28,6 +29,9 @@ void AWeaponProjectile::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 		auto health = Cast<UHealthComponent>(OtherActor->GetComponentByClass(UHealthComponent::StaticClass()));
 		if (IsValid(health)) {
 			health->TakeDamage(Damage);
+			if (Particles != NULL) {
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particles, GetActorLocation());
+			}
 			Destroy();
 		}
 	}

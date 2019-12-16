@@ -56,9 +56,9 @@ private:
 	UFUNCTION()
 	void ShootByTimer();
 
-	UFUNCTION()
+	/*UFUNCTION()
 	void OnTakeDamage(int health);
 
 	UFUNCTION()
-	void OnDeath();
+	void OnDeath();*/
 };

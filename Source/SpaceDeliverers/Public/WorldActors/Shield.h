@@ -38,7 +38,7 @@ private:
 	TArray<class AShieldGenerator*>* Generators;
 
 	UFUNCTION()
-	void OnTakeDamage(int health);
+	void OnTakeDamage(int health, UHealthComponent* hc);
 
 	float CurrentEnergy;
 	float MaxEnergy;

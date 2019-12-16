@@ -46,7 +46,7 @@ void AShield::BroadcastShieldPercent()
 	OnShieldUpdate.Broadcast(percent);
 }
 
-void AShield::OnTakeDamage(int health)
+void AShield::OnTakeDamage(int health, UHealthComponent* hc)
 {
 	OnTakeDamageBP(health);
 	for (int i = 0; i < Generators->Num(); ++i) {

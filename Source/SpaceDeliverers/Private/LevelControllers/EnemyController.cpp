@@ -27,14 +27,15 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	float seconds = GetWorld()->GetTimeSeconds();
-	if (NumberOfEnemies > 0 && seconds > ShootTime)
+	int num = Ships.Num();
+	if (num > 0 && seconds > ShootTime)
 	{
-		int index = FMath::RandRange(0, NumberOfEnemies - 1);
+		int index = FMath::RandRange(0, num - 1);
 		UE_LOG(LogTemp, Log, TEXT("Index Rand: %d"), index);
 		ShootTime = seconds + ShootRate;
 		Ships[index]->Shoot();
 	}
-	if (NumberOfEnemies < SpawnPoints->Num() && seconds > SpawnTime) 
+	if (num < SpawnPoints->Num() && seconds > SpawnTime)
 	{
 		int index = -1;
 		SpawnInfo.Find(false, index);
@@ -47,15 +48,14 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			AEnemyShip* enemy = GetWorld()->SpawnActor<AEnemyShip>(EnemyShipBase, position, rotation, ActorSpawnParams);
 			Ships.Add(enemy);
 			SpawnTime = seconds + SpawnRate;
-			enemy->GetHealthComponent()->OnTakeDamage.AddDynamic(this, &[](int health) {
-				
-			});
-			++NumberOfEnemies;
+			enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnShipDeath);
 		}
 	}
 }
 
-void UEnemyController::OnShipTakeDamage(int health)
+void UEnemyController::OnShipDeath(UHealthComponent* hc)
 {
-
+	AEnemyShip* ship = Cast<AEnemyShip>(hc->GetOwner());
+	Ships.Remove(ship);
+	ship->Destroy();
 }

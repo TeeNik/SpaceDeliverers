@@ -33,12 +33,11 @@ protected:
 private:
 	TArray<AActor*>* SpawnPoints;
 	TArray<AEnemyShip*> Ships;
-	int NumberOfEnemies;
 	TArray<bool> SpawnInfo;
 		
 	float SpawnTime;
 	float ShootTime;
 
 	UFUNCTION()
-	void OnShipTakeDamage(int health);
+	void OnShipDeath(class UHealthComponent* hc);
 };

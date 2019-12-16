@@ -14,8 +14,6 @@ AEnemyShip::AEnemyShip()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Box);
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-	HealthComponent->OnTakeDamage.AddDynamic(this, &AEnemyShip::OnTakeDamage);
-	HealthComponent->OnDeath.AddDynamic(this, &AEnemyShip::OnDeath);
 }
 
 void AEnemyShip::BeginPlay()
@@ -60,15 +58,4 @@ void AEnemyShip::Shoot()
 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		GetWorld()->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 	}
-}
-
-void AEnemyShip::OnTakeDamage(int health)
-{
-	GLog->Log("AEnemyShip::OnTakeDamage");
-}
-
-void AEnemyShip::OnDeath()
-{
-	GLog->Log("Death");
-	Destroy();
 }

@@ -60,6 +60,7 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASpaceDeliverersCharacter::LookUpAtRate);
 	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
+	PlayerInputComponent->BindAction("RMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnRelease);
 }
 
 void ASpaceDeliverersCharacter::TurnAtRate(float Rate)
@@ -124,6 +125,11 @@ void ASpaceDeliverersCharacter::OnFire() {
 		GLog->Log("InteractionComponent->GetInstrument() = NULL");
 	}
 	InteractionComponent->OnFire();
+}
+
+void ASpaceDeliverersCharacter::OnRelease() 
+{
+	InteractionComponent->OnRelease();
 }
 
 void ASpaceDeliverersCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

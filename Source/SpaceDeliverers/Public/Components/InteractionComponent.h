@@ -21,6 +21,7 @@ public:
 	FORCEINLINE void SetInteractive(IInteractive* interactive) { Interactive = interactive; }
 
 	void OnFire();
+	void OnRelease();
 	void OnSelect(IInteractive* interactive);
 	void OnDeselect();
 

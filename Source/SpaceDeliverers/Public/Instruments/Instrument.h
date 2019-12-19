@@ -28,4 +28,6 @@ public:
 	virtual void Use();
 
 	virtual InstrumentType GetType() const;
+
+	virtual void Release();
 };

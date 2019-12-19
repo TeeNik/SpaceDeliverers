@@ -19,7 +19,6 @@ void AToolbox::Interact(AInstrument*& inHand, ACharacter* character)
 void AToolbox::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 

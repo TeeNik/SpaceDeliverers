@@ -23,6 +23,14 @@ void UInteractionComponent::OnFire()
 	}
 }
 
+void UInteractionComponent::OnRelease()
+{
+	if (Instrument != NULL) {
+		Instrument->Release();
+		Instrument = NULL;
+	}
+}
+
 void UInteractionComponent::OnSelect(IInteractive * interactive)
 {
 	GLog->Log("OnOverlapBegin");

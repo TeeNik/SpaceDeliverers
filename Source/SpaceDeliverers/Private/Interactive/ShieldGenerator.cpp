@@ -13,13 +13,9 @@ void AShieldGenerator::BeginPlay()
 }
 
 void AShieldGenerator::Interact(class AInstrument *& inHand, class ACharacter* character) {
-	UE_LOG(LogTemp, Log, TEXT("Interact"));
 	if (inHand != NULL) {
-		UE_LOG(LogTemp, Log, TEXT("inHand != NULL"));
 		if (inHand->GetType() == InstrumentType::Wrench) {
-			UE_LOG(LogTemp, Log, TEXT("inHand->GetType()"));
 			if (CurrentEnergy < MaxEnergy) {
-				UE_LOG(LogTemp, Log, TEXT("CurrentEnergy < MaxEnergy"));
 				++CurrentEnergy;
 				OnEnergyUpdate.Broadcast();
 				UpdateMaterial();

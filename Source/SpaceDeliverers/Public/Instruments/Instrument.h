@@ -8,6 +8,7 @@ UENUM(Blueprintable)
 enum InstrumentType {
 	None,
 	Wrench,
+	Gun,
 };
 
 UCLASS()

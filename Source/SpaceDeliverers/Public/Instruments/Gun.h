@@ -23,4 +23,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	class UParticleSystem* ShootParticle;
+
+	UPROPERTY(EditDefaultsOnly)
+	FName SocketName;
 };

@@ -15,11 +15,11 @@ public:
 	virtual InstrumentType GetType() const override;
 	void Shoot(AActor* target);
 
-	FORCEINLINE float GetDamage() { return Damage; }
+	FORCEINLINE int GetDamage() { return Damage; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
-	float Damage;
+	int Damage;
 
 	UPROPERTY(EditDefaultsOnly)
 	class UParticleSystem* ShootParticle;

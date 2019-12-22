@@ -17,6 +17,7 @@ public:
 	virtual void Interact(class AInstrument*& inHand, class ACharacter* character) override;
 
 protected:
+	UPROPERTY(EditDefaultsOnly, Category = AEnemyDrill, meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;
 
 private:

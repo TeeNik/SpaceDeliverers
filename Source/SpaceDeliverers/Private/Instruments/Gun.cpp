@@ -18,7 +18,8 @@ InstrumentType AGun::GetType() const
 
 void AGun::Shoot(AActor * target)
 {
-	if (ShootParticle != NULL) {
+	if (ShootParticle != NULL) 
+	{
 		FVector location = Mesh->GetSocketLocation(SocketName);
 		FRotator rotation = Mesh->GetSocketRotation(SocketName);
 		UGameplayStatics::SpawnEmitterAttached(ShootParticle, Mesh, FName(TEXT("None")), location, rotation, EAttachLocation::KeepRelativeOffset);

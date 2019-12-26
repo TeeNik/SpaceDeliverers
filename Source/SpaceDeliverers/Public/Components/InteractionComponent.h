@@ -6,6 +6,10 @@
 
 class AInstrument;
 class IInteractive;
+enum InstrumentType;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInstrumentChanged, int8, type);
+
 
 UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UInteractionComponent : public UActorComponent
@@ -28,12 +32,15 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
 	void OnEnterInventory();
 
+	UPROPERTY(BlueprintAssignable)
+	FInstrumentChanged OnInstrumentChanged;
+
 protected:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY()
-	class AInstrument* Instrument;
+	AInstrument* Instrument;
 
-	class IInteractive* Interactive;
+	IInteractive* Interactive;
 		
 };

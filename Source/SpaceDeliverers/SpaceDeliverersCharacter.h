@@ -39,13 +39,13 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> ProjectileBase;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UInteractionComponent* InteractionComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsProducingAction;
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Character")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
 	void OnFireBP(InstrumentType type);
 
 protected:

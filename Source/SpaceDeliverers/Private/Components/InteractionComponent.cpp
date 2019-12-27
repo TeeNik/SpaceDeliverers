@@ -46,7 +46,3 @@ void UInteractionComponent::OnDeselect()
 		Interactive = NULL;
 	}
 }
-
-void UInteractionComponent::OnEnterInventory_Implementation()
-{
-}

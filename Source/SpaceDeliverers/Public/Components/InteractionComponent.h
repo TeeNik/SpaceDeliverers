@@ -7,7 +7,7 @@
 class AInstrument;
 class IInteractive;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UInteractionComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -25,7 +25,7 @@ public:
 	void OnSelect(IInteractive* interactive);
 	void OnDeselect();
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
 	void OnEnterInventory();
 
 protected:

@@ -73,11 +73,6 @@ void ASpaceDeliverersCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
-void ASpaceDeliverersCharacter::OnFireBP_Implementation(InstrumentType type)
-{
-
-}
-
 void ASpaceDeliverersCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))

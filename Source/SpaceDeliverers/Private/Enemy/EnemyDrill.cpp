@@ -9,6 +9,7 @@ AEnemyDrill::AEnemyDrill() {
 
 void AEnemyDrill::BeginPlay()
 {
+	Super::BeginPlay();
 	HealthComponent->OnDeath.AddDynamic(this, &AEnemyDrill::OnDeath);
 }
 
@@ -17,6 +18,7 @@ void AEnemyDrill::Interact(AInstrument *& inHand, ACharacter * character)
 	if (inHand != NULL && inHand->GetType() == InstrumentType::Gun) {
 		AGun* gun = Cast<AGun>(inHand);
 		float damage = gun->GetDamage();
+		gun->Shoot(this);
 		HealthComponent->TakeDamage(damage);
 	}
 }

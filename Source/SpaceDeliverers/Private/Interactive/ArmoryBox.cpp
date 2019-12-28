@@ -2,17 +2,19 @@
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Gun.h"
+#include "InteractionComponent.h"
 
 AArmoryBox::AArmoryBox()
 {
 }
 
-void AArmoryBox::Interact(AInstrument *& inHand, ACharacter * character)
+void AArmoryBox::Interact(UInteractionComponent* interComp, ACharacter * character)
 {
-	if (inHand == NULL) {
-		inHand = GetWorld()->SpawnActor<AGun>(GunBase);
+	if (interComp->GetInstrument() == NULL) {
+		AGun* gun = GetWorld()->SpawnActor<AGun>(GunBase);
 		FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
-		inHand->AttachToComponent(character->GetMesh(), rules, FName("WeaponSocket"));
+		gun->AttachToComponent(character->GetMesh(), rules, FName("WeaponSocket"));
+		interComp->SetInstrument(gun);
 	}
 }
 

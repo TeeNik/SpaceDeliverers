@@ -32,21 +32,16 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
-	//TODO Remove weapon later
-	UPROPERTY(EditAnywhere)
-	bool HasWeapon;
-
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> ProjectileBase;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UInteractionComponent* InteractionComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsProducingAction;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
 	void OnFireBP(InstrumentType type);
+
+	void ScaleInteractionBox(const int& coeff);
 
 protected:
 

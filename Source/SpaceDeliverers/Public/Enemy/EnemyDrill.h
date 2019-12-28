@@ -14,7 +14,9 @@ class SPACEDELIVERERS_API AEnemyDrill : public AInteractiveActor
 public:
 	AEnemyDrill();
 	virtual void BeginPlay() override;
-	virtual void Interact(class AInstrument*& inHand, class ACharacter* character) override;
+	virtual void Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+
+	FORCEINLINE class UStaticMeshComponent* GetMesh() { return Mesh; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = AEnemyDrill, meta = (AllowPrivateAccess = "true"))

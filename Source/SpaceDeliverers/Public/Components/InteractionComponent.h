@@ -8,7 +8,7 @@ class AInstrument;
 class IInteractive;
 enum InstrumentType;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInstrumentChanged, int8, type);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInstrumentChanged, int32, type);
 
 
 UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -20,17 +20,14 @@ public:
 	UInteractionComponent();
 
 	FORCEINLINE const AInstrument* GetInstrument() { return Instrument; }
-	FORCEINLINE void SetInstrument(AInstrument* instrument) { Instrument = instrument; }
 	FORCEINLINE const IInteractive* GetInteractive() { return Interactive; }
 	FORCEINLINE void SetInteractive(IInteractive* interactive) { Interactive = interactive; }
 
+	void SetInstrument(AInstrument* instrument);
 	void OnFire();
 	void OnRelease();
 	void OnSelect(IInteractive* interactive);
 	void OnDeselect();
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
-	void OnEnterInventory();
 
 	UPROPERTY(BlueprintAssignable)
 	FInstrumentChanged OnInstrumentChanged;

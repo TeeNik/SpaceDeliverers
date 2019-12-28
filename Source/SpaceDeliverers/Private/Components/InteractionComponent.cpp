@@ -12,6 +12,17 @@ void UInteractionComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
+void UInteractionComponent::SetInstrument(AInstrument * instrument)
+{
+	Instrument = instrument;
+	if (instrument == NULL) {
+		OnInstrumentChanged.Broadcast(InstrumentType::None);
+	}
+	else {
+		OnInstrumentChanged.Broadcast(instrument->GetType());
+	}
+}
+
 void UInteractionComponent::OnFire()
 {
 	if (Instrument != NULL) {
@@ -19,7 +30,7 @@ void UInteractionComponent::OnFire()
 	}
 
 	if (Interactive != NULL) {
-		Interactive->Interact(Instrument, Cast<ACharacter>(GetOwner()));
+		Interactive->Interact(this, Cast<ACharacter>(GetOwner()));
 	}
 }
 
@@ -27,7 +38,7 @@ void UInteractionComponent::OnRelease()
 {
 	if (Instrument != NULL) {
 		Instrument->Release();
-		Instrument = NULL;
+		SetInstrument(NULL);
 	}
 }
 

@@ -13,9 +13,9 @@ public:
 	AGun();
 	virtual void BeginPlay() override;
 	virtual InstrumentType GetType() const override;
-	void Shoot(AActor* target);
+	void Shoot(AActor* target) const;
 
-	FORCEINLINE int GetDamage() { return Damage; }
+	FORCEINLINE int GetDamage() const { return Damage; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly)

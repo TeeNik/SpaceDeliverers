@@ -16,7 +16,7 @@ public:
 	FORCEINLINE const float GetCurrentValue() const { return CurrentEnergy; }
 	FORCEINLINE const float GetMaxValue() const { return MaxEnergy; }
 
-	virtual void Interact(class AInstrument*& inHand, class ACharacter* character) override;
+	virtual void Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 	FEnergyUpdate OnEnergyUpdate;
 

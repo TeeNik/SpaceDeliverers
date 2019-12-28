@@ -13,7 +13,7 @@ class SPACEDELIVERERS_API AToolbox : public AInteractiveActor
 public:	
 	AToolbox();
 
-	void Interact(class AInstrument*& inHand, class ACharacter* character) override;
+	void Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 protected:
 	virtual void BeginPlay() override;

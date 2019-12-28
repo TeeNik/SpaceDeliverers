@@ -33,7 +33,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void OnSelect() override;
 	virtual void OnDeselect() override;
-	void Interact(class AInstrument*& inHand, class ACharacter* character) override;
+	void Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 private:
 	void Fire();

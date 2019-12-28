@@ -3,6 +3,7 @@
 #include "Materials/MaterialInterface.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Components/StaticMeshComponent.h"
+#include "InteractionComponent.h"
 
 AShieldGenerator::AShieldGenerator() {
 }
@@ -12,7 +13,8 @@ void AShieldGenerator::BeginPlay()
 	CurrentEnergy = MaxEnergy;
 }
 
-void AShieldGenerator::Interact(class AInstrument *& inHand, class ACharacter* character) {
+void AShieldGenerator::Interact(class UInteractionComponent* interComp, class ACharacter* character) {
+	const AInstrument* inHand = interComp->GetInstrument();
 	if (inHand != NULL) {
 		if (inHand->GetType() == InstrumentType::Wrench) {
 			if (CurrentEnergy < MaxEnergy) {

@@ -2,17 +2,19 @@
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Wrench.h"
+#include "InteractionComponent.h"
 
 AToolbox::AToolbox()
 {
 }
 
-void AToolbox::Interact(AInstrument*& inHand, ACharacter* character)
+void AToolbox::Interact(class UInteractionComponent* interComp, ACharacter* character)
 {
-	if (inHand == NULL) {
-		inHand = GetWorld()->SpawnActor<AInstrument>(WrenchBase);
+	if (interComp->GetInstrument() == NULL) {
+		AInstrument* wrench = GetWorld()->SpawnActor<AInstrument>(WrenchBase);
 		FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
-		inHand->AttachToComponent(character->GetMesh(), rules, FName("InstrumentSocket"));
+		wrench->AttachToComponent(character->GetMesh(), rules, FName("InstrumentSocket"));
+		interComp->SetInstrument(wrench);
 	}
 }
 

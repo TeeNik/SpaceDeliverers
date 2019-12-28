@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "Components/HealthComponent.h"
 #include "WeaponProjectile.h"
+#include "InteractionComponent.h"
 
 ATurret::ATurret()
 {
@@ -46,9 +47,9 @@ void ATurret::OnDeselect()
 	Mesh->SetRenderCustomDepth(false);
 }
 
-void ATurret::Interact(AInstrument*& inHand, ACharacter* character)
+void ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
-	if (inHand == NULL) {
+	if (interComp->GetInstrument() == NULL) {
 		GetWorld()->GetFirstPlayerController()->Possess(this);
 		Mesh->SetRenderCustomDepth(false);
 		character->SetActorHiddenInGame(true);

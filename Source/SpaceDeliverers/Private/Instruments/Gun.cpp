@@ -1,7 +1,9 @@
 #include "Gun.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "EnemyDrill.h"
 
 AGun::AGun() {
 
@@ -16,12 +18,13 @@ InstrumentType AGun::GetType() const
 	return InstrumentType::Gun;
 }
 
-void AGun::Shoot(AActor * target)
+void AGun::Shoot(AActor * target) const
 {
-	if (ShootParticle != NULL) 
+	AEnemyDrill* drill = Cast<AEnemyDrill>(target);
+	if (drill != NULL && ShootParticle != NULL) 
 	{
 		FVector location = Mesh->GetSocketLocation(SocketName);
-		FRotator rotation = Mesh->GetSocketRotation(SocketName);
-		UGameplayStatics::SpawnEmitterAttached(ShootParticle, Mesh, FName(TEXT("None")), location, rotation, EAttachLocation::KeepRelativeOffset);
+		UParticleSystemComponent* ps = UGameplayStatics::SpawnEmitterAttached(ShootParticle, drill->GetMesh(), FName(TEXT("None")), FVector(0), FRotator(0), EAttachLocation::KeepRelativeOffset);
+		ps->SetBeamTargetPoint(0, location, 0);
 	}
 }

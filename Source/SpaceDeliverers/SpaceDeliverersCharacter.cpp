@@ -63,6 +63,23 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAction("RMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnRelease);
 }
 
+void ASpaceDeliverersCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	InteractionComponent->OnInstrumentChanged.AddDynamic(this, &ASpaceDeliverersCharacter::OnInstrumentChanged);
+}
+
+void ASpaceDeliverersCharacter::OnInstrumentChanged(int typeInt)
+{
+	InstrumentType type = (InstrumentType)typeInt;
+	if (InteractionBoxScaleFactor != 1 && type == InstrumentType::None) {
+		ScaleInteractionBox(1);
+	}
+	else if (InteractionBoxScaleFactor == 1 && type == InstrumentType::Gun) {
+		ScaleInteractionBox(6);
+	}
+}
+
 void ASpaceDeliverersCharacter::TurnAtRate(float Rate)
 {
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
@@ -71,6 +88,13 @@ void ASpaceDeliverersCharacter::TurnAtRate(float Rate)
 void ASpaceDeliverersCharacter::LookUpAtRate(float Rate)
 {
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void ASpaceDeliverersCharacter::ScaleInteractionBox(const int& coeff)
+{
+	InteractionBoxScaleFactor = coeff;
+	InteractionBox->SetRelativeScale3D(FVector(coeff, 1, 1));
+	InteractionBox->SetRelativeLocation(FVector(BoxOffset + (coeff - 1) * 32, 0, -15));
 }
 
 void ASpaceDeliverersCharacter::MoveForward(float Value)

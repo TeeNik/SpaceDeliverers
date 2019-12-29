@@ -51,6 +51,7 @@ protected:
 	void LookUpAtRate(float Rate);
 	void OnFire();
 	void OnRelease();
+	virtual void BeginPlay() override;
 
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -60,5 +61,12 @@ protected:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+
+	UFUNCTION()
+	void OnInstrumentChanged(int type);
+
+	int InteractionBoxScaleFactor = 1;
+	const float BoxOffset = 75;
 };
 

@@ -18,6 +18,9 @@ public:
 
 	FORCEINLINE class UStaticMeshComponent* GetMesh() { return Mesh; }
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
+	void OnDrillHit(ACharacter* character);
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = AEnemyDrill, meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;

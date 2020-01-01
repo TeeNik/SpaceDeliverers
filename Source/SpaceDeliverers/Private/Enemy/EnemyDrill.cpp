@@ -22,6 +22,7 @@ void AEnemyDrill::Interact(UInteractionComponent* interComp, ACharacter * charac
 		float damage = gun->GetDamage();
 		gun->Shoot(this);
 		HealthComponent->TakeDamage(damage);
+		OnDrillHit(character);
 	}
 }
 

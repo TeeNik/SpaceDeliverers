@@ -14,9 +14,11 @@ class SPACEDELIVERERS_API AEnemyDrill : public AInteractiveActor
 public:
 	AEnemyDrill();
 	virtual void BeginPlay() override;
-	virtual void Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+	virtual float GetInteractionTime() override { return InteractionTime; }
 
 	FORCEINLINE class UStaticMeshComponent* GetMesh() { return Mesh; }
+	FORCEINLINE class UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
 	void OnDrillHit(ACharacter* character);
@@ -24,6 +26,9 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = AEnemyDrill, meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;
+
+	UPROPERTY(EditDefaultsOnly)
+	float InteractionTime = 3;
 
 private:
 	UFUNCTION()

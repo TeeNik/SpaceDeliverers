@@ -14,7 +14,7 @@ void AEnemyDrill::BeginPlay()
 	HealthComponent->OnDeath.AddDynamic(this, &AEnemyDrill::OnDeath);
 }
 
-void AEnemyDrill::Interact(UInteractionComponent* interComp, ACharacter * character)
+bool AEnemyDrill::Interact(UInteractionComponent* interComp, ACharacter * character)
 {
 	const AInstrument* inHand = interComp->GetInstrument();
 	if (inHand != NULL && inHand->GetType() == InstrumentType::Gun) {
@@ -23,7 +23,9 @@ void AEnemyDrill::Interact(UInteractionComponent* interComp, ACharacter * charac
 		gun->Shoot(this);
 		HealthComponent->TakeDamage(damage);
 		OnDrillHit(character);
+		return true;
 	}
+	return false;
 }
 
 void AEnemyDrill::OnDeath(UHealthComponent* health)

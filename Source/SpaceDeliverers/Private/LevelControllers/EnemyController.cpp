@@ -2,6 +2,7 @@
 #include "Engine/World.h"
 #include "SpaceLevelScript.h"
 #include "EnemyShip.h"
+#include "EnemyDrill.h"
 #include "HealthComponent.h"
 #include "Shield.h"
 
@@ -18,21 +19,22 @@ void UEnemyController::BeginPlay()
 void UEnemyController::Initialize()
 {
 	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
-	SpawnPoints = &level->GetSpawnPoints();
-	SpawnInfo.SetNum(SpawnPoints->Num());
+	ShipSpawnPoints = &level->GetSpawnPoints();
+	ShipSpawnInfo.SetNum(ShipSpawnPoints->Num());
 	level->GetShield()->OnShieldUpdate.AddDynamic(this, &UEnemyController::OnShieldUpdate);
 
-	SpawnTime = StartDelay;
-	ShootTime = StartDelay;
+	ShipSpawnTime = ShipStartDelay;
+	ShootTime = ShipStartDelay;
 }
 
 void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	float seconds = GetWorld()->GetTimeSeconds();
+
 	if (IsShieldActive) 
 	{
-		float seconds = GetWorld()->GetTimeSeconds();
 		int num = Ships.Num();
 		if (num > 0 && seconds > ShootTime)
 		{
@@ -41,30 +43,84 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			ShootTime = seconds + ShootRate;
 			Ships[index]->Shoot();
 		}
-		if (num < SpawnPoints->Num() && seconds > SpawnTime)
+		if (num < ShipSpawnPoints->Num() && seconds > ShipSpawnTime)
 		{
 			int index = -1;
-			SpawnInfo.Find(false, index);
+			ShipSpawnInfo.Find(false, index);
 			if (index >= 0) {
-				AActor* point = (*SpawnPoints)[index];
+				AActor* point = (*ShipSpawnPoints)[index];
 				FVector position = point->GetActorLocation();
 				FRotator rotation = point->GetActorRotation();
 				FActorSpawnParameters ActorSpawnParams;
 				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 				AEnemyShip* enemy = GetWorld()->SpawnActor<AEnemyShip>(EnemyShipBase, position, rotation, ActorSpawnParams);
 				Ships.Add(enemy);
-				SpawnTime = seconds + SpawnRate;
+				ShipSpawnTime = seconds + ShipSpawnRate;
 				enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnShipDeath);
+			}
+		}
+	}
+	else {
+		return;
+		int num = Drills.Num();
+
+		if (num > 0 && seconds > DrillTime) {
+			//send take damage to base controller
+		}
+		//TODO move to function
+		if (num < DrillSpawnPoints->Num() && seconds > DrillSpawnTime) {
+			int index = -1;
+			DrillSpawnInfo.Find(false, index);
+			if (index >= 0) {
+				AActor* point = (*DrillSpawnPoints)[index];
+				FVector position = point->GetActorLocation();
+				FRotator rotation = point->GetActorRotation();
+				FActorSpawnParameters ActorSpawnParams;
+				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				AEnemyDrill* enemy = GetWorld()->SpawnActor<AEnemyDrill>(EnemyDrillBase, position, rotation, ActorSpawnParams);
+				Drills.Add(enemy);
+				DrillSpawnTime = seconds + ShipSpawnRate;
+				enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnDrillDeath);
 			}
 		}
 	}
 }
 
+//inline? how does inline func work in loop?
+
+template<class T>
+T* SpawnActor(TArray<T*>& container, int& spawnTime, TArray<AActor*>* spawnPoints, TArray<bool>& info, TSubclassOf<T> spawnClass)
+{
+	int num = container.Num();
+	if (num < info.Num() && seconds > SpawnTime) {
+		int index = info.Find(false);
+		if (index >= 0) {
+			AActor* point = (*spawnPoints)[index];
+			FVector position = point->GetActorLocation();
+			FRotator rotation = point->GetActorRotation();
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			T* enemy = GetWorld()->SpawnActor<T>(spawnClass, position, rotation, ActorSpawnParams);
+			container.Add(enemy);
+			return enemy;
+		}
+	}
+	return NULL;
+}
+
 void UEnemyController::OnShipDeath(UHealthComponent* hc)
 {
+	ShipSpawnTime += ShipSpawnRate;
 	AEnemyShip* ship = Cast<AEnemyShip>(hc->GetOwner());
 	Ships.Remove(ship);
 	ship->Destroy();
+}
+
+void UEnemyController::OnDrillDeath(UHealthComponent * hc)
+{
+	AEnemyDrill* drill = Cast<AEnemyDrill>(hc->GetOwner());
+	Drills.Remove(drill);
+	drill->Destroy();
 }
 
 void UEnemyController::OnShieldUpdate(float shield)

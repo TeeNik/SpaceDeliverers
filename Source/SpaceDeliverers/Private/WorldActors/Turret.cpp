@@ -47,7 +47,7 @@ void ATurret::OnDeselect()
 	Mesh->SetRenderCustomDepth(false);
 }
 
-void ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
+bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
 	if (interComp->GetInstrument() == NULL) {
 		GetWorld()->GetFirstPlayerController()->Possess(this);
@@ -56,7 +56,9 @@ void ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 		ShootingPerson = character;
 		CharacterPos = ShootingPerson->GetActorLocation();
 		ShootingPerson->SetActorLocation(FVector(10000, 10000, 10000));
+		return true;
 	}
+	return false;
 }
 
 void ATurret::Fire()

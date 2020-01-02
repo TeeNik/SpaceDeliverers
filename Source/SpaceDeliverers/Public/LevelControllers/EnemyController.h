@@ -4,6 +4,9 @@
 #include "Components/SceneComponent.h"
 #include "EnemyController.generated.h"
 
+class AEnemyShip;
+class AEnemyDrill;
+class UHealthComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UEnemyController : public USceneComponent
@@ -20,28 +23,48 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
-	float SpawnRate;
+	float ShipSpawnRate;
 
 	UPROPERTY(EditDefaultsOnly)
 	float ShootRate;
 
 	UPROPERTY(EditDefaultsOnly)
-	float StartDelay;
+	float ShipStartDelay;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class AEnemyShip> EnemyShipBase;
+	float DrillRate;
+
+	UPROPERTY(EditDefaultsOnly)
+	float DrillStartDelay;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AEnemyShip> EnemyShipBase;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AEnemyDrill> EnemyDrillBase;
 
 private:
-	TArray<AActor*>* SpawnPoints;
+	TArray<AActor*>* ShipSpawnPoints;
 	TArray<AEnemyShip*> Ships;
-	TArray<bool> SpawnInfo;
+	TArray<bool> ShipSpawnInfo;
+
+	TArray<AActor*>* DrillSpawnPoints;
+	TArray<AEnemyDrill*> Drills;
+	TArray<bool> DrillSpawnInfo;
 		
-	float SpawnTime;
+	float ShipSpawnTime;
 	float ShootTime;
+
+	float DrillSpawnTime;
+	float DrillTime;
+
 	bool IsShieldActive;
 
 	UFUNCTION()
-	void OnShipDeath(class UHealthComponent* hc);
+	void OnShipDeath(UHealthComponent* hc);
+
+	UFUNCTION()
+	void OnDrillDeath(UHealthComponent* hc);
 
 	UFUNCTION()
 	void OnShieldUpdate(float shield);

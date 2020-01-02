@@ -19,6 +19,14 @@ void UBaseController::Initialize()
 	MainWidget->AddToViewport();
 }
 
+void UBaseController::TakeDamage(const int & damage)
+{
+	Health -= damage;
+	if (Health <= 0) {
+		//Game over
+	}
+}
+
 void UBaseController::BeginPlay()
 {
 	Super::BeginPlay();

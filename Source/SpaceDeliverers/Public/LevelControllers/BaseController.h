@@ -5,6 +5,7 @@
 #include "BaseController.generated.h"
 
 class UUserWidget;
+class UMainWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UBaseController : public USceneComponent
@@ -16,8 +17,10 @@ public:
 
 	FORCEINLINE int GetHealth() { return Health; }
 	FORCEINLINE int GetShield() { return Shield; }
+	FORCEINLINE UMainWidget* GetMainWidget() { return MainWidget; }
 
 	void Initialize();
+	void TakeDamage(const int& damage);
 
 protected:
 	virtual void BeginPlay() override;
@@ -26,7 +29,7 @@ protected:
 	TSubclassOf<UUserWidget> MainWidgetBP;
 
 	UPROPERTY()
-	class UMainWidget* MainWidget;
+	UMainWidget* MainWidget;
 
 private:
 

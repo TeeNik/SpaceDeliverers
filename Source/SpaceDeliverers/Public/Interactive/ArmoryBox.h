@@ -12,7 +12,7 @@ class SPACEDELIVERERS_API AArmoryBox : public AInteractiveActor
 public:
 	AArmoryBox();
 
-	void Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+	bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 protected:
 	virtual void BeginPlay() override;

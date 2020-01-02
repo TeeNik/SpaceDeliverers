@@ -1,28 +1,5 @@
 #pragma once
 
-/*#include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Interactive.generated.h"
-
-UCLASS()
-class SPACEDELIVERERS_API AInteractive : public AActor
-{
-	GENERATED_BODY()
-
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Instrument, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* Mesh;
-
-public:
-	AInteractive();
-
-	virtual void Interact(class AInstrument*& inHand, const class ACharacter* character) {}
-	virtual void OnSelect();
-	virtual void OnDeselect();
-};*/
-
-#pragma once
-
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "Interactive.generated.h"
@@ -39,7 +16,9 @@ class IInteractive {
 
 public:
 
-	virtual void Interact(class UInteractionComponent* interComp, class ACharacter* character) {}
+	//virtual void Interact(class UInteractionComponent* interComp, class ACharacter* character) {}
+	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) { return false; }
+	virtual float GetInteractionTime() { return 0; }
 	virtual void OnSelect() {};
 	virtual void OnDeselect() {};
 };

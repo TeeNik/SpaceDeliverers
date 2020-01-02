@@ -13,7 +13,7 @@ void AShieldGenerator::BeginPlay()
 	CurrentEnergy = MaxEnergy;
 }
 
-void AShieldGenerator::Interact(class UInteractionComponent* interComp, class ACharacter* character) {
+bool AShieldGenerator::Interact(class UInteractionComponent* interComp, class ACharacter* character) {
 	const AInstrument* inHand = interComp->GetInstrument();
 	if (inHand != NULL) {
 		if (inHand->GetType() == InstrumentType::Wrench) {
@@ -21,9 +21,11 @@ void AShieldGenerator::Interact(class UInteractionComponent* interComp, class AC
 				++CurrentEnergy;
 				OnEnergyUpdate.Broadcast();
 				UpdateMaterial();
+				return true;
 			}
 		}
 	}
+	return false;
 }
 
 void AShieldGenerator::UpdateMaterial()

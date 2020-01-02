@@ -3,6 +3,10 @@
 #include "Interactive.h"
 #include "GameFramework/Character.h"
 
+#include "BaseController.h"
+#include "SpaceDeliverersGameMode.h"
+#include "MainWidget.h"
+
 UInteractionComponent::UInteractionComponent()
 {
 }
@@ -30,7 +34,17 @@ void UInteractionComponent::OnFire()
 	}
 
 	if (Interactive != NULL) {
-		Interactive->Interact(this, Cast<ACharacter>(GetOwner()));
+		if (Interactive->Interact(this, Cast<ACharacter>(GetOwner()))) {
+			float time = Interactive->GetInteractionTime();
+			if (time > 0) {
+				auto* GM = Cast<ASpaceDeliverersGameMode>(GetWorld()->GetAuthGameMode());
+				if (IsValid(GM)) {
+					GM->GetBaseController()->GetMainWidget()->ShowActionProgress(time);
+				}
+				//Show Interaction ()
+			}
+			
+		}
 	}
 }
 

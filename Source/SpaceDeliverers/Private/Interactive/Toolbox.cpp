@@ -8,14 +8,16 @@ AToolbox::AToolbox()
 {
 }
 
-void AToolbox::Interact(class UInteractionComponent* interComp, ACharacter* character)
+bool AToolbox::Interact(class UInteractionComponent* interComp, ACharacter* character)
 {
 	if (interComp->GetInstrument() == NULL) {
 		AInstrument* wrench = GetWorld()->SpawnActor<AInstrument>(WrenchBase);
 		FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
 		wrench->AttachToComponent(character->GetMesh(), rules, FName("InstrumentSocket"));
 		interComp->SetInstrument(wrench);
+		return true;
 	}
+	return false;
 }
 
 void AToolbox::BeginPlay()

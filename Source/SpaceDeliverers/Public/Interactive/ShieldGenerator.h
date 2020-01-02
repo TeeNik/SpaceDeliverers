@@ -16,12 +16,16 @@ public:
 	FORCEINLINE const float GetCurrentValue() const { return CurrentEnergy; }
 	FORCEINLINE const float GetMaxValue() const { return MaxEnergy; }
 
-	virtual void Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+	virtual float GetInteractionTime() override { return InteractionTime; }
 
 	FEnergyUpdate OnEnergyUpdate;
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxEnergy = 10;
+
+	UPROPERTY(EditDefaultsOnly)
+	float InteractionTime = 10;
 
 	void ReduceEnergy();
 

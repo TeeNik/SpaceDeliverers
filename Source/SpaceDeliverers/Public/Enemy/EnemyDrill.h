@@ -21,7 +21,7 @@ public:
 	FORCEINLINE class UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
-	void OnDrillHit(ACharacter* character);
+	void OnDrillHit(ACharacter* character, float duration);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = AEnemyDrill, meta = (AllowPrivateAccess = "true"))

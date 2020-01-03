@@ -56,7 +56,6 @@ bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 		ShootingPerson = character;
 		CharacterPos = ShootingPerson->GetActorLocation();
 		ShootingPerson->SetActorLocation(FVector(10000, 10000, 10000));
-		return true;
 	}
 	return false;
 }

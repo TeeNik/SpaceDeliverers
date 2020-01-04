@@ -34,8 +34,8 @@ void UInteractionComponent::OnFire()
 	}
 
 	if (Interactive != NULL) {
+		float time = Interactive->GetInteractionTime();
 		if (Interactive->Interact(this, Cast<ACharacter>(GetOwner()))) {
-			float time = Interactive->GetInteractionTime();
 			if (time > 0) {
 				auto* GM = Cast<ASpaceDeliverersGameMode>(GetWorld()->GetAuthGameMode());
 				if (IsValid(GM)) {

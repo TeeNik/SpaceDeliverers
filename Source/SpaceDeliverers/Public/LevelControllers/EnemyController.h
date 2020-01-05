@@ -11,6 +11,13 @@ class UHealthComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UEnemyController : public USceneComponent
 {
+	template<class T>
+	class SpawnInfo {
+		public:
+			int index = -1;
+			T* actor = nullptr;
+	};
+
 	GENERATED_BODY()
 
 public:	
@@ -45,8 +52,8 @@ protected:
 
 private:
 	TArray<AActor*>* ShipSpawnPoints;
-	TArray<AEnemyShip*> Ships;
-	TArray<bool> ShipSpawnInfo;
+	int ShipsCount;
+	TArray<SpawnInfo<AEnemyShip>> ShipSpawnInfo;
 
 	TArray<AActor*>* DrillSpawnPoints;
 	TArray<AEnemyDrill*> Drills;

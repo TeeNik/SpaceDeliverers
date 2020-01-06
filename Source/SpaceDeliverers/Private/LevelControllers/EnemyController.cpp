@@ -44,6 +44,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		}
 		if (ShipsCount < ShipSpawnPoints->Num() && seconds > ShipSpawnTime)
 		{
+			++ShipsCount;
 			int index = -1;
 			for (int i = 0; i < ShipSpawnInfo.Num(); ++i) {
 				if (ShipSpawnInfo[i].actor == nullptr) {
@@ -115,6 +116,7 @@ T* SpawnActor(TArray<T*>& container, int& spawnTime, TArray<AActor*>* spawnPoint
 
 void UEnemyController::OnShipDeath(UHealthComponent* hc)
 {
+	--ShipsCount;
 	ShipSpawnTime += ShipSpawnRate;
 	AEnemyShip* ship = Cast<AEnemyShip>(hc->GetOwner());
 	for (auto& info : ShipSpawnInfo) {

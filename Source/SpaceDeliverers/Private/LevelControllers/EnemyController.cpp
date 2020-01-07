@@ -33,14 +33,17 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	float seconds = GetWorld()->GetTimeSeconds();
 
-	if (IsShieldActive) 
+	if (true) 
 	{
 		if (ShipsCount > 0 && seconds > ShootTime)
 		{
-			int index = FMath::RandRange(0, ShipsCount - 1);
-			UE_LOG(LogTemp, Log, TEXT("Index Rand: %d"), index);
+			for (auto& info : ShipSpawnInfo) {
+				if (info.actor != nullptr) {
+					info.actor->Shoot();
+					break;
+				}
+			}
 			ShootTime = seconds + ShootRate;
-			ShipSpawnInfo[index].actor->Shoot();
 		}
 		if (ShipsCount < ShipSpawnPoints->Num() && seconds > ShipSpawnTime)
 		{

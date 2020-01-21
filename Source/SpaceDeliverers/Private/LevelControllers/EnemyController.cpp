@@ -119,8 +119,7 @@ T* SpawnActor(TArray<T*>& container, int& spawnTime, TArray<AActor*>* spawnPoint
 
 void UEnemyController::OnShipDeath(UHealthComponent* hc)
 {
-	--ShipsCount;
-	ShipSpawnTime += ShipSpawnRate;
+	ShipSpawnTime = GetWorld()->GetTimeSeconds() + ShipSpawnRate;
 	AEnemyShip* ship = Cast<AEnemyShip>(hc->GetOwner());
 	for (auto& info : ShipSpawnInfo) {
 		if (info.actor == ship) {
@@ -129,6 +128,7 @@ void UEnemyController::OnShipDeath(UHealthComponent* hc)
 		}
 	}
 	ship->Destroy();
+	--ShipsCount;
 }
 
 void UEnemyController::OnDrillDeath(UHealthComponent * hc)

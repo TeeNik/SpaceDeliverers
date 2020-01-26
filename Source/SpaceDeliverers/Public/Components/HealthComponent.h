@@ -19,7 +19,10 @@ public:
 	void TakeDamage(int damage);
 	UPROPERTY(EditDefaultsOnly, Category = Health)
 	int MaxHealth;
+
+	UPROPERTY(BlueprintAssignable)
 	FTakeDamage OnTakeDamage;
+	UPROPERTY(BlueprintAssignable)
 	FDeath OnDeath;
 
 protected:

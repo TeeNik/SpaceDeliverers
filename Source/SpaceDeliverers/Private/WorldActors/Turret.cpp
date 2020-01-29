@@ -5,8 +5,10 @@
 #include "Components/BoxComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/HealthComponent.h"
+#include "GameFramework/PlayerController.h"
 #include "WeaponProjectile.h"
 #include "InteractionComponent.h"
+#include "Camera/CameraShake.h"
 
 ATurret::ATurret()
 {
@@ -71,6 +73,7 @@ void ATurret::Fire()
 			const FRotator SpawnRotation = GetControlRotation();
 			const FVector SpawnLocation = GetActorLocation();
 			FActorSpawnParameters ActorSpawnParams;
+			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1.0f);
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			AWeaponProjectile* shot = World->SpawnActor<AWeaponProjectile>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 			shot->SetTargetTag(TargetTag);

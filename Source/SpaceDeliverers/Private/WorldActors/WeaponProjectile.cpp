@@ -30,7 +30,7 @@ void AWeaponProjectile::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 		if (IsValid(health)) {
 			health->TakeDamage(Damage);
 			if (Particles != NULL) {
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particles, GetActorLocation());
+				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particles, GetActorLocation());
 			}
 			Destroy();
 		}

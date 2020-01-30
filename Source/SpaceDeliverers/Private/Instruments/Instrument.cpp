@@ -23,7 +23,7 @@ InstrumentType AInstrument::GetType() const
 	return InstrumentType::None;
 }
 
-void AInstrument::Release()
+void AInstrument::Release_Implementation()
 {
 	FDetachmentTransformRules rules(EDetachmentRule::KeepWorld, false);
 	DetachFromActor(rules);

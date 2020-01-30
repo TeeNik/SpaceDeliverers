@@ -27,8 +27,9 @@ protected:
 
 public:
 	virtual void Use();
-
 	virtual InstrumentType GetType() const;
 
-	virtual void Release();
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Instrument")
+	void Release();
+
 };

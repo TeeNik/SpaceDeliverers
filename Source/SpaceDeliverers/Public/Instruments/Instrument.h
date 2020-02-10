@@ -9,6 +9,7 @@ enum InstrumentType {
 	None,
 	Wrench,
 	Gun,
+	Builder,
 };
 
 UCLASS()

@@ -34,8 +34,6 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	virtual void OnSelect() override;
-	virtual void OnDeselect() override;
 	bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 private:

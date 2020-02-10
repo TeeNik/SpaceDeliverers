@@ -11,8 +11,8 @@ void AInteractiveActor::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AInteractiveActor::OnSelect()
-{ 
+void AInteractiveActor::OnSelect(UInteractionComponent * interComp)
+{
 	Mesh->SetRenderCustomDepth(true);
 }
 

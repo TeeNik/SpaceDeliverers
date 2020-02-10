@@ -1,5 +1,4 @@
 #include "Instrument.h"
-#include "..\..\Public\Instruments\Instrument.h"
 
 AInstrument::AInstrument()
 {

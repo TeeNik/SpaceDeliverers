@@ -19,6 +19,6 @@ public:
 	//virtual void Interact(class UInteractionComponent* interComp, class ACharacter* character) {}
 	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) { return false; }
 	virtual float GetInteractionTime() { return 0; }
-	virtual void OnSelect() {};
+	virtual void OnSelect(class UInteractionComponent* interComp) {};
 	virtual void OnDeselect() {};
 };

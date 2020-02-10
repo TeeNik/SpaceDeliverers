@@ -39,16 +39,6 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("RMB", IE_Pressed, this, &ATurret::Release);
 }
 
-void ATurret::OnSelect()
-{
-	Mesh->SetRenderCustomDepth(true);
-}
-
-void ATurret::OnDeselect()
-{
-	Mesh->SetRenderCustomDepth(false);
-}
-
 bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
 	if (interComp->GetInstrument() == NULL) {

@@ -2,7 +2,6 @@
 #include "Instruments/Instrument.h"
 #include "Interactive.h"
 #include "GameFramework/Character.h"
-
 #include "BaseController.h"
 #include "SpaceDeliverersGameMode.h"
 #include "MainWidget.h"
@@ -60,7 +59,7 @@ void UInteractionComponent::OnSelect(IInteractive * interactive)
 {
 	GLog->Log("OnOverlapBegin");
 	Interactive = interactive;
-	Interactive->OnSelect();
+	Interactive->OnSelect(this);
 }
 
 void UInteractionComponent::OnDeselect()

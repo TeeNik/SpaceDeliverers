@@ -13,7 +13,7 @@ class SPACEDELIVERERS_API AInteractiveActor : public AActor, public IInteractive
 public:	
 	AInteractiveActor();
 
-	virtual void OnSelect() override;
+	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 
 protected:

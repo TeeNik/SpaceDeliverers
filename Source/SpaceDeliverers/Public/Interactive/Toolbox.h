@@ -16,8 +16,6 @@ public:
 	bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 protected:
-	virtual void BeginPlay() override;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<class AWrench> WrenchBase;
 };

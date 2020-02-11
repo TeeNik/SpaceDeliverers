@@ -15,7 +15,8 @@ class SPACEDELIVERERS_API ABuilder : public AInstrument
 	GENERATED_BODY()
 
 public:
-	FORCEINLINE const BuildingType GetType() { return Type; }
+	FORCEINLINE const BuildingType GetBuildingType() { return Type; }
+	FORCEINLINE InstrumentType GetType() const override { return InstrumentType::Builder; }
 
 	void ShowPreview(const FVector& location);
 	void Build();

@@ -32,9 +32,10 @@ protected:
 	TSubclassOf <class AWeaponProjectile> ProjectileBase;
 
 public:	
-	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+	virtual void OnSelect(class UInteractionComponent* interComp) override;
+	virtual void OnDeselect() override;
 
 private:
 	void Fire();

@@ -10,6 +10,7 @@ AShieldGenerator::AShieldGenerator() {
 
 void AShieldGenerator::BeginPlay()
 {
+	Super::BeginPlay();
 	CurrentEnergy = MaxEnergy;
 }
 

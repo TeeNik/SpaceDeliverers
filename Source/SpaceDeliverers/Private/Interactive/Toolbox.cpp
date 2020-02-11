@@ -19,10 +19,3 @@ bool AToolbox::Interact(class UInteractionComponent* interComp, ACharacter* char
 	}
 	return false;
 }
-
-void AToolbox::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-

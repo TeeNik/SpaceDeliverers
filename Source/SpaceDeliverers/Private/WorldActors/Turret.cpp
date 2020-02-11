@@ -25,12 +25,6 @@ void ATurret::BeginPlay()
 	InitialRotation = GetActorRotation();
 }
 
-void ATurret::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -50,6 +44,16 @@ bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 		ShootingPerson->SetActorLocation(FVector(10000, 10000, 10000));
 	}
 	return false;
+}
+
+void ATurret::OnSelect(UInteractionComponent * interComp)
+{
+	Mesh->SetRenderCustomDepth(true);
+}
+
+void ATurret::OnDeselect()
+{
+	Mesh->SetRenderCustomDepth(false);
 }
 
 void ATurret::Fire()

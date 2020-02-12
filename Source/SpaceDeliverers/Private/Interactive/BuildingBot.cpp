@@ -1,10 +1,15 @@
 #include "BuildingBot.h"
 #include "InteractionComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Character.h"
 #include "Builder.h"
 
 ABuildingBot::ABuildingBot() {
-
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
+	RootComponent = Box;
+	Mesh->SetupAttachment(Box);
 }
 
 bool ABuildingBot::Interact(UInteractionComponent * interComp, ACharacter * character)
@@ -18,4 +23,14 @@ bool ABuildingBot::Interact(UInteractionComponent * interComp, ACharacter * char
 		return true;
 	}
 	return false;
+}
+
+void ABuildingBot::OnSelect(UInteractionComponent * interComp)
+{
+	Mesh->SetRenderCustomDepth(true);
+}
+
+void ABuildingBot::OnDeselect()
+{
+	Mesh->SetRenderCustomDepth(false);
 }

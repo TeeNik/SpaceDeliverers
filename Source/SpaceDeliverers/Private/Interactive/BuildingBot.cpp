@@ -27,6 +27,7 @@ bool ABuildingBot::Interact(UInteractionComponent * interComp, ACharacter * char
 
 void ABuildingBot::OnSelect(UInteractionComponent * interComp)
 {
+	GLog->Log("on select");
 	Mesh->SetRenderCustomDepth(true);
 }
 

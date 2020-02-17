@@ -20,7 +20,7 @@ public:
 	FORCEINLINE class UStaticMeshComponent* GetMesh() { return Mesh; }
 	FORCEINLINE class UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
+	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyDrill")
 	void OnDrillHit(ACharacter* character, float duration);
 
 protected:

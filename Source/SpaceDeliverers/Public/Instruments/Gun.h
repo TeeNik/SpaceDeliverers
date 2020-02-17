@@ -10,8 +10,6 @@ class SPACEDELIVERERS_API AGun : public AInstrument
 	GENERATED_BODY()
 	
 public:
-	AGun();
-	virtual void BeginPlay() override;
 	virtual InstrumentType GetType() const override;
 	void Shoot(AActor* target) const;
 

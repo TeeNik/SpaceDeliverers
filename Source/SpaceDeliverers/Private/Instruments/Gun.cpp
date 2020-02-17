@@ -5,14 +5,6 @@
 #include "Components/StaticMeshComponent.h"
 #include "EnemyDrill.h"
 
-AGun::AGun() {
-
-}
-
-void AGun::BeginPlay()
-{
-}
-
 InstrumentType AGun::GetType() const
 {
 	return InstrumentType::Gun;

@@ -12,5 +12,12 @@ class SPACEDELIVERERS_API ABuildingPlatform : public AInteractiveActor
 public:
 
 	virtual void OnSelect(class UInteractionComponent * interComp) override;
+	virtual void OnDeselect() override;
+
+	UPROPERTY(EditDefaultsOnly)
+	FVector SpawnPoint;
+
+private:
+	AActor* previewActor;
 	
 };

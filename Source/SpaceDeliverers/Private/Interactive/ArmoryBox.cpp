@@ -4,10 +4,6 @@
 #include "Gun.h"
 #include "InteractionComponent.h"
 
-AArmoryBox::AArmoryBox()
-{
-}
-
 bool AArmoryBox::Interact(UInteractionComponent* interComp, ACharacter * character)
 {
 	if (interComp->GetInstrument() == NULL) {
@@ -18,9 +14,4 @@ bool AArmoryBox::Interact(UInteractionComponent* interComp, ACharacter * charact
 		return true;
 	}
 	return false;
-}
-
-void AArmoryBox::BeginPlay()
-{
-	Super::BeginPlay();
 }

@@ -64,6 +64,7 @@ void UInteractionComponent::OnSelect(IInteractive * interactive)
 
 void UInteractionComponent::OnDeselect()
 {
+	GLog->Log("OnDeselect");
 	if (Interactive != NULL) {
 		GLog->Log("OnOverlapEnd");
 		Interactive->OnDeselect();

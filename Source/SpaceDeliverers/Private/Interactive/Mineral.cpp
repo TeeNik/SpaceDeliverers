@@ -11,8 +11,9 @@ bool AMineral::Interact(UInteractionComponent* interComp, ACharacter* character)
 		actorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 		auto collectable = GetWorld()->SpawnActor<AActor>(CollectableActor, GetActorLocation(), GetActorRotation(), actorSpawnParams);
-		float x = FMath::Cos(FMath::RandRange(0, 360)) * Radius;
-		float y = FMath::Sin(FMath::RandRange(0, 360)) * Radius;
+		float angle = FMath::RandRange(0, 360);
+		float x = FMath::Cos(angle) * Radius;
+		float y = FMath::Sin(angle) * Radius;
 		OnMineralHit(character, collectable, x, y, InteractionTime);
 		return true;
 	}

@@ -10,14 +10,12 @@ AInteractiveActor::AInteractiveActor()
 	Mesh->SetupAttachment(Box);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Mesh->SetGenerateOverlapEvents(false);
-	//Mesh->SetCustomDepthStencilValue(255);
-	Mesh->CustomDepthStencilValue = 255;
-	GLog->Log("Creating of AInteractiveActor: ");
 }
 
 void AInteractiveActor::BeginPlay()
 {
 	Super::BeginPlay();
+	Mesh->SetCustomDepthStencilValue(255);
 }
 
 void AInteractiveActor::OnSelect(UInteractionComponent * interComp)

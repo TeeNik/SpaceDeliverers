@@ -1,4 +1,4 @@
-#pragma once
+#pragma once;
 
 #include "CoreMinimal.h"
 #include "Interactive/InteractiveActor.h"
@@ -15,11 +15,20 @@ public:
 	virtual float GetInteractionTime() override { return InteractionTime; }
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Mineral")
-	void OnMineralHit(ACharacter* character, float duration);
+	void OnMineralHit(ACharacter* character, AActor* collectable, float x, float y, float duration);
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	float Height;
 
 protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float InteractionTime = 3;
-	
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> CollectableActor;
+
+	UPROPERTY(EditDefaultsOnly)
+	float Radius;
+
 };

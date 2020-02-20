@@ -17,7 +17,10 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	FVector SpawnPoint;
 
+	UPROPERTY(EditDefaultsOnly)
+	class UMaterialInterface* PreviewMaterial;
+
 private:
-	AActor* previewActor;
+	AActor* previewActor = nullptr;
 	
 };

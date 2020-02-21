@@ -13,6 +13,14 @@ class SPACEDELIVERERS_API ATurret : public APawn, public IInteractive
 public:
 	ATurret();
 
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
+	virtual void OnSelect(class UInteractionComponent* interComp) override;
+	virtual void OnDeselect() override;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATurret")
+	void OnAmmoEnd();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -31,11 +39,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf <class AWeaponProjectile> ProjectileBase;
 
-public:	
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
-	virtual void OnSelect(class UInteractionComponent* interComp) override;
-	virtual void OnDeselect() override;
+	UPROPERTY(EditDefaultsOnly, Category = EnemyShip)
+	int MaxAmmo = 10;
 
 private:
 	void Fire();
@@ -45,4 +50,6 @@ private:
 	FVector CharacterPos;
 	float LastFire;
 	const FName TargetTag = "EnemyShip";
+	int CurrentAmmo;
+	bool IsDestroying = false;
 };

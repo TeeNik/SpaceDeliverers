@@ -23,6 +23,7 @@ void ATurret::BeginPlay()
 {
 	Super::BeginPlay();
 	InitialRotation = GetActorRotation();
+	CurrentAmmo = MaxAmmo;
 }
 
 void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -35,7 +36,7 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
-	if (interComp->GetInstrument() == NULL) {
+	if (!IsDestroying && interComp->GetInstrument() == NULL) {
 		GetWorld()->GetFirstPlayerController()->Possess(this);
 		Mesh->SetRenderCustomDepth(false);
 		character->SetActorHiddenInGame(true);
@@ -71,6 +72,13 @@ void ATurret::Fire()
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			AWeaponProjectile* shot = World->SpawnActor<AWeaponProjectile>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 			shot->SetTargetTag(TargetTag);
+			--CurrentAmmo;
+			
+			if (CurrentAmmo == 0) {
+				IsDestroying = true;
+				Release();
+				OnAmmoEnd();
+			}
 		}
 	}
 }

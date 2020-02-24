@@ -161,5 +161,7 @@ void ASpaceDeliverersCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedCo
 
 void ASpaceDeliverersCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	InteractionComponent->OnDeselect();
+	if (InteractionComponent->GetInteractive() != nullptr && OtherActor == InteractionComponent->GetInteractive()->_getUObject()) {
+		InteractionComponent->OnDeselect();
+	}
 }

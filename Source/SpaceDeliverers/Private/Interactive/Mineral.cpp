@@ -2,6 +2,7 @@
 #include "InteractionComponent.h"
 #include "Instrument.h"
 #include "Engine/World.h"
+#include "WorldActors/Gem.h"
 
 bool AMineral::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
@@ -10,11 +11,9 @@ bool AMineral::Interact(UInteractionComponent* interComp, ACharacter* character)
 		FActorSpawnParameters actorSpawnParams;
 		actorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-		auto collectable = GetWorld()->SpawnActor<AActor>(CollectableActor, GetActorLocation(), GetActorRotation(), actorSpawnParams);
-		float angle = FMath::RandRange(0, 360);
-		float x = FMath::Cos(angle) * Radius;
-		float y = FMath::Sin(angle) * Radius;
-		OnMineralHit(character, collectable, x, y, InteractionTime);
+		auto gem = GetWorld()->SpawnActor<AGem>(CollectableGem, GetActorLocation(), GetActorRotation(), actorSpawnParams);
+		gem->PlaySpawnAnimation(GetActorLocation());
+		OnMineralHit();
 		return true;
 	}
 	return false;

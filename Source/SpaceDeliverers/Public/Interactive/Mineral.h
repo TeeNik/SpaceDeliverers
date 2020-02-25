@@ -15,10 +15,8 @@ public:
 	virtual float GetInteractionTime() override { return InteractionTime; }
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Mineral")
-	void OnMineralHit(ACharacter* character, AActor* collectable, float x, float y, float duration);
+	void OnMineralHit();
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	float Height;
 
 protected:
 
@@ -26,9 +24,7 @@ protected:
 	float InteractionTime = 3;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AActor> CollectableActor;
+	TSubclassOf<class AGem> CollectableGem;
 
-	UPROPERTY(EditDefaultsOnly)
-	float Radius;
 
 };

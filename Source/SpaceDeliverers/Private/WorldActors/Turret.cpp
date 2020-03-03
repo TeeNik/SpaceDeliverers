@@ -72,6 +72,7 @@ void ATurret::Fire()
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			AWeaponProjectile* shot = World->SpawnActor<AWeaponProjectile>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
 			shot->SetTargetTag(TargetTag);
+			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1);
 			--CurrentAmmo;
 			
 			if (CurrentAmmo == 0) {

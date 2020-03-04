@@ -19,7 +19,7 @@ void UEnemyController::BeginPlay()
 void UEnemyController::Initialize()
 {
 	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
-	ShipSpawnPoints = &level->GetSpawnPoints();
+	ShipSpawnPoints = &level->GetShipSpawnPoints();
 	ShipSpawnInfo.SetNum(ShipSpawnPoints->Num());
 	level->GetShield()->OnShieldUpdate.AddDynamic(this, &UEnemyController::OnShieldUpdate);
 

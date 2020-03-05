@@ -7,6 +7,9 @@
 #include "Components/InputComponent.h"
 #include "Components/HealthComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
+
 #include "WeaponProjectile.h"
 #include "InteractionComponent.h"
 #include "Camera/CameraShake.h"
@@ -20,6 +23,15 @@ ATurret::ATurret()
 	RootComponent = Arrow;
 	Box->SetupAttachment(Arrow);
 	Mesh->SetupAttachment(Arrow);
+
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+	CameraBoom->SetupAttachment(Mesh);
+	CameraBoom->TargetArmLength = 300.0f;
+	CameraBoom->bUsePawnControlRotation = true;
+
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+	FollowCamera->bUsePawnControlRotation = false;
 }
 
 void ATurret::BeginPlay()

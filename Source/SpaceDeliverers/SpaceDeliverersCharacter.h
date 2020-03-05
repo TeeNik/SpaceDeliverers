@@ -25,6 +25,7 @@ public:
 
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	FORCEINLINE class UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
@@ -35,15 +36,17 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> ProjectileBase;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UInteractionComponent* InteractionComponent;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
 	void OnFireBP(InstrumentType type);
 
 	void ScaleInteractionBox(const int& coeff);
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UInteractionComponent* InteractionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UInventoryComponent* InventoryComponent;
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);

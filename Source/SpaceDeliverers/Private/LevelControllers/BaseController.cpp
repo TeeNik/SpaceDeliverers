@@ -14,7 +14,6 @@ void UBaseController::Initialize()
 	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
 	level->GetShield()->OnShieldUpdate.AddDynamic(this, &UBaseController::OnShieldUpdate);
 
-	GLog->Log("Here");
 	MainWidget = CreateWidget<UMainWidget>(GetWorld(), MainWidgetBP);
 	MainWidget->AddToViewport();
 }

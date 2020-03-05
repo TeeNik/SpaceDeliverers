@@ -27,6 +27,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float FireRate;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class USpringArmComponent* CameraBoom;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UCameraComponent* FollowCamera;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* Mesh;
 

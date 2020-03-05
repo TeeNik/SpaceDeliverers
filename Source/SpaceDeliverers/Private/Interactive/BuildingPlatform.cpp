@@ -6,6 +6,11 @@
 #include "Components/StaticMeshComponent.h"
 #include "Materials/MaterialInterface.h"
 
+ABuildingPlatform::ABuildingPlatform() {
+	SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint"));
+	SpawnPoint->SetupAttachment(Mesh);
+}
+
 void ABuildingPlatform::OnSelect(UInteractionComponent * interComp) {
 	auto instrument = interComp->GetInstrument();
 	if (instrument != nullptr && instrument->GetType() == InstrumentType::Builder && previewActor == nullptr) {
@@ -20,7 +25,7 @@ void ABuildingPlatform::OnSelect(UInteractionComponent * interComp) {
 		previewActor = GetWorld()->SpawnActor<AActor>(spawningActor, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
 
 		previewActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-		previewActor->SetActorRelativeLocation(SpawnPoint);
+		previewActor->SetActorLocation(SpawnPoint->GetComponentLocation());
 
 		auto mesh = Cast<UStaticMeshComponent>(previewActor->GetComponentByClass(UStaticMeshComponent::StaticClass()));
 		auto numOfMaterials = mesh->GetNumMaterials();

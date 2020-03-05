@@ -11,6 +11,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/InteractionComponent.h"
+#include "Components/InventoryComponent.h"
 #include "Utils/TagStrings.h"
 
 ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
@@ -44,6 +45,7 @@ ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
 	InteractionBox->OnComponentEndOverlap.AddDynamic(this, &ASpaceDeliverersCharacter::OnOverlapEnd);
 
 	InteractionComponent = CreateDefaultSubobject<UInteractionComponent>(TEXT("InteractionComponent"));
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 
 	Tags.Add(TagStrings::PlayerTag);
 }

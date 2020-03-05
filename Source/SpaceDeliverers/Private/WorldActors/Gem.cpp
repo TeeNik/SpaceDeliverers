@@ -1,6 +1,7 @@
 #include "Gem.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/InventoryComponent.h"
 #include "SpaceDeliverersCharacter.h"
 #include "Utils/TagStrings.h"
 
@@ -32,6 +33,7 @@ void AGem::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 	if (OtherActor->ActorHasTag(TagStrings::PlayerTag)) {
 		ASpaceDeliverersCharacter* character = Cast<ASpaceDeliverersCharacter>(OtherActor);
 		if (IsValid(character)) {
+			character->GetInventoryComponent()->CollectCrystal(Type);
 			OnCollect();
 		}
 	}

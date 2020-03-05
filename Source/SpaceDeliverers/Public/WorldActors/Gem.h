@@ -4,6 +4,13 @@
 #include "GameFramework/Actor.h"
 #include "Gem.generated.h"
 
+UENUM(Blueprintable)
+enum GemType {
+	Purple,
+	Green,
+	Blue
+};
+
 UCLASS()
 class SPACEDELIVERERS_API AGem : public AActor
 {
@@ -37,5 +44,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float Radius;
+
+	UPROPERTY(EditDefaultsOnly)
+	TEnumAsByte<GemType> Type;
 	
 };

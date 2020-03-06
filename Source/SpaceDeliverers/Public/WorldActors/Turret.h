@@ -33,6 +33,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* Box;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	class UArrowComponent* Arrow;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UCameraShake> CameraShake;
 

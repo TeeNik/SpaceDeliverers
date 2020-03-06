@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/ArrowComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/HealthComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -15,8 +16,10 @@ ATurret::ATurret()
 	PrimaryActorTick.bCanEverTick = true;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
-	RootComponent = Box;
-	Mesh->SetupAttachment(Box);
+	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+	RootComponent = Arrow;
+	Box->SetupAttachment(Arrow);
+	Mesh->SetupAttachment(Arrow);
 }
 
 void ATurret::BeginPlay()

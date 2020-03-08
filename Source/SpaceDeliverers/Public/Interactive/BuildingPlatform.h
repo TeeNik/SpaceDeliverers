@@ -14,6 +14,7 @@ public:
 
 	virtual void OnSelect(class UInteractionComponent * interComp) override;
 	virtual void OnDeselect() override;
+	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 	/*UPROPERTY(EditDefaultsOnly)
 	FVector SpawnPoint;*/
@@ -25,6 +26,8 @@ public:
 	class USceneComponent* SpawnPoint;
 
 private:
-	AActor* previewActor = nullptr;
+	AActor* PreviewActor = nullptr;
+
+	AActor* PlacedActor = nullptr;
 	
 };

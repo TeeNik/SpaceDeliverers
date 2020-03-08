@@ -13,21 +13,20 @@ ABuildingPlatform::ABuildingPlatform() {
 
 void ABuildingPlatform::OnSelect(UInteractionComponent * interComp) {
 	auto instrument = interComp->GetInstrument();
-	if (instrument != nullptr && instrument->GetType() == InstrumentType::Builder && previewActor == nullptr) {
+	if (instrument != nullptr && instrument->GetType() == InstrumentType::Builder && PreviewActor == nullptr && PlacedActor == nullptr) {
 		Super::OnSelect(interComp);
-		GLog->Log("Builder instrument");
 
 		const ABuilder* builder = Cast<ABuilder>(instrument);
 		auto spawningActor = builder->GetSpawningActor();
 		
 		FActorSpawnParameters ActorSpawnParams;
 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		previewActor = GetWorld()->SpawnActor<AActor>(spawningActor, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
+		PreviewActor = GetWorld()->SpawnActor<AActor>(spawningActor, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
 
-		previewActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-		previewActor->SetActorLocation(SpawnPoint->GetComponentLocation());
+		PreviewActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+		PreviewActor->SetActorLocation(SpawnPoint->GetComponentLocation());
 
-		auto mesh = Cast<UStaticMeshComponent>(previewActor->GetComponentByClass(UStaticMeshComponent::StaticClass()));
+		auto mesh = Cast<UStaticMeshComponent>(PreviewActor->GetComponentByClass(UStaticMeshComponent::StaticClass()));
 		auto numOfMaterials = mesh->GetNumMaterials();
 		for (size_t i = 0; i < numOfMaterials; ++i)
 		{
@@ -39,8 +38,30 @@ void ABuildingPlatform::OnSelect(UInteractionComponent * interComp) {
 void ABuildingPlatform::OnDeselect()
 {
 	Super::OnDeselect();
-	if (previewActor != nullptr) {
-		previewActor->Destroy();
-		previewActor = nullptr;
+	if (PreviewActor != nullptr) {
+		PreviewActor->Destroy();
+		PreviewActor = nullptr;
 	}
+}
+
+bool ABuildingPlatform::Interact(UInteractionComponent* interComp, ACharacter* character)
+{
+	auto instrument = interComp->GetInstrument();
+	UE_LOG(LogTemp, Log, TEXT("ABuildingPlatform::Interact: %d %d"), PreviewActor != nullptr, PlacedActor == nullptr);
+	if (instrument != nullptr && instrument->GetType() == InstrumentType::Builder && PreviewActor != nullptr && PlacedActor == nullptr) {
+		const ABuilder* builder = Cast<ABuilder>(instrument);
+		auto spawningActor = builder->GetSpawningActor();
+
+		PreviewActor->Destroy();
+		PreviewActor = nullptr;
+
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		PlacedActor = GetWorld()->SpawnActor<AActor>(spawningActor, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
+
+		PlacedActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+		PlacedActor->SetActorLocation(SpawnPoint->GetComponentLocation());
+		return true;
+	}
+	return false;
 }

@@ -4,9 +4,6 @@
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
-
-
-
 class UUserWidget;
 class UInventoryWidget;
 enum GemType;

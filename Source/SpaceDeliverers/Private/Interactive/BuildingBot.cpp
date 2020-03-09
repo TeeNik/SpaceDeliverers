@@ -4,22 +4,41 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/Character.h"
 #include "Builder.h"
+#include "BuilderWidget.h"
 
-ABuildingBot::ABuildingBot() {
-	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
-	RootComponent = Box;
-	Mesh->SetupAttachment(Box);
+ABuildingBot::ABuildingBot()
+{
+}
+
+void ABuildingBot::BeginPlay()
+{
+	Super::BeginPlay();
+	if (IsValid(BuilderWidgetBP)) {
+		BuilderWidget = CreateWidget<UBuilderWidget>(GetWorld(), BuilderWidgetBP);
+		BuilderWidget->AddToViewport();
+		BuilderWidget->SetVisibility(ESlateVisibility::Hidden);
+		BuilderWidget->Init(OnBuildingSelected);
+		OnBuildingSelected.AddDynamic(this, &ABuildingBot::BuildingSelected);
+	}
+}
+
+void ABuildingBot::BuildingSelected()
+{
+	ABuilder* builder = GetWorld()->SpawnActor<ABuilder>(BuilderBase);
+	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
+	ACharacter* character = Cast<ACharacter>(InteractionComponent->GetOwner());
+	if (IsValid(character)) {
+		builder->AttachToComponent(character->GetMesh(), rules, FName("InstrumentSocket"));
+		builder->SetActorRelativeScale3D(FVector(.2f, .2f, .2f));
+		InteractionComponent->SetInstrument(builder);
+	}
 }
 
 bool ABuildingBot::Interact(UInteractionComponent * interComp, ACharacter * character)
 {
 	if (interComp->GetInstrument() == NULL) {
-		ABuilder* builder = GetWorld()->SpawnActor<ABuilder>(BuilderBase);
-		FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
-		builder->AttachToComponent(character->GetMesh(), rules, FName("InstrumentSocket"));
-		builder->SetActorRelativeScale3D(FVector(.2f, .2f, .2f));
-		interComp->SetInstrument(builder);
+		BuilderWidget->ShowWidget();
+		InteractionComponent = interComp;
 		return true;
 	}
 	return false;
@@ -28,10 +47,10 @@ bool ABuildingBot::Interact(UInteractionComponent * interComp, ACharacter * char
 void ABuildingBot::OnSelect(UInteractionComponent * interComp)
 {
 	GLog->Log("on select");
-	Mesh->SetRenderCustomDepth(true);
+	GetMesh()->SetRenderCustomDepth(true);
 }
 
 void ABuildingBot::OnDeselect()
 {
-	Mesh->SetRenderCustomDepth(false);
+	GetMesh()->SetRenderCustomDepth(false);
 }

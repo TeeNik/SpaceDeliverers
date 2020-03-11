@@ -20,7 +20,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<TSubclassOf<AActor>> Asteroids;
 
-	TArray<AActor*>* SpawnPoints;
+	const TArray<AActor*>* SpawnPoints;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float SpawnRate = 0;

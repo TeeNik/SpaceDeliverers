@@ -5,6 +5,8 @@
 #include "Engine/World.h"
 #include "Components/StaticMeshComponent.h"
 #include "Materials/MaterialInterface.h"
+#include "SpaceLevelScript.h"
+#include "BuildingBot.h"
 
 ABuildingPlatform::ABuildingPlatform() {
 	SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint"));
@@ -61,6 +63,11 @@ bool ABuildingPlatform::Interact(UInteractionComponent* interComp, ACharacter* c
 
 		PlacedActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 		PlacedActor->SetActorLocation(SpawnPoint->GetComponentLocation());
+
+		float duration = 3;
+		ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
+		level->GetBuildingBot()->Build(this, duration);
+
 		return true;
 	}
 	return false;

@@ -30,7 +30,5 @@ protected:
 private:
 	UPROPERTY()
 	TArray<int> Gems;
-
-
 		
 };

@@ -9,6 +9,9 @@ enum BuildingType {
 	Turret,
 };
 
+class ABuildingBot;
+
+
 UCLASS()
 class SPACEDELIVERERS_API ABuilder : public AInstrument
 {
@@ -21,6 +24,7 @@ public:
 
 	void ShowPreview(const FVector& location);
 	void Build();
+	void SetInfo(ABuildingBot* bot);
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
@@ -28,5 +32,5 @@ protected:
 
 private:
 	BuildingType Type;
-
+	ABuildingBot* BuildingBot = nullptr;
 };

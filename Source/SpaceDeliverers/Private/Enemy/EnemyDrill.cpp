@@ -3,9 +3,12 @@
 #include "HealthComponent.h"
 #include "Gun.h"
 #include "InteractionComponent.h"
+#include "Utils/TagStrings.h"
+
 
 AEnemyDrill::AEnemyDrill() {
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	Tags.Add(TagStrings::EnemyTag);
 }
 
 void AEnemyDrill::BeginPlay()

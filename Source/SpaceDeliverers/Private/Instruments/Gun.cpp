@@ -3,7 +3,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "EnemyDrill.h"
+#include "EnemyBot.h"
 
 InstrumentType AGun::GetType() const
 {
@@ -12,11 +12,12 @@ InstrumentType AGun::GetType() const
 
 void AGun::Shoot(AActor * target) const
 {
-	AEnemyDrill* drill = Cast<AEnemyDrill>(target);
+	AEnemyBot* drill = Cast<AEnemyBot>(target);
 	if (drill != NULL && ShootParticle != NULL) 
 	{
 		FVector location = Mesh->GetSocketLocation(SocketName);
 		UParticleSystemComponent* ps = UGameplayStatics::SpawnEmitterAttached(ShootParticle, drill->GetMesh(), FName(TEXT("None")), FVector(0), FRotator(0), EAttachLocation::KeepRelativeOffset);
+		ps->SetRelativeScale3D(FVector(.05f, .05f, .05f));
 		ps->SetBeamTargetPoint(0, location, 0);
 	}
 }

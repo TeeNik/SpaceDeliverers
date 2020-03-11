@@ -18,10 +18,13 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyDrill")
 	void OnBotHit(ACharacter* character, float duration);
 
+	virtual void OnSelect(class UInteractionComponent* interComp) override;
+	virtual void OnDeselect() override;
+
 private:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
-	float InteractionTime = 3;
+	float InteractionTime = 10;
 
 };

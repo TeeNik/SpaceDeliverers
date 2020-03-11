@@ -2,9 +2,11 @@
 #include "Instrument.h"
 #include "Gun.h"
 #include "InteractionComponent.h"
+#include "Utils/TagStrings.h"
 
 AEnemyBot::AEnemyBot()
 {
+	Tags.Add(TagStrings::EnemyTag);
 }
 
 void AEnemyBot::BeginPlay()
@@ -24,4 +26,14 @@ bool AEnemyBot::Interact(UInteractionComponent* interComp, ACharacter* character
 		return true;
 	}
 	return false;
+}
+
+void AEnemyBot::OnSelect(UInteractionComponent* interComp)
+{
+	GetMesh()->SetRenderCustomDepth(true);
+}
+
+void AEnemyBot::OnDeselect()
+{
+	GetMesh()->SetRenderCustomDepth(false);
 }

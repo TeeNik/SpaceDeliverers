@@ -1,11 +1,17 @@
 #include "Builder.h"
+#include "BuildingBot.h"
 
-void ShowPreview(const FVector& location)
+void ABuilder::ShowPreview(const FVector& location)
 {
 
 }
 
-void Build()
+void ABuilder::Build()
 {
 
+}
+
+void ABuilder::SetInfo(ABuildingBot* bot)
+{
+	BuildingBot = bot;
 }

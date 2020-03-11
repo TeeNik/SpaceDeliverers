@@ -11,7 +11,6 @@ void UBuilderWidget::Init(FBuildingSelected& onBuildingSelected)
 
 void UBuilderWidget::OnTurretButtonClicked()
 {
-	UE_LOG(LogTemp, Log, TEXT("UBuilderWidget::OnTurretButtonClicked"));
 	OnBuildingSelected.Broadcast();
 	CloseWidget();
 }

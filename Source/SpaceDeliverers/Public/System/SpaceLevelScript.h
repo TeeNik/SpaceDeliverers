@@ -6,6 +6,7 @@
 
 class AShieldGenerator;
 class AShield;
+class ABuildingBot;
 
 UCLASS(Blueprintable)
 class SPACEDELIVERERS_API ASpaceLevelScript : public ALevelScriptActor
@@ -15,8 +16,10 @@ class SPACEDELIVERERS_API ASpaceLevelScript : public ALevelScriptActor
 public:
 	FORCEINLINE TArray<AShieldGenerator*>& GetGenerators() { return Generators; }
 	FORCEINLINE AShield* GetShield() { return Shield; }
-	FORCEINLINE TArray<AActor*>& GetShipSpawnPoints() { return ShipSpawnPoints; }
-	FORCEINLINE TArray<AActor*>& GetAsteroidSpawnPoints() { return AsteroidSpawnPoints; }
+	FORCEINLINE const TArray<AActor*>& GetShipSpawnPoints() { return ShipSpawnPoints; }
+	FORCEINLINE const TArray<AActor*>& GetAsteroidSpawnPoints() { return AsteroidSpawnPoints; }
+	FORCEINLINE ABuildingBot* GetBuildingBot() { return BuildingBot; }
+	FORCEINLINE const AActor* GetBuildingBotHome() { return BuildingBotHome; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
@@ -30,4 +33,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	AShield* Shield;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	ABuildingBot* BuildingBot;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	AActor* BuildingBotHome;
 };

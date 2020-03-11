@@ -5,9 +5,11 @@
 #include "GameFramework/Character.h"
 #include "Builder.h"
 #include "BuilderWidget.h"
+#include "AIController.h"
 
 ABuildingBot::ABuildingBot()
 {
+	OnBuildingSelected.AddDynamic(this, &ABuildingBot::BuildingSelected);
 }
 
 void ABuildingBot::BeginPlay()
@@ -18,12 +20,13 @@ void ABuildingBot::BeginPlay()
 		BuilderWidget->AddToViewport();
 		BuilderWidget->SetVisibility(ESlateVisibility::Hidden);
 		BuilderWidget->Init(OnBuildingSelected);
-		OnBuildingSelected.AddDynamic(this, &ABuildingBot::BuildingSelected);
+		UE_LOG(LogTemp, Log, TEXT("ABuildingBot::BeginPlay"));
 	}
 }
 
 void ABuildingBot::BuildingSelected()
 {
+	UE_LOG(LogTemp, Log, TEXT("ABuildingBot::BuildingSelected"));
 	ABuilder* builder = GetWorld()->SpawnActor<ABuilder>(BuilderBase);
 	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
 	ACharacter* character = Cast<ACharacter>(InteractionComponent->GetOwner());
@@ -46,11 +49,17 @@ bool ABuildingBot::Interact(UInteractionComponent * interComp, ACharacter * char
 
 void ABuildingBot::OnSelect(UInteractionComponent * interComp)
 {
-	GLog->Log("on select");
 	GetMesh()->SetRenderCustomDepth(true);
 }
 
 void ABuildingBot::OnDeselect()
 {
 	GetMesh()->SetRenderCustomDepth(false);
+}
+
+void ABuildingBot::Build(const AActor* dest, const float duration)
+{
+	UE_LOG(LogTemp, Log, TEXT("ABuildingBot::Build"));
+	IsBusy = true;
+	OnBuildBP(dest, duration);
 }

@@ -51,7 +51,7 @@ protected:
 	TSubclassOf<AEnemyDrill> EnemyDrillBase;
 
 private:
-	TArray<AActor*>* ShipSpawnPoints;
+	const TArray<AActor*>* ShipSpawnPoints;
 	int ShipsCount;
 	TArray<SpawnInfo<AEnemyShip>> ShipSpawnInfo;
 

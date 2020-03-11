@@ -26,9 +26,17 @@ public:
 
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
+	
+	void Build(const AActor* dest, const float duration);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyDrill")
+	void OnBuildBP(const AActor* dest, const float duration);
 
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool IsBusy = false;
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -42,5 +50,4 @@ private:
 
 	UFUNCTION()
 	void BuildingSelected();
-
 };

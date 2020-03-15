@@ -17,5 +17,8 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<class AWrench> WrenchBase;
+	TSubclassOf<class AInstrument> InstrumentBase;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FName AttachSocket;
 };

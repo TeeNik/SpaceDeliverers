@@ -7,7 +7,7 @@
 bool AMineral::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
 	const AInstrument* inHand = interComp->GetInstrument();
-	if (inHand != NULL && inHand->GetType() == InstrumentType::Wrench) {
+	if (inHand != NULL && inHand->GetType() == InstrumentType::Pickaxe) {
 		FActorSpawnParameters actorSpawnParams;
 		actorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 

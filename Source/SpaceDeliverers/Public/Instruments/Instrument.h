@@ -10,6 +10,7 @@ enum InstrumentType {
 	Wrench,
 	Gun,
 	Builder,
+	Pickaxe,
 };
 
 UCLASS()

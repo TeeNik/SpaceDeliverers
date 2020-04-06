@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 
 AWeaponProjectile::AWeaponProjectile()
 {
@@ -30,7 +31,8 @@ void AWeaponProjectile::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 		if (IsValid(health)) {
 			health->TakeDamage(Damage);
 			if (Particles != NULL) {
-				//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particles, GetActorLocation());
+				auto particle = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particles, GetActorLocation());
+				particle->SetWorldScale3D(FVector(.5f, .5f, .5f));
 			}
 			Destroy();
 		}

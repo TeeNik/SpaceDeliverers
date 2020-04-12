@@ -6,6 +6,7 @@
 
 class UHealthComponent;
 class AWeaponProjectile;
+class UParticleSystem;
 
 UCLASS()
 class SPACEDELIVERERS_API AEnemyShip : public AActor
@@ -18,6 +19,8 @@ public:
 	FORCEINLINE UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
 	void Shoot();
+
+	void OnDeath();
 
 protected:
 	virtual void BeginPlay() override;
@@ -55,6 +58,9 @@ private:
 
 	UFUNCTION()
 	void ShootByTimer();
+
+	UPROPERTY(EditDefaultsOnly)
+	UParticleSystem* ExplosionParticle;
 
 	/*UFUNCTION()
 	void OnTakeDamage(int health);

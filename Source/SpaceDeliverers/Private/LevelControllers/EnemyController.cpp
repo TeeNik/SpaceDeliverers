@@ -127,6 +127,7 @@ void UEnemyController::OnShipDeath(UHealthComponent* hc)
 			info.index = -1;
 		}
 	}
+	ship->OnDeath();
 	ship->Destroy();
 	--ShipsCount;
 }

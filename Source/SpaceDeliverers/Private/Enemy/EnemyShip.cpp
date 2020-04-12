@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "WeaponProjectile.h"
 #include "HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 
 AEnemyShip::AEnemyShip()
 {
@@ -57,5 +59,13 @@ void AEnemyShip::Shoot()
 		FActorSpawnParameters ActorSpawnParams;
 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		GetWorld()->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
+	}
+}
+
+void AEnemyShip::OnDeath()
+{
+	if (ExplosionParticle != NULL) {
+		auto particle = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, GetActorLocation());
+		//particle->SetWorldScale3D(FVector(.5f, .5f, .5f));
 	}
 }

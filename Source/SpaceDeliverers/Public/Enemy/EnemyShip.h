@@ -62,6 +62,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	UParticleSystem* ExplosionParticle;
 
+	UPROPERTY(EditDefaultsOnly)
+	FVector ParticleSize;
+
 	/*UFUNCTION()
 	void OnTakeDamage(int health);
 

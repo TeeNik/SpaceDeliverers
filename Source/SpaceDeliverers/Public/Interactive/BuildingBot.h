@@ -29,7 +29,7 @@ public:
 	
 	void Build(const AActor* dest, const float duration);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyDrill")
+	UFUNCTION(BlueprintImplementableEvent, Category = "BuildingBot")
 	void OnBuildBP(const AActor* dest, const float duration);
 
 protected:

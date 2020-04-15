@@ -8,7 +8,7 @@ AToolbox::AToolbox()
 {
 }
 
-bool AToolbox::Interact(class UInteractionComponent* interComp, ACharacter* character)
+bool AToolbox::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
 	if (interComp->GetInstrument() == NULL) {
 		AInstrument* instrument = GetWorld()->SpawnActor<AInstrument>(InstrumentBase);

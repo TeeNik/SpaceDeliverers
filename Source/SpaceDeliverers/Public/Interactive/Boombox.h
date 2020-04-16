@@ -14,4 +14,6 @@ class SPACEDELIVERERS_API ABoombox : public AInteractiveActor
 public:
 	virtual bool Interact(UInteractionComponent* interComp, ACharacter* character) override;
 	
+	UFUNCTION(BlueprintImplementableEvent, Category = "Boombox")
+	void OnInteract(ACharacter* character);
 };

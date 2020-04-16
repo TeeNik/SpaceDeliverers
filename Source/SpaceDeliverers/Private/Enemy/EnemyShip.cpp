@@ -66,6 +66,6 @@ void AEnemyShip::OnDeath()
 {
 	if (ExplosionParticle != NULL) {
 		auto particle = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, GetActorLocation());
-		//particle->SetWorldScale3D(FVector(.5f, .5f, .5f));
+		particle->SetWorldScale3D(ParticleSize);
 	}
 }

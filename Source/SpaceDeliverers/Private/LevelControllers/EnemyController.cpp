@@ -66,6 +66,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 				ShipSpawnInfo[index].actor = enemy;
 				ShipSpawnInfo[index].index = index;
 				enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnShipDeath);
+				enemy->OnSpawn();
 			}
 		}
 	}

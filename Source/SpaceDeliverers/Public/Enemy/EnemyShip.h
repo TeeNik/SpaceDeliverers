@@ -18,8 +18,10 @@ public:
 
 	FORCEINLINE UHealthComponent* GetHealthComponent() { return HealthComponent; }
 
-	void Shoot();
+	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyShip")
+	void OnSpawn();
 
+	void Shoot();
 	void OnDeath();
 
 protected:

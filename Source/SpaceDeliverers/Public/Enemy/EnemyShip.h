@@ -23,6 +23,9 @@ public:
 
 	void Shoot();
 	void OnDeath();
+	UFUNCTION(BlueprintCallable)
+	void StartMovement();
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -54,6 +57,7 @@ protected:
 
 private:
 
+	bool IsMovementAble;
 	float RunningTime;
 
 	struct FTimerHandle TimerHandle;

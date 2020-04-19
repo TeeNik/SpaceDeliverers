@@ -29,13 +29,15 @@ void AEnemyShip::Tick(float DeltaTime)
 
 	Super::Tick(DeltaTime);
 
-	FVector newLocation = GetActorLocation();
-	float deltaHeight = FMath::Sin(RunningTime + DeltaTime) - FMath::Sin(RunningTime);
-	newLocation.X += deltaHeight * XValue;
-	newLocation.Y += deltaHeight * YValue;
-	newLocation.Z += deltaHeight * ZValue;
-	RunningTime += DeltaTime;
-	SetActorLocation(newLocation);
+	if (IsMovementAble) {
+		FVector newLocation = GetActorLocation();
+		float deltaHeight = FMath::Sin(RunningTime + DeltaTime) - FMath::Sin(RunningTime);
+		newLocation.X += deltaHeight * XValue;
+		newLocation.Y += deltaHeight * YValue;
+		newLocation.Z += deltaHeight * ZValue;
+		RunningTime += DeltaTime;
+		SetActorLocation(newLocation);
+	}
 }
 
 void AEnemyShip::ShootByTimer()
@@ -68,4 +70,9 @@ void AEnemyShip::OnDeath()
 		auto particle = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, GetActorLocation());
 		particle->SetWorldScale3D(ParticleSize);
 	}
+}
+
+void AEnemyShip::StartMovement()
+{
+	IsMovementAble = true;
 }

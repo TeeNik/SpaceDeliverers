@@ -54,7 +54,7 @@ void AEnemyShip::ShootByTimer()
 
 void AEnemyShip::Shoot()
 {
-	if (ProjectileBase != NULL)
+	if (ProjectileBase != NULL && IsMovementAble)
 	{
 		const FRotator SpawnRotation = GetActorRotation();
 		const FVector SpawnLocation = Mesh->GetSocketLocation(TEXT("Muzzle_1"));

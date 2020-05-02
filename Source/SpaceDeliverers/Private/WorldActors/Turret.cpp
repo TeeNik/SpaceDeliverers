@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "Components/HealthComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "Camera/PlayerCameraManager.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
@@ -52,12 +53,17 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
 	if (!IsDestroying && interComp->GetInstrument() == NULL) {
-		GetWorld()->GetFirstPlayerController()->Possess(this);
+		APlayerController* pc = GetWorld()->GetFirstPlayerController();
+		pc->Possess(this);
 		Mesh->SetRenderCustomDepth(false);
 		character->SetActorHiddenInGame(true);
 		ShootingPerson = character;
 		CharacterPos = ShootingPerson->GetActorLocation();
 		ShootingPerson->SetActorLocation(FVector(10000, 10000, 10000));
+		pc->PlayerCameraManager->ViewYawMin = -180;
+		pc->PlayerCameraManager->ViewYawMax = 0;
+		pc->PlayerCameraManager->ViewPitchMin = 0;
+		pc->PlayerCameraManager->ViewPitchMax = 90;
 	}
 	return false;
 }

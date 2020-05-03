@@ -14,6 +14,7 @@
 #include "WeaponProjectile.h"
 #include "InteractionComponent.h"
 #include "Camera/CameraShake.h"
+#include "Kismet/GameplayStatics.h"
 
 ATurret::ATurret()
 {
@@ -60,10 +61,17 @@ bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 		ShootingPerson = character;
 		CharacterPos = ShootingPerson->GetActorLocation();
 		ShootingPerson->SetActorLocation(FVector(10000, 10000, 10000));
+
+		APlayerCameraManager* cm = pc->PlayerCameraManager;
+		UE_LOG(LogTemp, Log, TEXT("ViewYawMin: %d"), cm->ViewYawMin);
+		UE_LOG(LogTemp, Log, TEXT("ViewYawMax: %d"), cm->ViewYawMax);
+		UE_LOG(LogTemp, Log, TEXT("ViewPitchMin: %d"), cm->ViewPitchMin);
+		UE_LOG(LogTemp, Log, TEXT("ViewPitchMax: %d"), cm->ViewPitchMax);
+
 		pc->PlayerCameraManager->ViewYawMin = -180;
 		pc->PlayerCameraManager->ViewYawMax = 0;
 		pc->PlayerCameraManager->ViewPitchMin = 0;
-		pc->PlayerCameraManager->ViewPitchMax = 90;
+		pc->PlayerCameraManager->ViewPitchMax = 40;
 	}
 	return false;
 }
@@ -95,6 +103,7 @@ void ATurret::Fire()
 			shot->SetTargetTag(TargetTag);
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1);
 			--CurrentAmmo;
+			UGameplayStatics::PlaySoundAtLocation(this, ShootSound, SpawnLocation);
 			
 			if (CurrentAmmo == 0) {
 				IsDestroying = true;
@@ -109,9 +118,24 @@ void ATurret::Release()
 {
 	if (ShootingPerson != NULL) {
 		ShootingPerson->SetActorHiddenInGame(false);
-		GetWorld()->GetFirstPlayerController()->Possess(ShootingPerson);
+
+		APlayerController* pc = GetWorld()->GetFirstPlayerController();
+		pc->Possess(ShootingPerson);
+
 		SetActorRotation(InitialRotation);
 		ShootingPerson->SetActorLocation(CharacterPos);
 		ShootingPerson = NULL;
+
+		UE_LOG(LogTemp, Log, TEXT("Release"));
+		APlayerCameraManager* cm = pc->PlayerCameraManager;
+		UE_LOG(LogTemp, Log, TEXT("ViewYawMin: %d"), cm->ViewYawMin);
+		UE_LOG(LogTemp, Log, TEXT("ViewYawMax: %d"), cm->ViewYawMax);
+		UE_LOG(LogTemp, Log, TEXT("ViewPitchMin: %d"), cm->ViewPitchMin);
+		UE_LOG(LogTemp, Log, TEXT("ViewPitchMax: %d"), cm->ViewPitchMax);
+
+		pc->PlayerCameraManager->ViewYawMin = -360;
+		pc->PlayerCameraManager->ViewYawMax = 360;
+		pc->PlayerCameraManager->ViewPitchMin = -30;
+		pc->PlayerCameraManager->ViewPitchMax = 90;
 	}
 }

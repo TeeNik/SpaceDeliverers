@@ -21,7 +21,14 @@ public:
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 
-private:
+protected:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UParticleSystem* ExplosionParticle;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FVector ParticleSize;
+
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)

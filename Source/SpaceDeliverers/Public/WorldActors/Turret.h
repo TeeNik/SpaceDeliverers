@@ -5,6 +5,14 @@
 #include "Interactive.h"
 #include "Turret.generated.h"
 
+class USoundBase;
+class USpringArmComponent;
+class UCameraComponent;
+class UStaticMeshComponent;
+class UBoxComponent;
+class UArrowComponent;
+class UCameraShake;
+
 UCLASS()
 class SPACEDELIVERERS_API ATurret : public APawn, public IInteractive
 {
@@ -28,22 +36,25 @@ protected:
 	float FireRate;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
+	USpringArmComponent* CameraBoom;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* FollowCamera;
+	UCameraComponent* FollowCamera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* Mesh;
+	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* Box;
+	UBoxComponent* Box;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
-	class UArrowComponent* Arrow;
+	UArrowComponent* Arrow;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UCameraShake> CameraShake;
+	TSubclassOf<UCameraShake> CameraShake;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* ShootSound;
 
 	UPROPERTY(EditDefaultsOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf <class AWeaponProjectile> ProjectileBase;

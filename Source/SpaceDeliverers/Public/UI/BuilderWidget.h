@@ -31,7 +31,7 @@ protected:
 private:
 	FBuildingSelected OnBuildingSelected;
 	
-	UFUNCTION()
+	UFUNCTION() 
 	void OnTurretButtonClicked();
 
 	UFUNCTION()

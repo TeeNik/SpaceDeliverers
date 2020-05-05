@@ -21,15 +21,15 @@ public:
 
 	void ShowWidget();
 
-private:
-
-	FBuildingSelected OnBuildingSelected;
-
-	UPROPERTY(meta = (BindWidget))
+protected:
+	UPROPERTY(meta = (BindWidget), VisibleAnywhere, BlueprintReadWrite)
 	UButton* TurretButton;
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* CloseButton;
+
+private:
+	FBuildingSelected OnBuildingSelected;
 	
 	UFUNCTION()
 	void OnTurretButtonClicked();

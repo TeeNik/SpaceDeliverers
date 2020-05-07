@@ -5,6 +5,7 @@
 #include "EnemyDrill.h"
 #include "HealthComponent.h"
 #include "Shield.h"
+#include "BuildingPlatform.h"
 
 UEnemyController::UEnemyController()
 {
@@ -22,7 +23,7 @@ void UEnemyController::Initialize()
 	ShipSpawnPoints = &level->GetShipSpawnPoints();
 	ShipSpawnInfo.SetNum(ShipSpawnPoints->Num());
 	level->GetShield()->OnShieldUpdate.AddDynamic(this, &UEnemyController::OnShieldUpdate);
-
+	Platforms = level->GetPlatforms();
 	ShipSpawnTime = ShipStartDelay;
 	ShootTime = ShipStartDelay;
 }
@@ -92,6 +93,14 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 				DrillSpawnTime = seconds + ShipSpawnRate;
 				enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnDrillDeath);
 			}
+		}
+	}
+
+	bool hasTargets = false;
+	for(auto* platform : Platforms)
+	{
+		if (platform->IsFree() && !platform->GetIsDestroyingByBot()) {
+
 		}
 	}
 }

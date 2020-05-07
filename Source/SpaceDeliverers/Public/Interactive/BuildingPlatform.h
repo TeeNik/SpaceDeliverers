@@ -16,8 +16,8 @@ public:
 	virtual void OnDeselect() override;
 	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
-	/*UPROPERTY(EditDefaultsOnly)
-	FVector SpawnPoint;*/
+	inline bool IsFree() { return PlacedActor == nullptr; }
+	inline bool GetIsDestroyingByBot() { return IsDestroyingByBot; }
 
 	UPROPERTY(EditDefaultsOnly)
 	class UMaterialInterface* PreviewMaterial;
@@ -27,7 +27,6 @@ public:
 
 private:
 	AActor* PreviewActor = nullptr;
-
 	AActor* PlacedActor = nullptr;
-	
+	bool IsDestroyingByBot;
 };

@@ -3,6 +3,7 @@
 #include "Gun.h"
 #include "InteractionComponent.h"
 #include "Utils/TagStrings.h"
+#include "BuildingPlatform.h"
 
 AEnemyBot::AEnemyBot()
 {
@@ -26,6 +27,21 @@ bool AEnemyBot::Interact(UInteractionComponent* interComp, ACharacter* character
 		return true;
 	}
 	return false;
+}
+
+void AEnemyBot::OnSpawn(ABuildingPlatform* targetPlatform)
+{
+	Target = targetPlatform;
+}
+
+void AEnemyBot::OnDestroyReached()
+{
+	UE_LOG(LogTemp, Log, TEXT("AEnemyBot::OnDestroyReached"));
+}
+
+void AEnemyBot::OnCrashReached()
+{
+	UE_LOG(LogTemp, Log, TEXT("AEnemyBot::OnCrashReached"));
 }
 
 void AEnemyBot::OnSelect(UInteractionComponent* interComp)

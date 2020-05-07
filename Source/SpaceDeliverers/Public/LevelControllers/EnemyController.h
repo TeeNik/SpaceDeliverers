@@ -7,6 +7,7 @@
 class AEnemyShip;
 class AEnemyDrill;
 class UHealthComponent;
+class ABuildingPlatform;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UEnemyController : public USceneComponent
@@ -58,6 +59,8 @@ private:
 	TArray<AActor*>* DrillSpawnPoints;
 	TArray<AEnemyDrill*> Drills;
 	TArray<bool> DrillSpawnInfo;
+
+	TArray<ABuildingPlatform*> Platforms;
 		
 	float ShipSpawnTime;
 	float ShootTime;

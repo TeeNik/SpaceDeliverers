@@ -10,6 +10,7 @@
 #include "Camera/PlayerCameraManager.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 #include "WeaponProjectile.h"
 #include "InteractionComponent.h"
@@ -22,9 +23,11 @@ ATurret::ATurret()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+	SmokeParticle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("SmokeParticle"));
 	RootComponent = Arrow;
 	Box->SetupAttachment(Arrow);
 	Mesh->SetupAttachment(Arrow);
+	SmokeParticle->SetupAttachment(Arrow);
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(Mesh);
@@ -53,7 +56,7 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
-	if (!IsDestroying && interComp->GetInstrument() == NULL) {
+	if (!IsDestroying && interComp->GetInstrument() == NULL && !GetIsTarget() && !GetIsTarget()) {
 		APlayerController* pc = GetWorld()->GetFirstPlayerController();
 		pc->Possess(this);
 		Mesh->SetRenderCustomDepth(false);
@@ -84,6 +87,22 @@ void ATurret::OnSelect(UInteractionComponent * interComp)
 void ATurret::OnDeselect()
 {
 	Mesh->SetRenderCustomDepth(false);
+}
+
+void ATurret::OnDestroyReached()
+{
+	UE_LOG(LogTemp, Log, TEXT("ATurret::OnDestroyReached"));
+}
+
+void ATurret::OnCrashReached()
+{
+	UE_LOG(LogTemp, Log, TEXT("ATurret::OnCrashReached"));
+}
+
+void ATurret::OnTargetReached()
+{
+	IDestructible::OnTargetReached();
+	UE_LOG(LogTemp, Log, TEXT("ATurret::OnTargetReached"));
 }
 
 void ATurret::Fire()

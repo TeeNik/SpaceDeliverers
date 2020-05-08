@@ -34,16 +34,6 @@ void AEnemyBot::OnSpawn(ABuildingPlatform* targetPlatform)
 	Target = targetPlatform;
 }
 
-void AEnemyBot::OnDestroyReached()
-{
-	UE_LOG(LogTemp, Log, TEXT("AEnemyBot::OnDestroyReached"));
-}
-
-void AEnemyBot::OnCrashReached()
-{
-	UE_LOG(LogTemp, Log, TEXT("AEnemyBot::OnCrashReached"));
-}
-
 void AEnemyBot::OnSelect(UInteractionComponent* interComp)
 {
 	GetMesh()->SetRenderCustomDepth(true);

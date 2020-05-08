@@ -22,12 +22,6 @@ public:
 
 	void OnSpawn(ABuildingPlatform* targetPlatform);
 
-	UFUNCTION(BlueprintCallable)
-	void OnDestroyReached();
-
-	UFUNCTION(BlueprintCallable)
-	void OnCrashReached();
-
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 

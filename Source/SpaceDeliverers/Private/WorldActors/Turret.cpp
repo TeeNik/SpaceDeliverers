@@ -131,7 +131,7 @@ void ATurret::Fire()
 			if (CurrentAmmo == 0) {
 				IsDestroying = true;
 				Release();
-				OnAmmoEnd();
+				OnDestroy();
 			}
 		}
 	}

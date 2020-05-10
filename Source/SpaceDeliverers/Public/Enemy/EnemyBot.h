@@ -5,7 +5,8 @@
 #include "GameFramework/Character.h"
 #include "EnemyBot.generated.h"
 
-class ABuildingPlatform;
+class UWidgetComponent;
+class IDestructible;
 
 UCLASS()
 class SPACEDELIVERERS_API AEnemyBot : public ACharacter, public IInteractive
@@ -20,13 +21,16 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyDrill")
 	void OnBotHit(ACharacter* character, float duration);
 
-	void OnSpawn(ABuildingPlatform* targetPlatform);
+	UFUNCTION(BlueprintCallable)
+	void OnTargetReached(AActor* destroyTarget);
 
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 
-protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UWidgetComponent* WidgetComponent;
 
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UParticleSystem* ExplosionParticle;
 
@@ -43,7 +47,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float TimeToDestroy = 10;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool IsDestroying = false;
 	
-	ABuildingPlatform* Target;
+	IDestructible* Target;
 
 };

@@ -29,7 +29,7 @@ public:
 	virtual void OnDeselect() override;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "ATurret")
-	void OnAmmoEnd();
+	void OnDestroy();
 
 	UFUNCTION(BlueprintCallable)
 	virtual void OnDestroyReached() override;

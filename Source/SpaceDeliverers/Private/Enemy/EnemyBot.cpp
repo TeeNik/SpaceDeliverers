@@ -3,25 +3,29 @@
 #include "Gun.h"
 #include "InteractionComponent.h"
 #include "Utils/TagStrings.h"
-#include "BuildingPlatform.h"
+#include "Components/WidgetComponent.h"
+#include "Destructible.h"
 
 AEnemyBot::AEnemyBot()
 {
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
+	WidgetComponent->SetupAttachment(RootComponent);
 	Tags.Add(TagStrings::EnemyTag);
 }
 
 void AEnemyBot::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 bool AEnemyBot::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
 	const AInstrument* inHand = interComp->GetInstrument();
 	if (inHand != NULL && inHand->GetType() == InstrumentType::Gun) {
+		WidgetComponent->SetVisibility(false);
+		Target->OnTargetRelease();
+		IsDestroying = true;
 		const AGun* gun = Cast<AGun>(inHand);
-		float damage = gun->GetDamage();
 		gun->Shoot(this);
 		OnBotHit(character, InteractionTime);
 		return true;
@@ -29,9 +33,12 @@ bool AEnemyBot::Interact(UInteractionComponent* interComp, ACharacter* character
 	return false;
 }
 
-void AEnemyBot::OnSpawn(ABuildingPlatform* targetPlatform)
+void AEnemyBot::OnTargetReached(AActor* destroyTarget)
 {
-	Target = targetPlatform;
+	Target = Cast<IDestructible>(destroyTarget);
+	if (Target != nullptr) {
+		GLog->Log("Target is valid");
+	}
 }
 
 void AEnemyBot::OnSelect(UInteractionComponent* interComp)

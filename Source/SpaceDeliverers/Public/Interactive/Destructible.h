@@ -25,6 +25,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual	void OnTargetReached() { IsTarget = true; };
 
+	UFUNCTION(BlueprintCallable)
+	virtual	void OnTargetRelease() { IsTarget = false; };
+
 	bool GetIsTarget() { return IsTarget; }
 	bool GetIsCrashed() { return IsCrashed; }
 

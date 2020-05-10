@@ -7,6 +7,7 @@
 #include "HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Utils/TagStrings.h"
 
 AEnemyShip::AEnemyShip()
 {
@@ -16,6 +17,7 @@ AEnemyShip::AEnemyShip()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Box);
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	Tags.Add(TagStrings::EnemyTag);
 }
 
 void AEnemyShip::BeginPlay()

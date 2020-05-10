@@ -83,7 +83,6 @@ private:
 	FRotator InitialRotation;
 	FVector CharacterPos;
 	float LastFire;
-	const FName TargetTag = "EnemyShip";
 	int CurrentAmmo;
 	bool IsDestroying = false;
 };

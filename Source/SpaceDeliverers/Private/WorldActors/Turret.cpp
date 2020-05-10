@@ -11,6 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Utils/TagStrings.h"
 
 #include "WeaponProjectile.h"
 #include "InteractionComponent.h"
@@ -37,6 +38,7 @@ ATurret::ATurret()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+	SmokeParticle->SetVisibility(false);
 }
 
 void ATurret::BeginPlay()
@@ -96,6 +98,8 @@ void ATurret::OnDestroyReached()
 
 void ATurret::OnCrashReached()
 {
+	IDestructible::OnCrashReached();
+	SmokeParticle->SetVisibility(true);
 	UE_LOG(LogTemp, Log, TEXT("ATurret::OnCrashReached"));
 }
 
@@ -119,7 +123,7 @@ void ATurret::Fire()
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1.0f);
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			AWeaponProjectile* shot = World->SpawnActor<AWeaponProjectile>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
-			shot->SetTargetTag(TargetTag);
+			shot->SetTargetTag(TagStrings::EnemyTag);
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1);
 			--CurrentAmmo;
 			UGameplayStatics::PlaySoundAtLocation(this, ShootSound, SpawnLocation);

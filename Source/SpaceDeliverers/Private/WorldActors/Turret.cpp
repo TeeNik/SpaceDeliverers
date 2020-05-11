@@ -15,6 +15,7 @@
 
 #include "WeaponProjectile.h"
 #include "InteractionComponent.h"
+#include "Instrument.h"
 #include "Camera/CameraShake.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -58,7 +59,9 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
-	if (!IsDestroying && interComp->GetInstrument() == NULL && !GetIsTarget() && !GetIsTarget()) {
+	auto* instrument = interComp->GetInstrument();
+	bool isCrashed = GetIsCrashed();
+	if (!IsDestroying && instrument == nullptr && !GetIsTarget() && !isCrashed) {
 		APlayerController* pc = GetWorld()->GetFirstPlayerController();
 		pc->Possess(this);
 		Mesh->SetRenderCustomDepth(false);
@@ -78,6 +81,11 @@ bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 		pc->PlayerCameraManager->ViewPitchMin = 0;
 		pc->PlayerCameraManager->ViewPitchMax = 40;
 	}
+	else if (!IsDestroying && isCrashed && instrument != nullptr && instrument->GetType() == InstrumentType::Wrench) {
+
+		return true;
+	}
+
 	return false;
 }
 
@@ -93,6 +101,8 @@ void ATurret::OnDeselect()
 
 void ATurret::OnDestroyReached()
 {
+	IsDestroying = true;
+	OnDestroy();
 	UE_LOG(LogTemp, Log, TEXT("ATurret::OnDestroyReached"));
 }
 

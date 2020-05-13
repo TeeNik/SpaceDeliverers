@@ -18,7 +18,7 @@ public:
 	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 	virtual float GetInteractionTime() override { return InteractionTime; }
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyDrill")
+	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyBot")
 	void OnBotHit(ACharacter* character, float duration);
 
 	UFUNCTION(BlueprintCallable)

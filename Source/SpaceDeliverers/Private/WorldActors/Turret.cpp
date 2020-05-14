@@ -133,7 +133,7 @@ void ATurret::Fire()
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1.0f);
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			AWeaponProjectile* shot = World->SpawnActor<AWeaponProjectile>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
-			shot->SetTargetTag(TagStrings::EnemyTag);
+			shot->SetTargetTag(TagStrings::EnemyShipTag);
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1);
 			--CurrentAmmo;
 			UGameplayStatics::PlaySoundAtLocation(this, ShootSound, SpawnLocation);

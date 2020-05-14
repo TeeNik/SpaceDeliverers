@@ -10,7 +10,7 @@ AEnemyBot::AEnemyBot()
 {
 	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
 	WidgetComponent->SetupAttachment(RootComponent);
-	Tags.Add(TagStrings::EnemyTag);
+	Tags.Add(TagStrings::EnemyBotTag);
 }
 
 void AEnemyBot::BeginPlay()

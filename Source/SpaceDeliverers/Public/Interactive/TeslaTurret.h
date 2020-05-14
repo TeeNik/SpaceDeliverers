@@ -28,6 +28,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float CheckRate;
 
+	UPROPERTY(EditDefaultsOnly)
+	float LightingDuration;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* SourcePoint;
 
@@ -36,11 +39,14 @@ protected:
 
 private:
 	AEnemyShip* Target = nullptr;
+	UParticleSystemComponent* lightning = nullptr;
+
+	TArray<FHitResult> GetActorsInRange(float radius);
 
 	float LastCheck = 0;
-	float LastShot = 0;
+	float LastAttack = 0;
+	float LightingDestroyTime = 0;
 
 	void Attack();
 	void LookForTarget();
-	
 };

@@ -8,7 +8,7 @@
 
 AEnemyDrill::AEnemyDrill() {
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-	Tags.Add(TagStrings::EnemyTag);
+	Tags.Add(TagStrings::EnemyBotTag);
 }
 
 void AEnemyDrill::BeginPlay()

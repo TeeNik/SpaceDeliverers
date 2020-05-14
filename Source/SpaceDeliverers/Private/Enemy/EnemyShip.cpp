@@ -17,7 +17,7 @@ AEnemyShip::AEnemyShip()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Box);
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-	Tags.Add(TagStrings::EnemyTag);
+	Tags.Add(TagStrings::EnemyShipTag);
 }
 
 void AEnemyShip::BeginPlay()

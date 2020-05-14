@@ -46,6 +46,9 @@ private:
 
 	TArray<FHitResult> GetActorsInRange(float radius);
 
+	UFUNCTION()
+	void OnTargetDestroy();
+
 	float LastCheck = 0;
 	float LastAttack = 0;
 	float LightingDestroyTime = 0;

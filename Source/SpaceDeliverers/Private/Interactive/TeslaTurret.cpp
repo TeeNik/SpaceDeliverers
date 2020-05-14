@@ -24,10 +24,7 @@ void ATeslaTurret::Tick(float DeltaTime)
 			lightning->DestroyComponent();
 			lightning = nullptr;
 			if (IsValid(Target)) {
-				auto health = Cast<UHealthComponent>(Target->GetComponentByClass(UHealthComponent::StaticClass()));
-				if (IsValid(health)) {
-					health->TakeDamage(Damage);
-				}
+				Target->GetHealthComponent()->TakeDamage(Damage);
 			}
 		}
 		else if(IsValid(Target)) {
@@ -67,6 +64,7 @@ void ATeslaTurret::LookForTarget()
 			AEnemyShip* ship = Cast<AEnemyShip>(It->GetActor());
 			if (IsValid(ship)) {
 				Target = ship;
+				ship->GetHealthComponent()->OnDeath.AddDynamic(this, &ATeslaTurret::OnTargetDestroy);
 				LastAttack = seconds + AttackRate;
 			}
 		}
@@ -85,4 +83,12 @@ TArray<FHitResult> ATeslaTurret::GetActorsInRange(float radius)
 	CollisionShape.SetSphere(radius);
 	GetWorld()->SweepMultiByChannel(HitResults, location, location, FQuat::FQuat(), ECC, CollisionShape);
 	return HitResults;
+}
+
+void ATeslaTurret::OnTargetDestroy()
+{
+	Target == nullptr;
+	float seconds = GetWorld()->GetTimeSeconds();
+	LastCheck = seconds + CheckRate;
+	LastAttack = seconds + AttackRate;
 }

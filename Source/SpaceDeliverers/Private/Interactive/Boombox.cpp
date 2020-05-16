@@ -6,7 +6,6 @@
 bool ABoombox::Interact(UInteractionComponent* interComp, ACharacter* character) {
 	if (interComp->GetInstrument() == NULL)
 	{
-		GLog->Log("ABoombox::Interact");
 		OnInteract(character);
 		return true;
 	}

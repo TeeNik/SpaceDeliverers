@@ -5,8 +5,10 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Utils/TagStrings.h"
+#include "HealthComponent.h"
 
 ATeslaTurret::ATeslaTurret() {
+	PrimaryActorTick.bCanEverTick = true;
 	SourcePoint = CreateDefaultSubobject<USceneComponent>(TEXT("SourcePoint"));
 	SourcePoint->SetupAttachment(RootComponent);
 }
@@ -21,28 +23,33 @@ void ATeslaTurret::Tick(float DeltaTime)
 		if (seconds >= LightingDestroyTime) {
 			lightning->DestroyComponent();
 			lightning = nullptr;
+			if (IsValid(Target)) {
+				auto health = Cast<UHealthComponent>(Target->GetComponentByClass(UHealthComponent::StaticClass()));
+				if (IsValid(health)) {
+					health->TakeDamage(Damage);
+				}
+			}
 		}
-		else if(Target != nullptr) {
+		else if(IsValid(Target)) {
 			lightning->SetBeamTargetPoint(0, Target->GetActorLocation(), 0);
 		}
 	}
 
-	if (Target == nullptr) {
-		if (LastCheck > seconds) {
+	if (!IsValid(Target)) {
+		if (seconds > LastCheck) {
 			LookForTarget();
 		}
 	}
 	else {
-		if(LastAttack > seconds){
+		if(seconds > LastAttack){
 			Attack();
 		}
 	}
 }
 
 void ATeslaTurret::Attack() {
-	if (Target != nullptr) {
-
-		lightning = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), LightingParticle, GetActorLocation());
+	if (IsValid(Target)) {
+		lightning = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), LightingParticle, SourcePoint->GetComponentLocation());
 		lightning->SetBeamTargetPoint(0, Target->GetActorLocation(), 0);
 		LightingDestroyTime = GetWorld()->GetTimeSeconds() + LightingDuration;
 		LastAttack = GetWorld()->GetTimeSeconds() + AttackRate;
@@ -70,15 +77,12 @@ void ATeslaTurret::LookForTarget()
 TArray<FHitResult> ATeslaTurret::GetActorsInRange(float radius)
 {
 	TArray<FHitResult> HitResults;
-	auto parent = GetOwner();
-	FVector StartLocation = parent->GetActorLocation();
-	FVector EndLocation = parent->GetActorLocation();
-	EndLocation.Z += 0;
+	FVector location = GetActorLocation();
 
 	ECollisionChannel ECC = ECollisionChannel::ECC_WorldStatic;
 	FCollisionShape CollisionShape;
 	CollisionShape.ShapeType = ECollisionShape::Sphere;
 	CollisionShape.SetSphere(radius);
-	GetWorld()->SweepMultiByChannel(HitResults, StartLocation, EndLocation, FQuat::FQuat(), ECC, CollisionShape);
+	GetWorld()->SweepMultiByChannel(HitResults, location, location, FQuat::FQuat(), ECC, CollisionShape);
 	return HitResults;
 }

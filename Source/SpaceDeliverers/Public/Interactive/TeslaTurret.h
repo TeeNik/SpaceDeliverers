@@ -31,6 +31,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float LightingDuration;
 
+	UPROPERTY(EditDefaultsOnly)
+	float Damage;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* SourcePoint;
 

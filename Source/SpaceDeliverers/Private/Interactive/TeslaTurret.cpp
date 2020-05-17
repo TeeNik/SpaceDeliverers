@@ -20,7 +20,7 @@ void ATeslaTurret::Tick(float DeltaTime)
 	float seconds = GetWorld()->GetTimeSeconds();
 
 	if (lightning != nullptr) {
-		if (seconds >= LightingDestroyTime) {
+		if (seconds >= LightningDestroyTime) {
 			lightning->DestroyComponent();
 			lightning = nullptr;
 			if (IsValid(Target)) {
@@ -48,7 +48,8 @@ void ATeslaTurret::Attack() {
 	if (IsValid(Target)) {
 		lightning = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), LightingParticle, SourcePoint->GetComponentLocation());
 		lightning->SetBeamTargetPoint(0, Target->GetActorLocation(), 0);
-		LightingDestroyTime = GetWorld()->GetTimeSeconds() + LightingDuration;
+		lightning->SetWorldScale3D(FVector(2, 2, 2));
+		LightningDestroyTime = GetWorld()->GetTimeSeconds() + LightningDuration;
 		LastAttack = GetWorld()->GetTimeSeconds() + AttackRate;
 	}
 }

@@ -166,9 +166,9 @@ void ATurret::Release()
 		UE_LOG(LogTemp, Log, TEXT("ViewPitchMin: %d"), cm->ViewPitchMin);
 		UE_LOG(LogTemp, Log, TEXT("ViewPitchMax: %d"), cm->ViewPitchMax);
 
-		pc->PlayerCameraManager->ViewYawMin = -360;
-		pc->PlayerCameraManager->ViewYawMax = 360;
-		pc->PlayerCameraManager->ViewPitchMin = -30;
+		pc->PlayerCameraManager->ViewYawMin = 0;
+		pc->PlayerCameraManager->ViewYawMax = 359;
+		pc->PlayerCameraManager->ViewPitchMin = -90;
 		pc->PlayerCameraManager->ViewPitchMax = 90;
 	}
 }

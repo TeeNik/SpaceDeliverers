@@ -29,7 +29,7 @@ protected:
 	float CheckRate;
 
 	UPROPERTY(EditDefaultsOnly)
-	float LightingDuration;
+	float LightningDuration;
 
 	UPROPERTY(EditDefaultsOnly)
 	float Damage;
@@ -51,7 +51,7 @@ private:
 
 	float LastCheck = 0;
 	float LastAttack = 0;
-	float LightingDestroyTime = 0;
+	float LightningDestroyTime = 0;
 
 	void Attack();
 	void LookForTarget();

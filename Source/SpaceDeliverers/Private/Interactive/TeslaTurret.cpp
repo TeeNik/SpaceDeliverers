@@ -64,7 +64,7 @@ void ATeslaTurret::LookForTarget()
 			AEnemyShip* ship = Cast<AEnemyShip>(It->GetActor());
 			if (IsValid(ship)) {
 				Target = ship;
-				ship->GetHealthComponent()->OnDeath.AddDynamic(this, &ATeslaTurret::OnTargetDestroy);
+				ship->OnDeathCallback.AddDynamic(this, &ATeslaTurret::OnTargetDestroy);
 				LastAttack = seconds + AttackRate;
 			}
 		}
@@ -85,9 +85,9 @@ TArray<FHitResult> ATeslaTurret::GetActorsInRange(float radius)
 	return HitResults;
 }
 
-void ATeslaTurret::OnTargetDestroy()
+void ATeslaTurret::OnTargetDestroy(AEnemyShip* ship)
 {
-	Target == nullptr;
+	Target = nullptr;
 	float seconds = GetWorld()->GetTimeSeconds();
 	LastCheck = seconds + CheckRate;
 	LastAttack = seconds + AttackRate;

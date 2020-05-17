@@ -14,7 +14,7 @@ AEnemyDrill::AEnemyDrill() {
 void AEnemyDrill::BeginPlay()
 {
 	Super::BeginPlay();
-	HealthComponent->OnDeath.AddDynamic(this, &AEnemyDrill::OnDeath);
+	//HealthComponent->OnDeath.AddDynamic(this, &AEnemyDrill::OnDeath);
 }
 
 bool AEnemyDrill::Interact(UInteractionComponent* interComp, ACharacter * character)

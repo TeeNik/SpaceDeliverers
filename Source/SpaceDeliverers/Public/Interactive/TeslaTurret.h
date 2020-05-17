@@ -47,7 +47,7 @@ private:
 	TArray<FHitResult> GetActorsInRange(float radius);
 
 	UFUNCTION()
-	void OnTargetDestroy();
+	void OnTargetDestroy(AEnemyShip* ship);
 
 	float LastCheck = 0;
 	float LastAttack = 0;

@@ -8,6 +8,8 @@ class UHealthComponent;
 class AWeaponProjectile;
 class UParticleSystem;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FShipDeath, AEnemyShip*, ship);
+
 UCLASS()
 class SPACEDELIVERERS_API AEnemyShip : public AActor
 {
@@ -22,9 +24,11 @@ public:
 	void OnSpawn();
 
 	void Shoot();
-	void OnDeath();
 	UFUNCTION(BlueprintCallable)
 	void StartMovement();
+
+	UPROPERTY(BlueprintAssignable)
+	FShipDeath OnDeathCallback;
 
 
 protected:
@@ -55,6 +59,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = EnemyShip)
 	float ZValue;
 
+	UFUNCTION()
+	void OnDeath();
+
 private:
 
 	bool IsMovementAble;
@@ -62,18 +69,9 @@ private:
 
 	struct FTimerHandle TimerHandle;
 
-	UFUNCTION()
-	void ShootByTimer();
-
 	UPROPERTY(EditDefaultsOnly)
 	UParticleSystem* ExplosionParticle;
 
 	UPROPERTY(EditDefaultsOnly)
 	FVector ParticleSize;
-
-	/*UFUNCTION()
-	void OnTakeDamage(int health);
-
-	UFUNCTION()
-	void OnDeath();*/
 };

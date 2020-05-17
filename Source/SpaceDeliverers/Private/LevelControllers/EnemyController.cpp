@@ -66,7 +66,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 				ShipSpawnTime = seconds + ShipSpawnRate;
 				ShipSpawnInfo[index].actor = enemy;
 				ShipSpawnInfo[index].index = index;
-				enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnShipDeath);
+				enemy->OnDeathCallback.AddDynamic(this, &UEnemyController::OnShipDeath);
 				enemy->OnSpawn();
 			}
 		}
@@ -91,7 +91,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 				AEnemyDrill* enemy = GetWorld()->SpawnActor<AEnemyDrill>(EnemyDrillBase, position, rotation, ActorSpawnParams);
 				Drills.Add(enemy);
 				DrillSpawnTime = seconds + ShipSpawnRate;
-				enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnDrillDeath);
+				//enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnDrillDeath);
 			}
 		}
 	}
@@ -127,18 +127,15 @@ T* SpawnActor(TArray<T*>& container, int& spawnTime, TArray<AActor*>* spawnPoint
 	return NULL;
 }
 
-void UEnemyController::OnShipDeath(UHealthComponent* hc)
+void UEnemyController::OnShipDeath(AEnemyShip* ship)
 {
 	ShipSpawnTime = GetWorld()->GetTimeSeconds() + ShipSpawnRate;
-	AEnemyShip* ship = Cast<AEnemyShip>(hc->GetOwner());
 	for (auto& info : ShipSpawnInfo) {
 		if (info.actor == ship) {
 			info.actor = nullptr;
 			info.index = -1;
 		}
 	}
-	ship->OnDeath();
-	ship->Destroy();
 	--ShipsCount;
 }
 

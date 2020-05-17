@@ -5,7 +5,7 @@
 #include "HealthComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTakeDamage, int, Health, UHealthComponent*, Component);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeath, UHealthComponent*, Component);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeath);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPACEDELIVERERS_API UHealthComponent : public UActorComponent

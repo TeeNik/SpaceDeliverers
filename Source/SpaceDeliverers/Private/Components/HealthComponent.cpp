@@ -11,7 +11,7 @@ void UHealthComponent::TakeDamage(int damage)
 	CurrentHealth -= damage;
 	OnTakeDamage.Broadcast(CurrentHealth, this);
 	if (CurrentHealth <= 0) {
-		OnDeath.Broadcast(this);
+		OnDeath.Broadcast();
 	}
 }
 

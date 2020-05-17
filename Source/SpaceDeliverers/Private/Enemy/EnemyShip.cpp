@@ -23,7 +23,7 @@ AEnemyShip::AEnemyShip()
 void AEnemyShip::BeginPlay()
 {
 	Super::BeginPlay();
-	//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AEnemyShip::ShootByTimer, FireRate, true);
+	HealthComponent->OnDeath.AddDynamic(this, &AEnemyShip::OnDeath);
 }
 
 void AEnemyShip::Tick(float DeltaTime)
@@ -40,18 +40,6 @@ void AEnemyShip::Tick(float DeltaTime)
 		RunningTime += DeltaTime;
 		SetActorLocation(newLocation);
 	}
-}
-
-void AEnemyShip::ShootByTimer()
-{
-	/*if ( && FireRate != 0)
-	{
-		UWorld* const World = ;
-		if (World != NULL)
-		{
-			
-		}
-	}*/
 }
 
 void AEnemyShip::Shoot()
@@ -72,6 +60,8 @@ void AEnemyShip::OnDeath()
 		auto particle = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, GetActorLocation());
 		particle->SetWorldScale3D(ParticleSize);
 	}
+	OnDeathCallback.Broadcast(this);
+	Destroy();
 }
 
 void AEnemyShip::StartMovement()

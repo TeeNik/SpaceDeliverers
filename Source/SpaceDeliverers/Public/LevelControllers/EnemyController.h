@@ -71,7 +71,7 @@ private:
 	bool IsShieldActive;
 
 	UFUNCTION()
-	void OnShipDeath(UHealthComponent* hc);
+	void OnShipDeath(AEnemyShip* ship);
 
 	UFUNCTION()
 	void OnDrillDeath(UHealthComponent* hc);

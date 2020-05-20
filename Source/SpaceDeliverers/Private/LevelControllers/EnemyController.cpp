@@ -2,7 +2,7 @@
 #include "Engine/World.h"
 #include "SpaceLevelScript.h"
 #include "EnemyShip.h"
-#include "EnemyDrill.h"
+#include "EnemyBot.h"
 #include "HealthComponent.h"
 #include "Shield.h"
 #include "BuildingPlatform.h"
@@ -21,6 +21,7 @@ void UEnemyController::Initialize()
 {
 	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
 	ShipSpawnPoints = &level->GetShipSpawnPoints();
+	BotsSpawnPoints = &level->GetBotsSpawnPoints();
 	ShipSpawnInfo.SetNum(ShipSpawnPoints->Num());
 	level->GetShield()->OnShieldUpdate.AddDynamic(this, &UEnemyController::OnShieldUpdate);
 	Platforms = level->GetPlatforms();
@@ -72,35 +73,20 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		}
 	}
 	else {
-		return;
-		int num = Drills.Num();
-
-		if (num > 0 && seconds > DrillTime) {
-			//send take damage to base controller
-		}
-		//TODO move to function
-		if (num < DrillSpawnPoints->Num() && seconds > DrillSpawnTime) {
-			int index = -1;
-			DrillSpawnInfo.Find(false, index);
-			if (index >= 0) {
-				AActor* point = (*DrillSpawnPoints)[index];
+		bool hasFreeTargets = false;
+		for (auto* platform : Platforms)
+		{
+			if (platform->IsFree() && !platform->GetIsDestroyingByBot())
+			{
+				AActor* point = (*BotsSpawnPoints)[0];
 				FVector position = point->GetActorLocation();
 				FRotator rotation = point->GetActorRotation();
 				FActorSpawnParameters ActorSpawnParams;
 				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				AEnemyDrill* enemy = GetWorld()->SpawnActor<AEnemyDrill>(EnemyDrillBase, position, rotation, ActorSpawnParams);
-				Drills.Add(enemy);
-				DrillSpawnTime = seconds + ShipSpawnRate;
-				//enemy->GetHealthComponent()->OnDeath.AddDynamic(this, &UEnemyController::OnDrillDeath);
+				AEnemyBot* bot = GetWorld()->SpawnActor<AEnemyBot>(EnemyBotBase, position, rotation, ActorSpawnParams);
+
+				break;
 			}
-		}
-	}
-
-	bool hasTargets = false;
-	for(auto* platform : Platforms)
-	{
-		if (platform->IsFree() && !platform->GetIsDestroyingByBot()) {
-
 		}
 	}
 }
@@ -139,11 +125,9 @@ void UEnemyController::OnShipDeath(AEnemyShip* ship)
 	--ShipsCount;
 }
 
-void UEnemyController::OnDrillDeath(UHealthComponent * hc)
+void UEnemyController::OnBotDeath()
 {
-	AEnemyDrill* drill = Cast<AEnemyDrill>(hc->GetOwner());
-	Drills.Remove(drill);
-	drill->Destroy();
+	
 }
 
 void UEnemyController::OnShieldUpdate(float shield)

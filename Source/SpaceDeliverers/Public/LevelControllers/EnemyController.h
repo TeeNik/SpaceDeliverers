@@ -5,7 +5,7 @@
 #include "EnemyController.generated.h"
 
 class AEnemyShip;
-class AEnemyDrill;
+class AEnemyBot;
 class UHealthComponent;
 class ABuildingPlatform;
 
@@ -40,33 +40,30 @@ protected:
 	float ShipStartDelay;
 
 	UPROPERTY(EditDefaultsOnly)
-	float DrillRate;
+	float BotsRate;
 
 	UPROPERTY(EditDefaultsOnly)
-	float DrillStartDelay;
+	float BotsStartDelay;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AEnemyShip> EnemyShipBase;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AEnemyDrill> EnemyDrillBase;
+	TSubclassOf<AEnemyBot> EnemyBotBase;
 
 private:
 	const TArray<AActor*>* ShipSpawnPoints;
 	int ShipsCount;
 	TArray<SpawnInfo<AEnemyShip>> ShipSpawnInfo;
 
-	TArray<AActor*>* DrillSpawnPoints;
-	TArray<AEnemyDrill*> Drills;
-	TArray<bool> DrillSpawnInfo;
+	const TArray<AActor*>* BotsSpawnPoints;
 
 	TArray<ABuildingPlatform*> Platforms;
 		
 	float ShipSpawnTime;
 	float ShootTime;
 
-	float DrillSpawnTime;
-	float DrillTime;
+	float BotSpawnTime;
 
 	bool IsShieldActive;
 
@@ -74,7 +71,7 @@ private:
 	void OnShipDeath(AEnemyShip* ship);
 
 	UFUNCTION()
-	void OnDrillDeath(UHealthComponent* hc);
+	void OnBotDeath();
 
 	UFUNCTION()
 	void OnShieldUpdate(float shield);

@@ -6,12 +6,33 @@
 #include "InteractionComponent.h"
 
 AShieldGenerator::AShieldGenerator() {
+
+	Part1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Part1"));
+	Part2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Part2"));
+	Part1->SetupAttachment(RootComponent);
+	Part2->SetupAttachment(RootComponent);
 }
 
 void AShieldGenerator::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentEnergy = MaxEnergy;
+	Part1->SetCustomDepthStencilValue(255);
+	Part2->SetCustomDepthStencilValue(255);
+}
+
+void AShieldGenerator::OnSelect(UInteractionComponent* interComp)
+{
+	Mesh->SetRenderCustomDepth(true);
+	Part1->SetRenderCustomDepth(true);
+	Part2->SetRenderCustomDepth(true);
+}
+
+void AShieldGenerator::OnDeselect()
+{
+	Mesh->SetRenderCustomDepth(false);
+	Part1->SetRenderCustomDepth(false);
+	Part2->SetRenderCustomDepth(false);
 }
 
 bool AShieldGenerator::Interact(class UInteractionComponent* interComp, class ACharacter* character) {

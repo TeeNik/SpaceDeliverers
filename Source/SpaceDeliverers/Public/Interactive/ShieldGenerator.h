@@ -30,6 +30,16 @@ public:
 	void ReduceEnergy();
 
 	virtual void BeginPlay() override;
+	virtual void OnSelect(class UInteractionComponent* interComp) override;
+	virtual void OnDeselect() override;
+
+protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* Part1;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* Part2;
 
 private:
 	float CurrentEnergy;

@@ -5,11 +5,14 @@
 #include "Utils/TagStrings.h"
 #include "Components/WidgetComponent.h"
 #include "Destructible.h"
+#include "Particles/ParticleSystemComponent.h"
 
 AEnemyBot::AEnemyBot()
 {
 	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
 	WidgetComponent->SetupAttachment(RootComponent);
+	SpawnParticle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("SpawnParticle"));
+	SpawnParticle->SetupAttachment(RootComponent);
 	Tags.Add(TagStrings::EnemyBotTag);
 }
 

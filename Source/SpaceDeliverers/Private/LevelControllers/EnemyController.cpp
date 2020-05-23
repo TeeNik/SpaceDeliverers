@@ -35,63 +35,57 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	float seconds = GetWorld()->GetTimeSeconds();
 
-	if (true) 
+	if (ShipsCount > 0 && seconds > ShootTime)
 	{
-		if (ShipsCount > 0 && seconds > ShootTime)
-		{
-			for (auto& info : ShipSpawnInfo) {
-				if (info.actor != nullptr) {
-					info.actor->Shoot();
-					break;
-				}
-			}
-			ShootTime = seconds + ShootRate;
-		}
-		if (ShipsCount < ShipSpawnPoints->Num() && seconds > ShipSpawnTime)
-		{
-			++ShipsCount;
-			int index = -1;
-			for (int i = 0; i < ShipSpawnInfo.Num(); ++i) {
-				if (ShipSpawnInfo[i].actor == nullptr) {
-					index = i;
-					break;
-				}
-			}
-			if (index >= 0) {
-				AActor* point = (*ShipSpawnPoints)[index];
-				FVector position = point->GetActorLocation();
-				FRotator rotation = point->GetActorRotation();
-				FActorSpawnParameters ActorSpawnParams;
-				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				AEnemyShip* enemy = GetWorld()->SpawnActor<AEnemyShip>(EnemyShipBase, position, rotation, ActorSpawnParams);
-				ShipSpawnTime = seconds + ShipSpawnRate;
-				ShipSpawnInfo[index].actor = enemy;
-				ShipSpawnInfo[index].index = index;
-				enemy->OnDeathCallback.AddDynamic(this, &UEnemyController::OnShipDeath);
-				enemy->OnSpawn();
-			}
-		}
-	}
-	else {
-		bool hasFreeTargets = false;
-		for (auto* platform : Platforms)
-		{
-			if (platform->IsFree() && !platform->GetIsDestroyingByBot())
-			{
-				AActor* point = (*BotsSpawnPoints)[0];
-				FVector position = point->GetActorLocation();
-				FRotator rotation = point->GetActorRotation();
-				FActorSpawnParameters ActorSpawnParams;
-				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				AEnemyBot* bot = GetWorld()->SpawnActor<AEnemyBot>(EnemyBotBase, position, rotation, ActorSpawnParams);
-
+		for (auto& info : ShipSpawnInfo) {
+			if (info.actor != nullptr) {
+				info.actor->Shoot();
 				break;
 			}
 		}
+		ShootTime = seconds + ShootRate;
+	}
+	if (ShipsCount < ShipSpawnPoints->Num() && seconds > ShipSpawnTime)
+	{
+		++ShipsCount;
+		int index = -1;
+		for (int i = 0; i < ShipSpawnInfo.Num(); ++i) {
+			if (ShipSpawnInfo[i].actor == nullptr) {
+				index = i;
+				break;
+			}
+		}
+		if (index >= 0) {
+			AActor* point = (*ShipSpawnPoints)[index];
+			FVector position = point->GetActorLocation();
+			FRotator rotation = point->GetActorRotation();
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			AEnemyShip* enemy = GetWorld()->SpawnActor<AEnemyShip>(EnemyShipBase, position, rotation, ActorSpawnParams);
+			ShipSpawnTime = seconds + ShipSpawnRate;
+			ShipSpawnInfo[index].actor = enemy;
+			ShipSpawnInfo[index].index = index;
+			enemy->OnDeathCallback.AddDynamic(this, &UEnemyController::OnShipDeath);
+			enemy->OnSpawn();
+		}
+	}
+
+	bool hasFreeTargets = false;
+	for (auto* platform : Platforms)
+	{
+		if (!platform->IsFree() && !platform->GetIsDestroyingByBot())
+		{
+			AActor* point = (*BotsSpawnPoints)[0];
+			FVector position = point->GetActorLocation();
+			FRotator rotation = point->GetActorRotation();
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			AEnemyBot* bot = GetWorld()->SpawnActor<AEnemyBot>(EnemyBotBase, position, rotation, ActorSpawnParams);
+			bot->OnSpawnBP();
+			break;
+		}
 	}
 }
-
-//inline? how does inline func work in loop?
 
 template<class T>
 T* SpawnActor(TArray<T*>& container, int& spawnTime, TArray<AActor*>* spawnPoints, TArray<bool>& info, TSubclassOf<T> spawnClass)

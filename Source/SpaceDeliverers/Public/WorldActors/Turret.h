@@ -61,14 +61,14 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	UArrowComponent* Arrow;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	UParticleSystemComponent* SmokeParticle;
+	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UCameraShake> CameraShake;
 
 	UPROPERTY(EditDefaultsOnly)
 	USoundBase* ShootSound;
-
-	UPROPERTY(EditDefaultsOnly)
-	UParticleSystemComponent* SmokeParticle;
 
 	UPROPERTY(EditDefaultsOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf <class AWeaponProjectile> ProjectileBase;

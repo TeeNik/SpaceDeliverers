@@ -6,6 +6,7 @@
 #include "EnemyBot.generated.h"
 
 class UWidgetComponent;
+class UParticleSystemComponent;
 class IDestructible;
 
 UCLASS()
@@ -29,6 +30,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UWidgetComponent* WidgetComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	UParticleSystemComponent* SpawnParticle;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyShip")
+	void OnSpawnBP();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

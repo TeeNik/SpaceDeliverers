@@ -119,6 +119,16 @@ void ATurret::OnTargetReached()
 	UE_LOG(LogTemp, Log, TEXT("ATurret::OnTargetReached"));
 }
 
+void ATurret::SetColliderActive(bool isActive)
+{
+	if (isActive) {
+		Box->Activate();
+	}
+	else {
+		Box->Deactivate();
+	}
+}
+
 void ATurret::Fire()
 {
 	UWorld* const World = GetWorld();

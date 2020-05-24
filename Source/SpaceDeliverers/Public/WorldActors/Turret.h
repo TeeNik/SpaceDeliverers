@@ -40,6 +40,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void OnTargetReached() override;
 
+	void SetColliderActive(bool isActive);
+
 protected:
 	virtual void BeginPlay() override;
 

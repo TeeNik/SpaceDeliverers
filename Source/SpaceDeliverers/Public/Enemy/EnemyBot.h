@@ -8,6 +8,7 @@
 class UWidgetComponent;
 class UParticleSystemComponent;
 class IDestructible;
+class ABuildingPlatform;
 
 UCLASS()
 class SPACEDELIVERERS_API AEnemyBot : public ACharacter, public IInteractive
@@ -37,7 +38,13 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyShip")
 	void OnSpawnBP();
 
+	inline void SetTargetPlatform(ABuildingPlatform* target) { TargetPlatform = target; }
+
 protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	ABuildingPlatform* TargetPlatform;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UParticleSystem* ExplosionParticle;
 

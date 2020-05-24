@@ -17,7 +17,8 @@ public:
 	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 	inline bool IsFree() { return PlacedActor == nullptr; }
-	inline bool GetIsDestroyingByBot() { return IsDestroyingByBot; }
+	
+	bool IsBotTarget;
 
 	UPROPERTY(EditDefaultsOnly)
 	class UMaterialInterface* PreviewMaterial;
@@ -28,5 +29,4 @@ public:
 private:
 	AActor* PreviewActor = nullptr;
 	AActor* PlacedActor = nullptr;
-	bool IsDestroyingByBot;
 };

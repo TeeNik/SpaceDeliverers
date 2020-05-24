@@ -35,8 +35,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool IsBusy = false;
+	UFUNCTION(BlueprintCallable)
+	void OnReturnToHome();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	const AActor* Home = nullptr;
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -50,4 +53,6 @@ private:
 
 	UFUNCTION()
 	void BuildingSelected();
+
+	bool IsBusy = false;
 };

@@ -6,6 +6,7 @@
 #include "Builder.h"
 #include "BuilderWidget.h"
 #include "AIController.h"
+#include "SpaceLevelScript.h"
 
 ABuildingBot::ABuildingBot()
 {
@@ -22,6 +23,14 @@ void ABuildingBot::BeginPlay()
 		BuilderWidget->Init(OnBuildingSelected);
 		UE_LOG(LogTemp, Log, TEXT("ABuildingBot::BeginPlay"));
 	}
+
+	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
+	Home = level->GetBuildingBotHome();
+}
+
+void ABuildingBot::OnReturnToHome()
+{
+	IsBusy = false;
 }
 
 void ABuildingBot::BuildingSelected()
@@ -39,7 +48,7 @@ void ABuildingBot::BuildingSelected()
 
 bool ABuildingBot::Interact(UInteractionComponent * interComp, ACharacter * character)
 {
-	if (interComp->GetInstrument() == NULL) {
+	if (interComp->GetInstrument() == NULL && !IsBusy) {
 		BuilderWidget->ShowWidget();
 		InteractionComponent = interComp;
 		return true;

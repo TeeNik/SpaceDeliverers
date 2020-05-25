@@ -7,6 +7,7 @@
 #include "Materials/MaterialInterface.h"
 #include "SpaceLevelScript.h"
 #include "BuildingBot.h"
+#include "Interactive.h"
 
 ABuildingPlatform::ABuildingPlatform() {
 	SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint"));
@@ -24,6 +25,11 @@ void ABuildingPlatform::OnSelect(UInteractionComponent * interComp) {
 		FActorSpawnParameters ActorSpawnParams;
 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		PreviewActor = GetWorld()->SpawnActor<AActor>(spawningActor, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
+
+		IInteractive* inter = Cast<IInteractive>(PreviewActor);
+		if (inter != nullptr) {
+			inter->IsActiveForInteraction = false;
+		}
 
 		PreviewActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 		PreviewActor->SetActorLocation(SpawnPoint->GetComponentLocation());
@@ -54,8 +60,9 @@ bool ABuildingPlatform::Interact(UInteractionComponent* interComp, ACharacter* c
 		const ABuilder* builder = Cast<ABuilder>(instrument);
 		auto spawningActor = builder->GetSpawningActor();
 
-		PreviewActor->Destroy();
-		PreviewActor = nullptr;
+		OnDeselect();
+		//PreviewActor->Destroy();
+		//PreviewActor = nullptr;
 
 		FActorSpawnParameters ActorSpawnParams;
 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

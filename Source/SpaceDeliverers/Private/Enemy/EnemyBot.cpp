@@ -6,6 +6,7 @@
 #include "Components/WidgetComponent.h"
 #include "Destructible.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "BuildingPlatform.h"
 
 AEnemyBot::AEnemyBot()
 {
@@ -25,6 +26,7 @@ bool AEnemyBot::Interact(UInteractionComponent* interComp, ACharacter* character
 {
 	const AInstrument* inHand = interComp->GetInstrument();
 	if (inHand != NULL && inHand->GetType() == InstrumentType::Gun) {
+		TargetPlatform->IsBotTarget = false;
 		WidgetComponent->SetVisibility(false);
 		Target->OnTargetRelease();
 		IsDestroying = true;

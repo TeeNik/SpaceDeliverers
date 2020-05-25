@@ -24,6 +24,8 @@ void ATeslaTurret::Tick(float DeltaTime)
 			lightning->DestroyComponent();
 			lightning = nullptr;
 			if (IsValid(Target)) {
+				GLog->Log("Damage " + Target->GetName());
+				//UE_LOG(LogTemp, Log, TEXT("Damage:"+ Target->GetName()));
 				Target->GetHealthComponent()->TakeDamage(Damage);
 			}
 		}
@@ -46,6 +48,7 @@ void ATeslaTurret::Tick(float DeltaTime)
 
 void ATeslaTurret::Attack() {
 	if (IsValid(Target)) {
+		UE_LOG(LogTemp, Log, TEXT("Attack"));
 		lightning = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), LightingParticle, SourcePoint->GetComponentLocation());
 		lightning->SetBeamTargetPoint(0, Target->GetActorLocation(), 0);
 		lightning->SetWorldScale3D(FVector(2, 2, 2));
@@ -65,6 +68,7 @@ void ATeslaTurret::LookForTarget()
 			AEnemyShip* ship = Cast<AEnemyShip>(It->GetActor());
 			if (IsValid(ship)) {
 				Target = ship;
+				GLog->Log("LookForTarget " + ship->GetName());
 				ship->OnDeathCallback.AddDynamic(this, &ATeslaTurret::OnTargetDestroy);
 				LastAttack = seconds + AttackRate;
 			}
@@ -92,4 +96,5 @@ void ATeslaTurret::OnTargetDestroy(AEnemyShip* ship)
 	float seconds = GetWorld()->GetTimeSeconds();
 	LastCheck = seconds + CheckRate;
 	LastAttack = seconds + AttackRate;
+	UE_LOG(LogTemp, Log, TEXT("OnTargetDestroy"));
 }

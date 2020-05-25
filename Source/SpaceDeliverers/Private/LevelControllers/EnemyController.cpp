@@ -73,7 +73,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	bool hasFreeTargets = false;
 	for (auto* platform : Platforms)
 	{
-		if (!platform->IsFree() && !platform->GetIsDestroyingByBot())
+		if (!platform->IsFree() && !platform->IsBotTarget)
 		{
 			AActor* point = (*BotsSpawnPoints)[0];
 			FVector position = point->GetActorLocation();
@@ -81,6 +81,8 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			FActorSpawnParameters ActorSpawnParams;
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			AEnemyBot* bot = GetWorld()->SpawnActor<AEnemyBot>(EnemyBotBase, position, rotation, ActorSpawnParams);
+			bot->SetTargetPlatform(platform);
+			platform->IsBotTarget = true;
 			bot->OnSpawnBP();
 			break;
 		}

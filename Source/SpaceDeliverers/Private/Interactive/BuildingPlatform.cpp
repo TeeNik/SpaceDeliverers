@@ -74,6 +74,7 @@ bool ABuildingPlatform::Interact(UInteractionComponent* interComp, ACharacter* c
 		float duration = 3;
 		ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
 		level->GetBuildingBot()->Build(this, duration);
+		interComp->OnRelease();
 
 		return true;
 	}

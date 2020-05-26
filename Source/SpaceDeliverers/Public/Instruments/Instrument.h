@@ -13,7 +13,7 @@ enum InstrumentType {
 	Pickaxe,
 };
 
-UCLASS()
+UCLASS(Blueprintable)
 class SPACEDELIVERERS_API AInstrument : public AActor
 {
 	GENERATED_BODY()

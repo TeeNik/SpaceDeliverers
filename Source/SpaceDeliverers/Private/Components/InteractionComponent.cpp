@@ -32,7 +32,6 @@ void UInteractionComponent::OnFire()
 		Instrument->Use();
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("UInteractionComponent::OnFire: %d"), Interactive != NULL);
 	if (Interactive != NULL) {
 		float time = Interactive->GetInteractionTime();
 		if (Interactive->Interact(this, Cast<ACharacter>(GetOwner()))) {

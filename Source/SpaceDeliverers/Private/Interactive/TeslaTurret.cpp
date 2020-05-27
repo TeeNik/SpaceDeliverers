@@ -19,6 +19,17 @@ void ATeslaTurret::Tick(float DeltaTime)
 
 	float seconds = GetWorld()->GetTimeSeconds();
 
+	if (!IsValid(Target)) {
+		if (seconds > LastCheck) {
+			LookForTarget();
+		}
+	}
+	else {
+		if (seconds > LastAttack) {
+			Attack();
+		}
+	}
+
 	if (lightning != nullptr) {
 		if (seconds >= LightningDestroyTime) {
 			lightning->DestroyComponent();
@@ -34,16 +45,6 @@ void ATeslaTurret::Tick(float DeltaTime)
 		}
 	}
 
-	if (!IsValid(Target)) {
-		if (seconds > LastCheck) {
-			LookForTarget();
-		}
-	}
-	else {
-		if(seconds > LastAttack){
-			Attack();
-		}
-	}
 }
 
 void ATeslaTurret::Attack() {
@@ -71,6 +72,7 @@ void ATeslaTurret::LookForTarget()
 				GLog->Log("LookForTarget " + ship->GetName());
 				ship->OnDeathCallback.AddDynamic(this, &ATeslaTurret::OnTargetDestroy);
 				LastAttack = seconds + AttackRate;
+				break;
 			}
 		}
 	}

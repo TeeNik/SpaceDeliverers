@@ -2,6 +2,7 @@
 #include "Engine/DataTable.h"
 #include "BuildingData.generated.h"
 
+class UTexture2D;
 
 USTRUCT(BlueprintType)
 struct SPACEDELIVERERS_API FBuildingData : public FTableRowBase
@@ -28,4 +29,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	float BuildingTime;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
+	UTexture2D* Icon;
 };

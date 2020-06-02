@@ -8,5 +8,11 @@ void UBuilderItem::Init(const FBuildingData* data)
 {
 	Data = data;
 
+	USpacer* spacer1 = WidgetTree->ConstructWidget<USpacer>(USpacer::StaticClass());
+
+	if (Data->BlueGems) {
+
+	}
+
 }
 

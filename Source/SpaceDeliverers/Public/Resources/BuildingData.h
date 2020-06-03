@@ -3,6 +3,7 @@
 #include "BuildingData.generated.h"
 
 class UTexture2D;
+class PriceData;
 
 USTRUCT(BlueprintType)
 struct SPACEDELIVERERS_API FBuildingData : public FTableRowBase
@@ -10,7 +11,7 @@ struct SPACEDELIVERERS_API FBuildingData : public FTableRowBase
 	GENERATED_BODY()
 
 public:
-	FBuildingData() {} ;
+	FBuildingData();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	FString Name;
@@ -32,4 +33,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	UTexture2D* Icon;
+
+	TArray<PriceData> Prices[3];
 };

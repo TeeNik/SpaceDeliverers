@@ -1,9 +1,11 @@
 #include "Resources/BuildingData.h"
-#include "Resources/PriceData.h"
 #include "Gem.h"
+#include "PriceData.h"
+#include "Engine/World.h"
 
 FBuildingData::FBuildingData() {
-	/*Prices.Add(FPriceData(GemType::Blue, BlueGems));
-	Prices.Add(FPriceData(GemType::Green, GreenGems));
-	Prices.Add(FPriceData(GemType::Purple, PurpleGems));*/
+	//auto price = NewObject<UPriceData>(this);
+	//Prices.Add(UPriceData(GemType::Blue, BlueGems));
+	//Prices.Add(UPriceData(GemType::Green, GreenGems));
+	//Prices.Add(UPriceData(GemType::Purple, PurpleGems));*/
 }

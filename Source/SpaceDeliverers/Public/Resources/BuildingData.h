@@ -19,16 +19,10 @@ public:
 	FBuildingData();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
+	int Id;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	FString Name;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
-	int BlueGems;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
-	int PurpleGems;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
-	int GreenGems;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	TSubclassOf<AActor> ActorToBuild;
@@ -39,5 +33,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	UTexture2D* Icon;
 
-	TArray<UPriceData> Prices;
+	//TArray<UPriceData> Prices;
 };

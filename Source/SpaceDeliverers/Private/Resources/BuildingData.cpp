@@ -1,6 +1,6 @@
 #include "Resources/BuildingData.h"
 #include "Gem.h"
-#include "PriceData.h"
+//#include "PriceData.h"
 #include "Engine/World.h"
 
 FBuildingData::FBuildingData() {

@@ -3,9 +3,22 @@
 #include "Components/TextBlock.h"
 #include "Engine/Texture2D.h"
 
-void UPriceItem::Init(UTexture2D* texture, FString text)
+#include "PriceData.h"
+#include "Gem.h"
+
+void UPriceItem::Init(UPriceData* data)
 {
-	Icon->SetBrushFromTexture(texture);
-	Text->SetText(FText::FromString(text));
+	switch (data->Type) {
+	case GemType::Blue:
+		Icon->SetBrushFromTexture(BlueIcon);
+		break;
+	case GemType::Green:
+		Icon->SetBrushFromTexture(GreenIcon);
+		break;
+	case GemType::Purple:
+		Icon->SetBrushFromTexture(PurpleIcon);
+		break;
+	}
+	Text->SetText(FText::FromString(FString::FromInt(data->Value)));
 }
 

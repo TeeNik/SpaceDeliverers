@@ -1,26 +1,17 @@
 #pragma once
-
-#include "Engine/DataTable.h"
+#include "CoreMinimal.h"
+#include "Gem.h"
 #include "PriceData.generated.h"
 
-
-USTRUCT()
-struct SPACEDELIVERERS_API FPriceData : public FTableRowBase
+UCLASS()
+class SPACEDELIVERERS_API UPriceData : public UObject
 {
 	GENERATED_BODY()
 
 public:
+	void SetData(GemType type, int value);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceData")
-	int Id;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceData")
-	int BlueGems;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceData")
-	int PurpleGems;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceData")
-	int GreenGems;
+	GemType Type;
+	int Value;
 	
 };

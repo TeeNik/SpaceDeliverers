@@ -3,13 +3,15 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-//TODO replace by class
+
+//TODO replace by class(look at FBuildingSelected OnBuildingSelected)
 #include "BuildingBot.h"
 
 #include "BuilderWidget.generated.h"
 
 class UButton;
-
+class UBuilderItem;
+class UHorizontalBox;
 
 UCLASS()
 class SPACEDELIVERERS_API UBuilderWidget : public UUserWidget
@@ -27,6 +29,12 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* CloseButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UHorizontalBox* ItemsContainer;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UBuilderItem> BuilderItemBP;
 
 private:
 	FBuildingSelected OnBuildingSelected;

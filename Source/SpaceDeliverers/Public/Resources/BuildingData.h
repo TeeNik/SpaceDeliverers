@@ -4,11 +4,7 @@
 
 class UTexture2D;
 class UPriceData;
-
-/*class SimpleData {
-public:
-	int value;
-};*/
+class UPriceItem;
 
 USTRUCT(BlueprintType)
 struct SPACEDELIVERERS_API FBuildingData : public FTableRowBase
@@ -27,11 +23,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	TSubclassOf<AActor> ActorToBuild;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceData")
+	int BlueGems;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceData")
+	int PurpleGems;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceData")
+	int GreenGems;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	float BuildingTime;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	UTexture2D* Icon;
 
-	//TArray<UPriceData> Prices;
+	UPROPERTY()
+	TArray<UPriceData*> Prices;
 };

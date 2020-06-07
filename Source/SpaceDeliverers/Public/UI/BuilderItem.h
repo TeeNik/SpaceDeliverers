@@ -8,6 +8,7 @@ class UHorizontalBox;
 class UImage;
 struct FBuildingData;
 class UTexture2D;
+class UPriceItem;
 
 UCLASS()
 class SPACEDELIVERERS_API UBuilderItem : public UUserWidget
@@ -26,13 +27,7 @@ protected:
 	UImage* Icon;
 
 	UPROPERTY(EditDefaultsOnly)
-	UTexture2D* BlueGemIcon;
-
-	UPROPERTY(EditDefaultsOnly)
-	UTexture2D* PurpleGemIcon;
-
-	UPROPERTY(EditDefaultsOnly)
-	UTexture2D* GreenGemIcon;
+	TSubclassOf<UPriceItem> PriceItemBP;
 
 private:
 	const FBuildingData* Data;

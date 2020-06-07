@@ -7,6 +7,7 @@
 class UTextBlock;
 class UImage;
 class UTexture2D;
+class UPriceData;
 
 UCLASS()
 class SPACEDELIVERERS_API UPriceItem : public UUserWidget
@@ -14,7 +15,7 @@ class SPACEDELIVERERS_API UPriceItem : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void Init(UTexture2D* texture, FString text);
+	void Init(UPriceData* data);
 
 protected:
 	UPROPERTY(meta = (BindWidget))
@@ -22,5 +23,14 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* Text;
+
+	UPROPERTY(EditDefaultsOnly)
+	UTexture2D* GreenIcon;
+
+	UPROPERTY(EditDefaultsOnly)
+	UTexture2D* BlueIcon;
+
+	UPROPERTY(EditDefaultsOnly)
+	UTexture2D* PurpleIcon;
 	
 };

@@ -21,7 +21,9 @@ void UBuilderWidget::Init(FBuildingSelected& onBuildingSelected)
 	TArray<FBuildingData*> buildingDatas;
 	dataTable->GetAllRows(TEXT(""), buildingDatas);
 
+	UE_LOG(LogTemp, Log, TEXT("UBuilderWidget::Init"));
 	for (auto data : buildingDatas) {
+		UE_LOG(LogTemp, Log, TEXT("auto data : buildingDatas"));
 		UBuilderItem* builderItem = WidgetTree->ConstructWidget<UBuilderItem>(BuilderItemBP);
 		builderItem->Init(data);
 		ItemsContainer->AddChildToHorizontalBox(builderItem);

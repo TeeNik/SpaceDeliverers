@@ -3,18 +3,26 @@
 #include "Engine/World.h"
 #include "PriceData.h"
 
-FBuildingData::FBuildingData()
+TArray<UPriceData*>& FBuildingData::GetPrices()
 {
-	auto greenPrice = NewObject<UPriceData>();
-	greenPrice->SetData(GemType::Green, GreenGems);
+	UE_LOG(LogTemp, Log, TEXT("FBuildingData::GetPrices"));
+	UE_LOG(LogTemp, Log, TEXT("Prices.Num() = %d"), Prices.Num());
 
-	auto bluePrice = NewObject<UPriceData>();
-	bluePrice->SetData(GemType::Blue, GreenGems);
+	if (Prices.Num() == 0) {
+		auto greenPrice = NewObject<UPriceData>();
+		greenPrice->SetData(GemType::Green, GreenGems);
 
-	auto purplePrice = NewObject<UPriceData>();
-	purplePrice->SetData(GemType::Purple, GreenGems);
+		auto bluePrice = NewObject<UPriceData>();
+		bluePrice->SetData(GemType::Blue, BlueGems);
 
-	Prices.Add(greenPrice);
-	Prices.Add(purplePrice);
-	Prices.Add(bluePrice);
+		auto purplePrice = NewObject<UPriceData>();
+		purplePrice->SetData(GemType::Purple, PurpleGems);
+
+		Prices.Add(greenPrice);
+		Prices.Add(purplePrice);
+		Prices.Add(bluePrice);
+
+		UE_LOG(LogTemp, Log, TEXT("Prices created"));
+	}
+	return Prices;
 }

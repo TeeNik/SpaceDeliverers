@@ -12,11 +12,6 @@ struct SPACEDELIVERERS_API FBuildingData : public FTableRowBase
 	GENERATED_BODY()
 
 public:
-	FBuildingData();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
-	int Id;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	FString Name;
 
@@ -37,6 +32,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Data")
 	UTexture2D* Icon;
+
+	TArray<UPriceData*>& GetPrices();
+
+private:
 
 	UPROPERTY()
 	TArray<UPriceData*> Prices;

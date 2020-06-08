@@ -16,7 +16,7 @@ class SPACEDELIVERERS_API UBuilderItem : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void Init(const FBuildingData* data);
+	void Init(FBuildingData* data);
 
 protected:
 	
@@ -30,6 +30,6 @@ protected:
 	TSubclassOf<UPriceItem> PriceItemBP;
 
 private:
-	const FBuildingData* Data;
+	FBuildingData* Data;
 	
 };

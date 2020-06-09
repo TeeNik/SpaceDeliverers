@@ -9,7 +9,7 @@ class UBuilderWidget;
 class UUserWidget;
 class UInteractionComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FBuildingSelected);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBuildingSelected, TSubclassOf<AActor>, ActorBP);
 
 UCLASS()
 class SPACEDELIVERERS_API ABuildingBot : public ACharacter, public IInteractive
@@ -52,7 +52,7 @@ private:
 	UInteractionComponent* InteractionComponent;
 
 	UFUNCTION()
-	void BuildingSelected();
+	void BuildingSelected(TSubclassOf<AActor> actorBP);
 
 	bool IsBusy = false;
 };

@@ -10,11 +10,9 @@
 #include "Components/HorizontalBoxSlot.h"
 #include "Components/HorizontalBox.h"
 
-
 void UBuilderWidget::Init(FBuildingSelected& onBuildingSelected) 
 {
 	OnBuildingSelected = onBuildingSelected;
-	TurretButton->OnClicked.AddDynamic(this, &UBuilderWidget::OnTurretButtonClicked);
 	CloseButton->OnClicked.AddDynamic(this, &UBuilderWidget::CloseWidget);
 
 	UDataTable* dataTable = UResourceManagerLibrary::GetData()->BuildingDataTable;
@@ -25,14 +23,14 @@ void UBuilderWidget::Init(FBuildingSelected& onBuildingSelected)
 	for (auto data : buildingDatas) {
 		UE_LOG(LogTemp, Log, TEXT("auto data : buildingDatas"));
 		UBuilderItem* builderItem = WidgetTree->ConstructWidget<UBuilderItem>(BuilderItemBP);
-		builderItem->Init(data);
 		ItemsContainer->AddChildToHorizontalBox(builderItem);
+		OnBuildingSelected.AddDynamic(this, &UBuilderWidget::OnSelected);
+		builderItem->Init(data, OnBuildingSelected);
 	}
 }
 
-void UBuilderWidget::OnTurretButtonClicked()
+void UBuilderWidget::OnSelected(TSubclassOf<AActor> actor)
 {
-	OnBuildingSelected.Broadcast();
 	CloseWidget();
 }
 

@@ -1,17 +1,8 @@
 #include "Builder.h"
 #include "BuildingBot.h"
 
-void ABuilder::ShowPreview(const FVector& location)
-{
-
-}
-
-void ABuilder::Build()
-{
-
-}
-
-void ABuilder::SetInfo(ABuildingBot* bot)
+void ABuilder::SetInfo(ABuildingBot* bot, TSubclassOf<AActor> spawnActor)
 {
 	BuildingBot = bot;
+	SpawnActor = spawnActor;
 }

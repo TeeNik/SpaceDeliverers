@@ -22,9 +22,7 @@ public:
 	FORCEINLINE InstrumentType GetType() const override { return InstrumentType::Builder; }
 	FORCEINLINE const TSubclassOf<AActor> GetSpawningActor() const { return SpawnActor; }
 
-	void ShowPreview(const FVector& location);
-	void Build();
-	void SetInfo(ABuildingBot* bot);
+	void SetInfo(ABuildingBot* bot, TSubclassOf<AActor> spawnActor);
 
 protected:
 	UPROPERTY(EditDefaultsOnly)

@@ -3,8 +3,6 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-
-//TODO replace by class(look at FBuildingSelected OnBuildingSelected)
 #include "BuildingBot.h"
 
 #include "BuilderWidget.generated.h"
@@ -39,8 +37,8 @@ protected:
 private:
 	FBuildingSelected OnBuildingSelected;
 	
-	UFUNCTION() 
-	void OnTurretButtonClicked();
+	UFUNCTION()
+	void OnSelected(TSubclassOf<AActor> actor);
 
 	UFUNCTION()
 	void CloseWidget();

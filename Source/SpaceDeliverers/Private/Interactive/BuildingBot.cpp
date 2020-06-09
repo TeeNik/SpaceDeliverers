@@ -32,7 +32,7 @@ void ABuildingBot::OnReturnToHome()
 	IsBusy = false;
 }
 
-void ABuildingBot::BuildingSelected()
+void ABuildingBot::BuildingSelected(TSubclassOf<AActor> actorBP)
 {
 	ABuilder* builder = GetWorld()->SpawnActor<ABuilder>(BuilderBase);
 	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);

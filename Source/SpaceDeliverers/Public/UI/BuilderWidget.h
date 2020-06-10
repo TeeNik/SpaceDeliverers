@@ -22,9 +22,6 @@ public:
 	void ShowWidget();
 
 protected:
-	UPROPERTY(meta = (BindWidget), VisibleAnywhere, BlueprintReadWrite)
-	UButton* TurretButton;
-
 	UPROPERTY(meta = (BindWidget))
 	UButton* CloseButton;
 

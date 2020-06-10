@@ -65,6 +65,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	bool IsDestroying = false;
 	
-	IDestructible* Target;
+	IDestructible* Target = nullptr;
 
 };

@@ -9,23 +9,28 @@
 #include "BuilderItem.h"
 #include "Components/HorizontalBoxSlot.h"
 #include "Components/HorizontalBox.h"
+#include "Components/Spacer.h"
 
 void UBuilderWidget::Init(FBuildingSelected& onBuildingSelected) 
 {
 	OnBuildingSelected = onBuildingSelected;
 	CloseButton->OnClicked.AddDynamic(this, &UBuilderWidget::CloseWidget);
+	OnBuildingSelected.AddDynamic(this, &UBuilderWidget::OnSelected);
 
 	UDataTable* dataTable = UResourceManagerLibrary::GetData()->BuildingDataTable;
 	TArray<FBuildingData*> buildingDatas;
 	dataTable->GetAllRows(TEXT(""), buildingDatas);
+	const FSlateChildSize size(ESlateSizeRule::Fill);
 
-	UE_LOG(LogTemp, Log, TEXT("UBuilderWidget::Init"));
-	for (auto data : buildingDatas) {
-		UE_LOG(LogTemp, Log, TEXT("auto data : buildingDatas"));
+	for (int i = 0; i < buildingDatas.Num(); ++i) {
 		UBuilderItem* builderItem = WidgetTree->ConstructWidget<UBuilderItem>(BuilderItemBP);
 		ItemsContainer->AddChildToHorizontalBox(builderItem);
-		OnBuildingSelected.AddDynamic(this, &UBuilderWidget::OnSelected);
-		builderItem->Init(data, OnBuildingSelected);
+		builderItem->Init(buildingDatas[i], OnBuildingSelected);
+		if (i != buildingDatas.Num() - 1) {
+			USpacer* spacer = WidgetTree->ConstructWidget<USpacer>(USpacer::StaticClass());
+			UHorizontalBoxSlot* spacelSlot = ItemsContainer->AddChildToHorizontalBox(spacer);
+			spacelSlot->SetSize(size);
+		}
 	}
 }
 
@@ -48,6 +53,7 @@ void UBuilderWidget::ShowWidget()
 
 void UBuilderWidget::CloseWidget()
 {
+	UE_LOG(LogTemp, Log, TEXT("UBuilderWidget::CloseWidget"));
 	auto pc = GetWorld()->GetFirstPlayerController();
 	if (IsValid(pc)) {
 		pc->bShowMouseCursor = false;

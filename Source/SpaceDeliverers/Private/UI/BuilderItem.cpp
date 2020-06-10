@@ -20,9 +20,9 @@ void UBuilderItem::Init(FBuildingData* data, FBuildingSelected onBuildingSelecte
 			UPriceItem* priceItem = WidgetTree->ConstructWidget<UPriceItem>(PriceItemBP);
 			priceItem->Init(price);
 			PriceBox->AddChildToHorizontalBox(priceItem);
-			ClickButton->OnClicked.AddDynamic(this, &UBuilderItem::OnClick);
 		}
 	}
+	ClickButton->OnClicked.AddDynamic(this, &UBuilderItem::OnClick);
 }
 
 void UBuilderItem::OnClick()

@@ -32,12 +32,13 @@ void ABuildingBot::OnReturnToHome()
 	IsBusy = false;
 }
 
-void ABuildingBot::BuildingSelected(TSubclassOf<AActor> actorBP)
+void ABuildingBot::BuildingSelected(TSubclassOf<AActor> spawnActor)
 {
 	ABuilder* builder = GetWorld()->SpawnActor<ABuilder>(BuilderBase);
 	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
 	ACharacter* character = Cast<ACharacter>(InteractionComponent->GetOwner());
 	if (IsValid(character)) {
+		builder->SetSpawnActor(spawnActor);
 		builder->AttachToComponent(character->GetMesh(), rules, FName("BuilderSocket"));
 		InteractionComponent->SetInstrument(builder);
 	}

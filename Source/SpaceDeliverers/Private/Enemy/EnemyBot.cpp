@@ -28,11 +28,13 @@ bool AEnemyBot::Interact(UInteractionComponent* interComp, ACharacter* character
 	if (inHand != NULL && inHand->GetType() == InstrumentType::Gun) {
 		TargetPlatform->IsBotTarget = false;
 		WidgetComponent->SetVisibility(false);
-		Target->OnTargetRelease();
 		IsDestroying = true;
 		const AGun* gun = Cast<AGun>(inHand);
 		gun->Shoot(this);
 		OnBotHit(character, InteractionTime);
+		if (Target != nullptr) {
+			Target->OnTargetRelease();
+		}
 		return true;
 	}
 	return false;

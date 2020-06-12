@@ -1,13 +1,16 @@
 #include "InteractiveActor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/SceneComponent.h"
 
 AInteractiveActor::AInteractiveActor()
 {
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
-	RootComponent = Box;
-	Mesh->SetupAttachment(Box);
+	RootComponent = Root;
+	Box->SetupAttachment(Root);
+	Mesh->SetupAttachment(Root);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Mesh->SetGenerateOverlapEvents(false);
 }

@@ -37,6 +37,8 @@ public:
 
 private:
 
-	UPROPERTY()
+	bool IsInited;
+
+	UPROPERTY(Transient)
 	TArray<UPriceData*> Prices;
 };

@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "InteractionComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundBase.h"
 #include "Components/AudioComponent.h"
 
 bool ABoombox::Interact(UInteractionComponent* interComp, ACharacter* character) {

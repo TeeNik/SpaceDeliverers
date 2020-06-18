@@ -19,16 +19,19 @@ class SPACEDELIVERERS_API AGem : public AActor
 public:	
 	AGem();
 
-	void PlaySpawnAnimation(FVector spawnLocation);
+	void PlaySpawnAnimation(FVector spawnLocation, FVector offset);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Gem")
-	void OnPlaySpawnAnimation(FVector spawnLocation, float x, float y);
+	void OnPlaySpawnAnimation(FVector spawnLocation, FVector offset);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Gem")
 	void OnCollect();
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	float Height;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	bool IsCollectable;
 
 protected:
 	virtual void BeginPlay() override;
@@ -41,9 +44,6 @@ protected:
 
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(EditDefaultsOnly)
-	float Radius;
 
 	UPROPERTY(EditDefaultsOnly)
 	TEnumAsByte<GemType> Type;

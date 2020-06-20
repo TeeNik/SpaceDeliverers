@@ -12,12 +12,17 @@ bool AMineral::Interact(UInteractionComponent* interComp, ACharacter* character)
 		FActorSpawnParameters actorSpawnParams;
 		actorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
+		int dispersion = 90;
+		FVector actorLoc = GetActorLocation();
+		auto offset = actorLoc - character->GetActorLocation();
+		offset.Z = 0;
+		int angle = FMath::RandRange(-dispersion, dispersion);
+		offset = offset.RotateAngleAxis(angle, FVector(0, 0, 1));
+		offset.Normalize();
+		offset *= Radius;
 
-		auto dir = GetActorLocation() - character->GetActorLocation();
-		float angle = FMath::RandRange(-90, 90);
-
-		auto gem = GetWorld()->SpawnActor<AGem>(CollectableGem, GetActorLocation(), GetActorRotation(), actorSpawnParams);
-		gem->PlaySpawnAnimation(GetActorLocation());
+		auto gem = GetWorld()->SpawnActor<AGem>(CollectableGem, actorLoc, GetActorRotation(), actorSpawnParams);
+		gem->PlaySpawnAnimation(actorLoc, offset);
 		OnMineralHit();
 		return true;
 	}

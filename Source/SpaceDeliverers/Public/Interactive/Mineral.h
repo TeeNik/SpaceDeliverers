@@ -17,8 +17,10 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Mineral")
 	void OnMineralHit();
 
-
 protected:
+
+	UPROPERTY(EditDefaultsOnly)
+	float Radius = 200;
 
 	UPROPERTY(EditDefaultsOnly)
 	float InteractionTime = 3;

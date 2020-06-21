@@ -8,6 +8,7 @@
 class UBuilderWidget;
 class UUserWidget;
 class UInteractionComponent;
+class ABuildingPlatform;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBuildingSelected, TSubclassOf<AActor>, ActorBP);
 
@@ -27,10 +28,10 @@ public:
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 	
-	void Build(const AActor* dest, const float duration);
+	void Build(ABuildingPlatform* dest, const float duration);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "BuildingBot")
-	void OnBuildBP(const AActor* dest, const float duration);
+	void OnBuildBP(ABuildingPlatform* dest, const float duration);
 
 protected:
 	virtual void BeginPlay() override;

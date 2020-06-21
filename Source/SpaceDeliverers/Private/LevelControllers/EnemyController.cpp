@@ -73,7 +73,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	bool hasFreeTargets = false;
 	for (auto* platform : Platforms)
 	{
-		if (!platform->IsFree() && !platform->IsBotTarget)
+		if (!platform->IsFree() && !platform->IsBotTarget && !platform->GetIsBuildingProcess())
 		{
 			AActor* point = (*BotsSpawnPoints)[0];
 			FVector position = point->GetActorLocation();

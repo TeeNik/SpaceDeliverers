@@ -7,6 +7,7 @@
 #include "BuilderWidget.h"
 #include "AIController.h"
 #include "SpaceLevelScript.h"
+#include "BuildingPlatform.h"
 
 ABuildingBot::ABuildingBot()
 {
@@ -64,7 +65,7 @@ void ABuildingBot::OnDeselect()
 	GetMesh()->SetRenderCustomDepth(false);
 }
 
-void ABuildingBot::Build(const AActor* dest, const float duration)
+void ABuildingBot::Build(ABuildingPlatform* dest, const float duration)
 {
 	IsBusy = true;
 	OnBuildBP(dest, duration);

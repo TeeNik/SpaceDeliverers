@@ -17,6 +17,7 @@ public:
 	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
 	inline bool IsFree() { return PlacedActor == nullptr; }
+	inline bool GetIsBuildingProcess() { return IsBuildingProcess; }
 	
 	bool IsBotTarget;
 
@@ -25,6 +26,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	class USceneComponent* SpawnPoint;
+
+protected:
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	bool IsBuildingProcess;
 
 private:
 	AActor* PreviewActor = nullptr;

@@ -5,6 +5,7 @@
 #include "Utils/TagStrings.h"
 #include "Components/WidgetComponent.h"
 #include "Destructible.h"
+#include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "BuildingPlatform.h"
 
@@ -46,6 +47,16 @@ void AEnemyBot::OnTargetReached(AActor* destroyTarget)
 	if (Target != nullptr) {
 		GLog->Log("Target is valid");
 	}
+}
+
+void AEnemyBot::OnDestroy()
+{
+	OnDeathCallback.Broadcast();
+	if (ExplosionParticle != NULL) {
+		auto particle = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, GetActorLocation());
+		particle->SetWorldScale3D(ParticleSize);
+	}
+	Destroy();
 }
 
 void AEnemyBot::OnSelect(UInteractionComponent* interComp)

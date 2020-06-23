@@ -61,8 +61,7 @@ bool ABuildingPlatform::Interact(UInteractionComponent* interComp, ACharacter* c
 		auto spawningActor = builder->GetSpawningActor();
 
 		OnDeselect();
-		//PreviewActor->Destroy();
-		//PreviewActor = nullptr;
+		IsBuildingProcess = true;
 
 		FActorSpawnParameters ActorSpawnParams;
 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

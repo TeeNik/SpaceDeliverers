@@ -73,8 +73,9 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	bool hasFreeTargets = false;
 	for (auto* platform : Platforms)
 	{
-		if (!platform->IsFree() && !platform->IsBotTarget && !platform->GetIsBuildingProcess())
+		if (!platform->IsFree() && !platform->IsBotTarget && !platform->GetIsBuildingProcess() && seconds > BotSpawnTime)
 		{
+			UE_LOG(LogTemp, Log, TEXT("%d %d %d"), platform->IsFree(), platform->IsBotTarget, platform->GetIsBuildingProcess());
 			AActor* point = (*BotsSpawnPoints)[0];
 			FVector position = point->GetActorLocation();
 			FRotator rotation = point->GetActorRotation();
@@ -84,6 +85,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			bot->SetTargetPlatform(platform);
 			platform->IsBotTarget = true;
 			bot->OnSpawnBP();
+			BotSpawnTime = seconds + BotsRate;
 			break;
 		}
 	}
@@ -123,7 +125,7 @@ void UEnemyController::OnShipDeath(AEnemyShip* ship)
 
 void UEnemyController::OnBotDeath()
 {
-	
+	BotSpawnTime = GetWorld()->GetTimeSeconds() + BotsRate;
 }
 
 void UEnemyController::OnShieldUpdate(float shield)

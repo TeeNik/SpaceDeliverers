@@ -10,6 +10,8 @@ class UParticleSystemComponent;
 class IDestructible;
 class ABuildingPlatform;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FBotDeath);
+
 UCLASS()
 class SPACEDELIVERERS_API AEnemyBot : public ACharacter, public IInteractive
 {
@@ -26,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnTargetReached(AActor* destroyTarget);
 
+	UFUNCTION(BlueprintCallable)
+	void OnDestroy();
+
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 
@@ -39,6 +44,8 @@ public:
 	void OnSpawnBP();
 
 	inline void SetTargetPlatform(ABuildingPlatform* target) { TargetPlatform = target; }
+
+	FBotDeath OnDeathCallback;
 
 protected:
 

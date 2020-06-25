@@ -57,7 +57,7 @@ private:
 	TArray<SpawnInfo<AEnemyShip>> ShipSpawnInfo;
 
 	const TArray<AActor*>* BotsSpawnPoints;
-
+	AActor* GetFarthestBotPoint();
 	TArray<ABuildingPlatform*> Platforms;
 		
 	float ShipSpawnTime;

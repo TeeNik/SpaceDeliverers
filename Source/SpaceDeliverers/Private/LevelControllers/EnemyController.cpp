@@ -75,8 +75,11 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	{
 		if (!platform->IsFree() && !platform->IsBotTarget && !platform->GetIsBuildingProcess() && seconds > BotSpawnTime)
 		{
+			UE_LOG(LogTemp, Log, TEXT("Seconds: %f"), seconds);
+			UE_LOG(LogTemp, Log, TEXT("BotSpawnTime: %f"), BotSpawnTime);
+
 			UE_LOG(LogTemp, Log, TEXT("%d %d %d"), platform->IsFree(), platform->IsBotTarget, platform->GetIsBuildingProcess());
-			AActor* point = (*BotsSpawnPoints)[0];
+			AActor* point = GetFarthestBotPoint();
 			FVector position = point->GetActorLocation();
 			FRotator rotation = point->GetActorRotation();
 			FActorSpawnParameters ActorSpawnParams;
@@ -86,9 +89,25 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			platform->IsBotTarget = true;
 			bot->OnSpawnBP();
 			BotSpawnTime = seconds + BotsRate;
+			UE_LOG(LogTemp, Log, TEXT("New BotSpawnTime: %f"), BotSpawnTime);
 			break;
 		}
 	}
+}
+
+AActor* UEnemyController::GetFarthestBotPoint() {
+	AActor* finalPoint = nullptr;
+	float finalDist = 0;
+	FVector playerPos = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+
+	for (auto point : (*BotsSpawnPoints)) {
+		float dist = FVector::DistSquared(point->GetActorLocation(), playerPos);
+		if (dist > finalDist) {
+			finalDist = dist;
+			finalPoint = point;
+		}
+	}
+	return finalPoint;
 }
 
 template<class T>

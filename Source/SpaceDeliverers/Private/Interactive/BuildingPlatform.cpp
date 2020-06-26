@@ -79,3 +79,9 @@ bool ABuildingPlatform::Interact(UInteractionComponent* interComp, ACharacter* c
 	}
 	return false;
 }
+
+void ABuildingPlatform::DestroyByBot()
+{
+	IsBotTarget = false;
+	PlacedActor = nullptr;
+}

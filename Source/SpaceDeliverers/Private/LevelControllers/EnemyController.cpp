@@ -85,9 +85,8 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			FActorSpawnParameters ActorSpawnParams;
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			AEnemyBot* bot = GetWorld()->SpawnActor<AEnemyBot>(EnemyBotBase, position, rotation, ActorSpawnParams);
+			bot->SpawnDefaultController();
 			bot->SetTargetPlatform(platform);
-			platform->IsBotTarget = true;
-			bot->OnSpawnBP();
 			BotSpawnTime = seconds + BotsRate;
 			UE_LOG(LogTemp, Log, TEXT("New BotSpawnTime: %f"), BotSpawnTime);
 			break;

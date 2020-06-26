@@ -5,6 +5,7 @@
 #include "Components/HorizontalBoxSlot.h"
 #include "Components/HorizontalBox.h"
 #include "Components/Button.h"
+#include "Components/Image.h"
 
 #include "PriceData.h"
 #include "PriceItem.h"
@@ -13,6 +14,7 @@
 void UBuilderItem::Init(FBuildingData* data, FBuildingSelected onBuildingSelected)
 {
 	Data = data;
+	Icon->SetBrushFromTexture(data->Icon);
 	OnBuildingSelected = onBuildingSelected;
 	auto prices = Data->GetPrices();
 	for (auto price : prices) {

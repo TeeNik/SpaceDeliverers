@@ -27,26 +27,46 @@ bool AEnemyBot::Interact(UInteractionComponent* interComp, ACharacter* character
 {
 	const AInstrument* inHand = interComp->GetInstrument();
 	if (inHand != NULL && inHand->GetType() == InstrumentType::Gun) {
-		TargetPlatform->IsBotTarget = false;
+		if (TargetPlatform != nullptr) {
+			TargetPlatform->IsBotTarget = false;
+		}
 		WidgetComponent->SetVisibility(false);
 		IsDestroying = true;
 		const AGun* gun = Cast<AGun>(inHand);
 		gun->Shoot(this);
 		OnBotHit(character, InteractionTime);
 		if (Target != nullptr) {
-			Target->OnTargetRelease();
+			Target->TargetRelease();
 		}
 		return true;
 	}
 	return false;
 }
 
-void AEnemyBot::OnTargetReached(AActor* destroyTarget)
+
+void AEnemyBot::SetTargetPlatform(ABuildingPlatform* platform)
 {
-	Target = Cast<IDestructible>(destroyTarget);
-	if (Target != nullptr) {
-		GLog->Log("Target is valid");
-	}
+	TargetPlatform = platform;
+	TargetPlatform->IsBotTarget = true;
+	OnFoundTarget(platform->GetPlacedActor());
+}
+
+void AEnemyBot::OnTargetReached()
+{
+	Target = Cast<IDestructible>(TargetPlatform->GetPlacedActor());
+}
+
+void AEnemyBot::OnCrashReached()
+{
+	Target->CrashReached();
+}
+
+void AEnemyBot::OnDestroyReached()
+{
+	TargetPlatform->DestroyByBot();
+	TargetPlatform = nullptr;
+	Target->DestroyReached();
+	Target = nullptr;
 }
 
 void AEnemyBot::OnDestroy()

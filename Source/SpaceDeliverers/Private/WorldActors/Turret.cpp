@@ -99,24 +99,21 @@ void ATurret::OnDeselect()
 	Mesh->SetRenderCustomDepth(false);
 }
 
-void ATurret::OnDestroyReached()
+void ATurret::DestroyReached()
 {
 	IsDestroying = true;
 	OnDestroy();
-	UE_LOG(LogTemp, Log, TEXT("ATurret::OnDestroyReached"));
 }
 
-void ATurret::OnCrashReached()
+void ATurret::CrashReached()
 {
-	IDestructible::OnCrashReached();
+	IDestructible::CrashReached();
 	SmokeParticle->SetVisibility(true);
-	UE_LOG(LogTemp, Log, TEXT("ATurret::OnCrashReached"));
 }
 
-void ATurret::OnTargetReached()
+void ATurret::TargetReached()
 {
-	IDestructible::OnTargetReached();
-	UE_LOG(LogTemp, Log, TEXT("ATurret::OnTargetReached"));
+	IDestructible::TargetReached();
 }
 
 void ATurret::SetColliderActive(bool isActive)

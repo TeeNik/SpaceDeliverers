@@ -31,14 +31,11 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "ATurret")
 	void OnDestroy();
 
-	UFUNCTION(BlueprintCallable)
-	virtual void OnDestroyReached() override;
+	virtual void DestroyReached() override;
 
-	UFUNCTION(BlueprintCallable)
-	virtual void OnCrashReached() override;
+	virtual void CrashReached() override;
 
-	UFUNCTION(BlueprintCallable)
-	virtual void OnTargetReached() override;
+	virtual void TargetReached() override;
 
 	void SetColliderActive(bool isActive);
 

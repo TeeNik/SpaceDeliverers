@@ -16,17 +16,17 @@ class IDestructible
 
 public:
 
-	UFUNCTION(BlueprintCallable)
-	virtual	void OnDestroyReached() {};
+	//UFUNCTION(BlueprintCallable)
+	virtual	void DestroyReached() {};
 
-	UFUNCTION(BlueprintCallable)
-	virtual	void OnCrashReached() { IsCrashed = true; };
+	//UFUNCTION(BlueprintCallable)
+	virtual	void CrashReached() { IsCrashed = true; };
 
-	UFUNCTION(BlueprintCallable)
-	virtual	void OnTargetReached() { IsTarget = true; };
+	//UFUNCTION(BlueprintCallable)
+	virtual	void TargetReached() { IsTarget = true; };
 
-	UFUNCTION(BlueprintCallable)
-	virtual	void OnTargetRelease() { IsTarget = false; };
+	//UFUNCTION(BlueprintCallable)
+	virtual	void TargetRelease() { IsTarget = false; };
 
 	bool GetIsTarget() { return IsTarget; }
 	bool GetIsCrashed() { return IsCrashed; }

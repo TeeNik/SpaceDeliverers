@@ -18,7 +18,11 @@ public:
 
 	inline bool IsFree() { return PlacedActor == nullptr; }
 	inline bool GetIsBuildingProcess() { return IsBuildingProcess; }
+
+	void DestroyByBot();
 	
+	inline AActor* GetPlacedActor() { return PlacedActor; }
+
 	bool IsBotTarget;
 
 	UPROPERTY(EditDefaultsOnly)

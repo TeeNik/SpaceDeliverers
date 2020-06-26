@@ -127,26 +127,8 @@ void ASpaceDeliverersCharacter::MoveRight(float Value)
 }
 
 void ASpaceDeliverersCharacter::OnFire() {
-	
-	/*if (ProjectileBase != NULL)
-	{
-		UWorld* const World = GetWorld();
-		if (World != NULL)
-		{
-			const FRotator SpawnRotation = GetControlRotation();
-			const FVector SpawnLocation = GetActorLocation();
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-			World->SpawnActor<AActor>(ProjectileBase, SpawnLocation, SpawnRotation, ActorSpawnParams);
-		}
-	}*/
-	GLog->Log("Fire");
 	if (InteractionComponent->GetInstrument() != NULL) {
-		GLog->Log("OnFireBP");
 		OnFireBP(InteractionComponent->GetInstrument()->GetType());
-	}
-	else {
-		GLog->Log("InteractionComponent->GetInstrument() = NULL");
 	}
 	InteractionComponent->OnFire();
 }

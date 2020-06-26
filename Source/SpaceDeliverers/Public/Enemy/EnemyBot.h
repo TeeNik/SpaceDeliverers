@@ -26,7 +26,13 @@ public:
 	void OnBotHit(ACharacter* character, float duration);
 
 	UFUNCTION(BlueprintCallable)
-	void OnTargetReached(AActor* destroyTarget);
+	void OnTargetReached();
+
+	UFUNCTION(BlueprintCallable)
+	void OnCrashReached();
+
+	UFUNCTION(BlueprintCallable)
+	void OnDestroyReached();
 
 	UFUNCTION(BlueprintCallable)
 	void OnDestroy();
@@ -40,17 +46,17 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	UParticleSystemComponent* SpawnParticle;
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyShip")
-	void OnSpawnBP();
+	UFUNCTION(BlueprintImplementableEvent, Category = "EnemyBot")
+	void OnFoundTarget(AActor* target);
 
-	inline void SetTargetPlatform(ABuildingPlatform* target) { TargetPlatform = target; }
+	void SetTargetPlatform(ABuildingPlatform* target);
 
 	FBotDeath OnDeathCallback;
 
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	ABuildingPlatform* TargetPlatform;
+	ABuildingPlatform* TargetPlatform = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UParticleSystem* ExplosionParticle;

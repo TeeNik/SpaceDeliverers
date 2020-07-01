@@ -1,8 +1,24 @@
 #include "MainWidget.h"
 #include "ProgressBar.h"
 
-void UMainWidget::UpdateShield(const float& value) 
+void UMainWidget::Init(float value)
 {
-	UE_LOG(LogTemp, Log, TEXT("UpdateShield: %g"), value);
 	ShieldBar->SetPercent(value);
+}
+
+void UMainWidget::UpdateShield(float value)
+{
+	TargetPercent = value;
+}
+
+void UMainWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	UUserWidget::NativeTick(MyGeometry, InDeltaTime);
+	
+
+	float percent = ShieldBar->Percent;
+	if (percent != TargetPercent) {
+		percent = FMath::Lerp(percent, TargetPercent, .01f);
+		ShieldBar->SetPercent(percent);
+	}
 }

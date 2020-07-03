@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Interactive/InteractiveActor.h"
+#include "Destructible.h"
 #include "TeslaTurret.generated.h"
 
 class AEnemyShip;
@@ -9,12 +10,14 @@ class USceneComponent;
 class UParticleSystem;
 
 UCLASS()
-class SPACEDELIVERERS_API ATeslaTurret : public AInteractiveActor
+class SPACEDELIVERERS_API ATeslaTurret : public AInteractiveActor, public IDestructible
 {
 	GENERATED_BODY()
 
 public:
 	ATeslaTurret();
+
+	virtual void DestroyReached() override;
 
 protected:
 	virtual void Tick(float DeltaTime) override;

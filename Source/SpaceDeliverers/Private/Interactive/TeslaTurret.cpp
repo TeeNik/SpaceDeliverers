@@ -44,7 +44,11 @@ void ATeslaTurret::Tick(float DeltaTime)
 			lightning->SetBeamTargetPoint(0, Target->GetActorLocation(), 0);
 		}
 	}
+}
 
+void ATeslaTurret::DestroyReached()
+{
+	Destroy();
 }
 
 void ATeslaTurret::Attack() {

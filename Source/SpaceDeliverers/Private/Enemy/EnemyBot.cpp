@@ -58,7 +58,12 @@ void AEnemyBot::OnTargetReached()
 
 void AEnemyBot::OnCrashReached()
 {
-	Target->CrashReached();
+	if (Target != nullptr) {
+		Target->CrashReached();
+	}
+	else {
+		UE_LOG(LogTemp, Log, TEXT("AEnemyBot::OnCrashReached = Target is not valid"));
+	}
 }
 
 void AEnemyBot::OnDestroyReached()

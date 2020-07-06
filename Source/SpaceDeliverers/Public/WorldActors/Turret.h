@@ -32,10 +32,7 @@ public:
 	void OnDestroy();
 
 	virtual void DestroyReached() override;
-
 	virtual void CrashReached() override;
-
-	virtual void TargetReached() override;
 
 	void SetColliderActive(bool isActive);
 

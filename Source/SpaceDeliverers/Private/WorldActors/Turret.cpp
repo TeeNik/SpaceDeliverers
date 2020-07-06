@@ -111,11 +111,6 @@ void ATurret::CrashReached()
 	SmokeParticle->SetVisibility(true);
 }
 
-void ATurret::TargetReached()
-{
-	IDestructible::TargetReached();
-}
-
 void ATurret::SetColliderActive(bool isActive)
 {
 	if (isActive) {

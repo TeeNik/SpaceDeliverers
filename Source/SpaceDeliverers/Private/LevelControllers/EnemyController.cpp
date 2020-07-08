@@ -35,6 +35,29 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	float seconds = GetWorld()->GetTimeSeconds();
 
+	UpdateShipAttack(seconds);
+	UpdateShipSpawn(seconds);
+	UpdateBotSpawn(seconds);
+
+}
+
+AActor* UEnemyController::GetFarthestBotPoint() {
+	AActor* finalPoint = nullptr;
+	float finalDist = 0;
+	FVector playerPos = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+
+	for (auto point : (*BotsSpawnPoints)) {
+		float dist = FVector::DistSquared(point->GetActorLocation(), playerPos);
+		if (dist > finalDist) {
+			finalDist = dist;
+			finalPoint = point;
+		}
+	}
+	return finalPoint;
+}
+
+void UEnemyController::UpdateShipAttack(float seconds)
+{
 	if (ShipsCount > 0 && seconds > ShootTime)
 	{
 		for (auto& info : ShipSpawnInfo) {
@@ -45,6 +68,10 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		}
 		ShootTime = seconds + ShootRate;
 	}
+}
+
+void UEnemyController::UpdateShipSpawn(float seconds)
+{
 	if (ShipsCount < ShipSpawnPoints->Num() && seconds > ShipSpawnTime)
 	{
 		++ShipsCount;
@@ -69,7 +96,10 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			enemy->OnSpawn();
 		}
 	}
+}
 
+void UEnemyController::UpdateBotSpawn(float seconds)
+{
 	bool hasFreeTargets = false;
 	for (auto* platform : Platforms)
 	{
@@ -92,41 +122,6 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			break;
 		}
 	}
-}
-
-AActor* UEnemyController::GetFarthestBotPoint() {
-	AActor* finalPoint = nullptr;
-	float finalDist = 0;
-	FVector playerPos = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
-
-	for (auto point : (*BotsSpawnPoints)) {
-		float dist = FVector::DistSquared(point->GetActorLocation(), playerPos);
-		if (dist > finalDist) {
-			finalDist = dist;
-			finalPoint = point;
-		}
-	}
-	return finalPoint;
-}
-
-template<class T>
-T* SpawnActor(TArray<T*>& container, int& spawnTime, TArray<AActor*>* spawnPoints, TArray<bool>& info, TSubclassOf<T> spawnClass)
-{
-	int num = container.Num();
-	if (num < info.Num() && seconds > SpawnTime) {
-		int index = info.Find(false);
-		if (index >= 0) {
-			AActor* point = (*spawnPoints)[index];
-			FVector position = point->GetActorLocation();
-			FRotator rotation = point->GetActorRotation();
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-			T* enemy = GetWorld()->SpawnActor<T>(spawnClass, position, rotation, ActorSpawnParams);
-			container.Add(enemy);
-			return enemy;
-		}
-	}
-	return NULL;
 }
 
 void UEnemyController::OnShipDeath(AEnemyShip* ship)

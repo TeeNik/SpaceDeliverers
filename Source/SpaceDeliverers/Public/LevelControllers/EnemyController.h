@@ -75,4 +75,8 @@ private:
 
 	UFUNCTION()
 	void OnShieldUpdate(float shield);
+
+	void UpdateShipAttack(float seconds);
+	void UpdateShipSpawn(float seconds);
+	void UpdateBotSpawn(float seconds);
 };

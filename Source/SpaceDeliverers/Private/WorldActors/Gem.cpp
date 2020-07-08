@@ -29,6 +29,7 @@ void AGem::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 	if (IsCollectable && OtherActor->ActorHasTag(TagStrings::PlayerTag)) {
 		ASpaceDeliverersCharacter* character = Cast<ASpaceDeliverersCharacter>(OtherActor);
 		if (IsValid(character)) {
+			IsCollectable = false;
 			character->GetInventoryComponent()->CollectCrystal(Type);
 			OnCollect();
 		}

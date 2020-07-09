@@ -17,13 +17,15 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Mineral")
 	void OnMineralHit();
 
+	UFUNCTION(BlueprintCallable, Category = "Mineral")
+	void SpawnGem();
+
 protected:
+	UPROPERTY(EditDefaultsOnly)
+	int GemsToSpawn = 3;
 
 	UPROPERTY(EditDefaultsOnly)
 	float Radius = 200;
-
-	UPROPERTY(EditDefaultsOnly)
-	float InteractionTime = 3;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class AGem> CollectableGem;

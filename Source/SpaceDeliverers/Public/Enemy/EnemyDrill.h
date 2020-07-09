@@ -27,9 +27,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = AEnemyDrill, meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;
 
-	UPROPERTY(EditDefaultsOnly)
-	float InteractionTime = 3;
-
 private:
 	UFUNCTION()
 	void OnDeath(UHealthComponent* health);

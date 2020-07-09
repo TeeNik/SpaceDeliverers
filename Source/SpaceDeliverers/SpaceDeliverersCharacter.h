@@ -41,6 +41,9 @@ public:
 
 	void ScaleInteractionBox(const int& coeff);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisableMovement(float time);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UInteractionComponent* InteractionComponent;

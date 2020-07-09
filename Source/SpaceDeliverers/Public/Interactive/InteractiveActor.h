@@ -16,8 +16,13 @@ public:
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 
-//protected:
+	virtual float GetInteractionTime() override;
+
+protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float InteractionTime;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* Root;

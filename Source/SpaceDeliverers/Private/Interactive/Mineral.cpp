@@ -4,17 +4,32 @@
 #include "Engine/World.h"
 #include "WorldActors/Gem.h"
 #include "GameFramework/Character.h"
+#include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 bool AMineral::Interact(UInteractionComponent* interComp, ACharacter* character)
 {
 	const AInstrument* inHand = interComp->GetInstrument();
-	if (inHand != NULL && inHand->GetType() == InstrumentType::Pickaxe) {
-		FActorSpawnParameters actorSpawnParams;
-		actorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	if (inHand != NULL && inHand->GetType() == InstrumentType::Pickaxe) 
+	{
+		OnMineralHit();
+		return true;
+	}
+	return false;
+}
 
-		int dispersion = 90;
-		FVector actorLoc = GetActorLocation();
-		auto offset = actorLoc - character->GetActorLocation();
+void AMineral::SpawnGem()
+{
+	FActorSpawnParameters actorSpawnParams;
+	actorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	int dispersion = 90;
+	FVector actorLoc = GetActorLocation();
+	ACharacter* owner = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);;
+
+	for (int i = 0; i < GemsToSpawn; ++i)
+	{
+		auto offset = actorLoc - owner->GetActorLocation();
 		offset.Z = 0;
 		int angle = FMath::RandRange(-dispersion, dispersion);
 		offset = offset.RotateAngleAxis(angle, FVector(0, 0, 1));
@@ -23,8 +38,5 @@ bool AMineral::Interact(UInteractionComponent* interComp, ACharacter* character)
 
 		auto gem = GetWorld()->SpawnActor<AGem>(CollectableGem, actorLoc, GetActorRotation(), actorSpawnParams);
 		gem->PlaySpawnAnimation(actorLoc, offset);
-		OnMineralHit();
-		return true;
 	}
-	return false;
 }

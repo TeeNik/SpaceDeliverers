@@ -24,9 +24,6 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxEnergy = 10;
 
-	UPROPERTY(EditDefaultsOnly)
-	float InteractionTime = 10;
-
 	void ReduceEnergy();
 
 	virtual void BeginPlay() override;

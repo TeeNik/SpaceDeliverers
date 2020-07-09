@@ -30,3 +30,8 @@ void AInteractiveActor::OnDeselect()
 {
 	Mesh->SetRenderCustomDepth(false);
 }
+
+float AInteractiveActor::GetInteractionTime()
+{
+	return InteractionTime;
+}

@@ -30,6 +30,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+private:
+
 	UPROPERTY(EditDefaultsOnly)
 	float ShipSpawnRate;
 
@@ -40,10 +42,10 @@ protected:
 	float ShipStartDelay;
 
 	UPROPERTY(EditDefaultsOnly)
-	float BotsRate;
+	float BotsStartDelay;
 
 	UPROPERTY(EditDefaultsOnly)
-	float BotsStartDelay;
+	FVector2D BotSpawnRange;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AEnemyShip> EnemyShipBase;
@@ -51,7 +53,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AEnemyBot> EnemyBotBase;
 
-private:
 	const TArray<AActor*>* ShipSpawnPoints;
 	int ShipsCount;
 	TArray<SpawnInfo<AEnemyShip>> ShipSpawnInfo;

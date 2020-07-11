@@ -27,6 +27,7 @@ void UEnemyController::Initialize()
 	Platforms = level->GetPlatforms();
 	ShipSpawnTime = ShipStartDelay;
 	ShootTime = ShipStartDelay;
+	BotSpawnTime = BotsStartDelay;
 }
 
 void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -105,10 +106,6 @@ void UEnemyController::UpdateBotSpawn(float seconds)
 	{
 		if (!platform->IsFree() && !platform->IsBotTarget && !platform->GetIsBuildingProcess() && seconds > BotSpawnTime)
 		{
-			UE_LOG(LogTemp, Log, TEXT("Seconds: %f"), seconds);
-			UE_LOG(LogTemp, Log, TEXT("BotSpawnTime: %f"), BotSpawnTime);
-
-			UE_LOG(LogTemp, Log, TEXT("%d %d %d"), platform->IsFree(), platform->IsBotTarget, platform->GetIsBuildingProcess());
 			AActor* point = GetFarthestBotPoint();
 			FVector position = point->GetActorLocation();
 			FRotator rotation = point->GetActorRotation();
@@ -117,8 +114,8 @@ void UEnemyController::UpdateBotSpawn(float seconds)
 			AEnemyBot* bot = GetWorld()->SpawnActor<AEnemyBot>(EnemyBotBase, position, rotation, ActorSpawnParams);
 			bot->SpawnDefaultController();
 			bot->SetTargetPlatform(platform);
-			BotSpawnTime = seconds + BotsRate;
-			UE_LOG(LogTemp, Log, TEXT("New BotSpawnTime: %f"), BotSpawnTime);
+			float time = FMath::RandRange(BotSpawnRange.X, BotSpawnRange.Y);
+			BotSpawnTime = seconds + time;
 			break;
 		}
 	}
@@ -138,7 +135,7 @@ void UEnemyController::OnShipDeath(AEnemyShip* ship)
 
 void UEnemyController::OnBotDeath()
 {
-	BotSpawnTime = GetWorld()->GetTimeSeconds() + BotsRate;
+	BotSpawnTime = GetWorld()->GetTimeSeconds() + FMath::RandRange(BotSpawnRange.X, BotSpawnRange.Y);
 }
 
 void UEnemyController::OnShieldUpdate(float shield)

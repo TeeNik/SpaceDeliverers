@@ -10,6 +10,7 @@
 class UButton;
 class UBuilderItem;
 class UHorizontalBox;
+struct FBuildingData;
 
 UCLASS()
 class SPACEDELIVERERS_API UBuilderWidget : public UUserWidget
@@ -35,8 +36,13 @@ private:
 	FBuildingSelected OnBuildingSelected;
 	
 	UFUNCTION()
-	void OnSelected(TSubclassOf<AActor> actor);
+	void OnSelected(FBuildingData& data);
 
 	UFUNCTION()
 	void CloseWidget();
+
+	UPROPERTY()
+	TArray<UBuilderItem*> BuilderItems;
+
+	void CheckBuilderItemsPrices(const TArray<int>& gems);
 };

@@ -11,6 +11,7 @@ struct FBuildingData;
 class UTexture2D;
 class UPriceItem;
 class UButton;
+class UPriceData;
 
 UCLASS()
 class SPACEDELIVERERS_API UBuilderItem : public UUserWidget
@@ -18,7 +19,8 @@ class SPACEDELIVERERS_API UBuilderItem : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void Init(FBuildingData* data, FBuildingSelected onBuildingSelected);
+	void Init(FBuildingData* data, FBuildingSelected& onBuildingSelected);
+	void CheckPrices(const TArray<int>& gems);
 
 protected:
 	
@@ -27,6 +29,9 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UImage* Icon;
+
+	UPROPERTY(meta = (BindWidget))
+	UImage* Shadow;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UPriceItem> PriceItemBP;
@@ -38,6 +43,9 @@ protected:
 	void OnClick();
 
 private:
+	UPROPERTY()
+	TArray<UPriceData*> Prices;
+
 	FBuildingData* Data;
 	FBuildingSelected OnBuildingSelected;
 };

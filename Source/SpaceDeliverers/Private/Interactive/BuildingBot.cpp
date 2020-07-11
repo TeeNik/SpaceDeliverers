@@ -8,6 +8,7 @@
 #include "AIController.h"
 #include "SpaceLevelScript.h"
 #include "BuildingPlatform.h"
+#include "BuildingData.h"
 
 ABuildingBot::ABuildingBot()
 {
@@ -33,13 +34,13 @@ void ABuildingBot::OnReturnToHome()
 	IsBusy = false;
 }
 
-void ABuildingBot::BuildingSelected(TSubclassOf<AActor> spawnActor)
+void ABuildingBot::BuildingSelected(FBuildingData& data)
 {
 	ABuilder* builder = GetWorld()->SpawnActor<ABuilder>(BuilderBase);
 	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, false);
 	ACharacter* character = Cast<ACharacter>(InteractionComponent->GetOwner());
 	if (IsValid(character)) {
-		builder->SetSpawnActor(spawnActor);
+		builder->SetSpawnActor(data.ActorToBuild);
 		builder->AttachToComponent(character->GetMesh(), rules, FName("BuilderSocket"));
 		InteractionComponent->SetInstrument(builder);
 	}

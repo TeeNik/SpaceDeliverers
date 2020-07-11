@@ -3,14 +3,17 @@
 #include "CoreMinimal.h"
 #include "Interactive.h"
 #include "GameFramework/Character.h"
+#include "BuildingData.h"
 #include "BuildingBot.generated.h"
 
 class UBuilderWidget;
 class UUserWidget;
 class UInteractionComponent;
 class ABuildingPlatform;
+struct FBuildingData;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBuildingSelected, TSubclassOf<AActor>, ActorBP);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBuildingSelected, TSubclassOf<AActor>, ActorBP);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBuildingSelected, FBuildingData&, Data);
 
 UCLASS()
 class SPACEDELIVERERS_API ABuildingBot : public ACharacter, public IInteractive
@@ -33,6 +36,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "BuildingBot")
 	void OnBuildBP(ABuildingPlatform* dest, const float duration);
 
+	FBuildingSelected OnBuildingSelected;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -49,11 +54,10 @@ private:
 	UPROPERTY()
 	UBuilderWidget* BuilderWidget;
 
-	FBuildingSelected OnBuildingSelected;
 	UInteractionComponent* InteractionComponent;
 
 	UFUNCTION()
-	void BuildingSelected(TSubclassOf<AActor> actorBP);
+	void BuildingSelected(FBuildingData& data);
 
 	bool IsBusy = false;
 };

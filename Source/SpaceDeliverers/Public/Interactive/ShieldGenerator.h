@@ -17,7 +17,6 @@ public:
 	FORCEINLINE const float GetMaxValue() const { return MaxEnergy; }
 
 	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
-	virtual float GetInteractionTime() override { return InteractionTime; }
 
 	FEnergyUpdate OnEnergyUpdate;
 

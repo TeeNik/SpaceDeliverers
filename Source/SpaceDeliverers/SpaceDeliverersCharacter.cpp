@@ -13,6 +13,8 @@
 #include "Components/InteractionComponent.h"
 #include "Components/InventoryComponent.h"
 #include "Utils/TagStrings.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "SpaceLevelScript.h"
 
 ASpaceDeliverersCharacter::ASpaceDeliverersCharacter()
 {
@@ -72,6 +74,11 @@ void ASpaceDeliverersCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	InteractionComponent->OnInstrumentChanged.AddDynamic(this, &ASpaceDeliverersCharacter::OnInstrumentChanged);
+
+	if (IsNeedCameraAnimation)
+	{
+		StartCameraAnimation();
+	}
 }
 
 void ASpaceDeliverersCharacter::OnInstrumentChanged(int typeInt)
@@ -151,4 +158,23 @@ void ASpaceDeliverersCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp
 	if (InteractionComponent->GetInteractive() != nullptr && OtherActor == InteractionComponent->GetInteractive()->_getUObject()) {
 		InteractionComponent->OnDeselect();
 	}
+}
+
+void ASpaceDeliverersCharacter::StartCameraAnimation()
+{
+	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
+	const AActor* cameraStartPoint = level->GetPlayerCameraStart();
+	FVector startLocation = GetTransform().InverseTransformPosition(GetActorLocation());
+	//FRotator startRotation = GetTransform().InverseTransformRotation(GetActorRotation());
+
+	FollowCamera->SetWorldLocation(cameraStartPoint->GetActorLocation());
+	FollowCamera->SetWorldRotation(cameraStartPoint->GetActorRotation());
+
+	DisableMovement(CameraAnimationDuration);
+
+	FLatentActionInfo ActionInfo;
+	ActionInfo.CallbackTarget = this;
+	UKismetSystemLibrary::MoveComponentTo(FollowCamera, startLocation, FRotator::ZeroRotator,
+		false, false, CameraAnimationDuration, false,
+		EMoveComponentAction::Move, ActionInfo);
 }

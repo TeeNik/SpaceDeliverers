@@ -5,12 +5,12 @@
 
 AInteractiveActor::AInteractiveActor()
 {
-	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));;
+	//Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("BOX"));
-	RootComponent = Root;
-	Box->SetupAttachment(Root);
-	Mesh->SetupAttachment(Root);
+	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
+	//RootComponent = Root;
+	//Box->SetupAttachment(Root);
+	//Mesh->SetupAttachment(Root);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Mesh->SetGenerateOverlapEvents(false);
 }

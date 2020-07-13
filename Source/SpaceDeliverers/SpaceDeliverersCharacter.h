@@ -66,8 +66,16 @@ protected:
 	void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	
 private:
+
+	UPROPERTY(EditDefaultsOnly)
+	bool IsNeedCameraAnimation;
+
+	UPROPERTY(EditDefaultsOnly)
+	float CameraAnimationDuration;
+
+	void StartCameraAnimation();
 
 	UFUNCTION()
 	void OnInstrumentChanged(int type);

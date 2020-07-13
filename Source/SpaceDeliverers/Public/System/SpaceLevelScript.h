@@ -23,6 +23,7 @@ public:
 	FORCEINLINE const TArray<AActor*>& GetAsteroidSpawnPoints() { return AsteroidSpawnPoints; }
 	FORCEINLINE ABuildingBot* GetBuildingBot() { return BuildingBot; }
 	FORCEINLINE const AActor* GetBuildingBotHome() { return BuildingBotHome; }
+	FORCEINLINE const AActor* GetPlayerCameraStart() { return PlayerCameraStartPoint; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
@@ -48,4 +49,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<ABuildingPlatform*> Platforms;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	AActor* PlayerCameraStartPoint;
 };

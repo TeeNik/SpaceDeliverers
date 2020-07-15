@@ -53,8 +53,12 @@ protected:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+	void Turn(float Value);
+	void LookUp(float Value);
 	void TurnAtRate(float Rate);
 	void LookUpAtRate(float Rate);
+	bool IsRotationEnabled = true;
+
 	void OnFire();
 	void OnRelease();
 	virtual void BeginPlay() override;
@@ -67,6 +71,9 @@ protected:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
+	UFUNCTION()
+	void OnInstrumentChanged(int type);
+
 private:
 
 	UPROPERTY(EditDefaultsOnly)
@@ -78,7 +85,8 @@ private:
 	void StartCameraAnimation();
 
 	UFUNCTION()
-	void OnInstrumentChanged(int type);
+	void OnCameraAnimationEnd();
+
 
 	int InteractionBoxScaleFactor = 1;
 	const float BoxOffset = 75;

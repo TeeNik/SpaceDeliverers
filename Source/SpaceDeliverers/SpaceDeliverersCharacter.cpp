@@ -62,9 +62,9 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASpaceDeliverersCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASpaceDeliverersCharacter::MoveRight);
 
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("Turn", this, &ASpaceDeliverersCharacter::Turn);
 	PlayerInputComponent->BindAxis("TurnRate", this, &ASpaceDeliverersCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &ASpaceDeliverersCharacter::LookUp);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASpaceDeliverersCharacter::LookUpAtRate);
 	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
 	PlayerInputComponent->BindAction("RMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnRelease);
@@ -92,14 +92,32 @@ void ASpaceDeliverersCharacter::OnInstrumentChanged(int typeInt)
 	}
 }
 
+void ASpaceDeliverersCharacter::Turn(float Value)
+{
+	if (IsRotationEnabled) {
+		AddControllerYawInput(Value);
+	}
+}
+
+void ASpaceDeliverersCharacter::LookUp(float Value)
+{
+	if (IsRotationEnabled) {
+		AddControllerPitchInput(Value);
+	}
+}
+
 void ASpaceDeliverersCharacter::TurnAtRate(float Rate)
 {
-	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	if (IsRotationEnabled) {
+		AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	}
 }
 
 void ASpaceDeliverersCharacter::LookUpAtRate(float Rate)
 {
-	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+	if (IsRotationEnabled) {
+		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+	}
 }
 
 void ASpaceDeliverersCharacter::ScaleInteractionBox(const int& coeff)
@@ -133,7 +151,8 @@ void ASpaceDeliverersCharacter::MoveRight(float Value)
 	}
 }
 
-void ASpaceDeliverersCharacter::OnFire() {
+void ASpaceDeliverersCharacter::OnFire() 
+{
 	if (InteractionComponent->GetInstrument() != NULL) {
 		OnFireBP(InteractionComponent->GetInstrument()->GetType());
 	}
@@ -174,7 +193,15 @@ void ASpaceDeliverersCharacter::StartCameraAnimation()
 
 	FLatentActionInfo ActionInfo;
 	ActionInfo.CallbackTarget = this;
+	ActionInfo.Linkage = 0;
+	IsRotationEnabled = false;
+	ActionInfo.ExecutionFunction = "OnCameraAnimationEnd";
 	UKismetSystemLibrary::MoveComponentTo(FollowCamera, startLocation, FRotator::ZeroRotator,
 		false, false, CameraAnimationDuration, false,
 		EMoveComponentAction::Move, ActionInfo);
+}
+
+void ASpaceDeliverersCharacter::OnCameraAnimationEnd()
+{
+	IsRotationEnabled = true;
 }

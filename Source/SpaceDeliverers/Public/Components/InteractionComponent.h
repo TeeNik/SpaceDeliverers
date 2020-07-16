@@ -9,6 +9,7 @@ class IInteractive;
 enum InstrumentType;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInstrumentChanged, int32, type);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInstrumentUsed, int32, type);
 
 
 UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -31,6 +32,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FInstrumentChanged OnInstrumentChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FInstrumentUsed OnInstrumentUsed;
 
 protected:
 	virtual void BeginPlay() override;

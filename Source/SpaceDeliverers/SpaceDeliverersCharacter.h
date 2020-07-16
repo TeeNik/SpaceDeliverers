@@ -87,7 +87,6 @@ private:
 	UFUNCTION()
 	void OnCameraAnimationEnd();
 
-
 	int InteractionBoxScaleFactor = 1;
 	const float BoxOffset = 75;
 };

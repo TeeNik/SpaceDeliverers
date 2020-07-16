@@ -22,7 +22,13 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
-	int GemsToSpawn = 3;
+	float SpawnZ = 50;
+
+	UPROPERTY(EditDefaultsOnly)
+	FVector2D SpawnGemsRange;
+
+	//UPROPERTY(EditDefaultsOnly)
+	//int GemsToSpawn = 3;
 
 	UPROPERTY(EditDefaultsOnly)
 	float Radius = 200;

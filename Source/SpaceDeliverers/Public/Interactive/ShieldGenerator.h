@@ -23,6 +23,12 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxEnergy = 10;
 
+	UFUNCTION(BlueprintCallable)
+	void IncreaseEnergy();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInteractBP();
+
 	void ReduceEnergy();
 
 	virtual void BeginPlay() override;

@@ -40,14 +40,19 @@ bool AShieldGenerator::Interact(class UInteractionComponent* interComp, class AC
 	if (inHand != NULL) {
 		if (inHand->GetType() == InstrumentType::Wrench) {
 			if (CurrentEnergy < MaxEnergy) {
-				++CurrentEnergy;
-				OnEnergyUpdate.Broadcast();
-				UpdateMaterial();
+				OnInteractBP();
 				return true;
 			}
 		}
 	}
 	return false;
+}
+
+void AShieldGenerator::IncreaseEnergy()
+{
+	++CurrentEnergy;
+	OnEnergyUpdate.Broadcast();
+	UpdateMaterial();
 }
 
 void AShieldGenerator::UpdateMaterial()

@@ -28,14 +28,20 @@ void UInteractionComponent::SetInstrument(AInstrument * instrument)
 
 void UInteractionComponent::OnFire()
 {
-	if (Instrument != NULL) {
-		Instrument->Use();
-	}
-
 	if (Interactive != NULL) {
 		float time = Interactive->GetInteractionTime();
 		auto* character = Cast<ASpaceDeliverersCharacter>(GetOwner());
+		
+		bool hasInstrument = Instrument != NULL;
+		if (hasInstrument)
+		{
+			Instrument->Use();
+		}
+
 		if (Interactive->Interact(this, character)) {
+			if (hasInstrument) {
+				OnInstrumentUsed.Broadcast((int)Instrument->GetType());
+			}
 			if (time > 0) {
 				character->DisableMovement(time);
 				auto* GM = Cast<ASpaceDeliverersGameMode>(GetWorld()->GetAuthGameMode());

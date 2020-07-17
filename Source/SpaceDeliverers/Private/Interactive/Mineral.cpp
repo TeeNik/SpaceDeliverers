@@ -27,7 +27,9 @@ void AMineral::SpawnGem()
 	FVector actorLoc = GetActorLocation();
 	ACharacter* owner = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);;
 
-	for (int i = 0; i < GemsToSpawn; ++i)
+	int gemsToSpawn = FMath::RandRange(SpawnGemsRange.X, SpawnGemsRange.Y);
+
+	for (int i = 0; i < gemsToSpawn; ++i)
 	{
 		auto offset = actorLoc - owner->GetActorLocation();
 		offset.Z = 0;
@@ -35,6 +37,7 @@ void AMineral::SpawnGem()
 		offset = offset.RotateAngleAxis(angle, FVector(0, 0, 1));
 		offset.Normalize();
 		offset *= Radius;
+		offset.Z = SpawnZ;
 
 		auto gem = GetWorld()->SpawnActor<AGem>(CollectableGem, actorLoc, GetActorRotation(), actorSpawnParams);
 		gem->PlaySpawnAnimation(actorLoc, offset);

@@ -19,6 +19,13 @@ void UInventoryComponent::BeginPlay()
 	InventoryWidget = CreateWidget<UInventoryWidget>(GetWorld(), InventoryWidgetBP);
 	InventoryWidget->AddToViewport();
 	InventoryWidget->Init();
+
+	//for (int i = 0; i < 9; ++i)
+	//{
+	//	CollectCrystal(GemType::Blue);
+	//	CollectCrystal(GemType::Purple);
+	//	CollectCrystal(GemType::Green);
+	//}
 }
 
 void UInventoryComponent::SpendGems(FBuildingData& data)

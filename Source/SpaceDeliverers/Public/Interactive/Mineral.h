@@ -22,7 +22,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
-	float SpawnZ = 50;
+	float SpawnZ;
 
 	UPROPERTY(EditDefaultsOnly)
 	FVector2D SpawnGemsRange;

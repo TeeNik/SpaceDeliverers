@@ -37,7 +37,8 @@ void AMineral::SpawnGem()
 		offset = offset.RotateAngleAxis(angle, FVector(0, 0, 1));
 		offset.Normalize();
 		offset *= Radius;
-		offset.Z = SpawnZ;
+
+		actorLoc.Z = SpawnZ;
 
 		auto gem = GetWorld()->SpawnActor<AGem>(CollectableGem, actorLoc, GetActorRotation(), actorSpawnParams);
 		gem->PlaySpawnAnimation(actorLoc, offset);

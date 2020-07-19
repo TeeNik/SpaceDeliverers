@@ -33,4 +33,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UTexture2D* PurpleIcon;
 	
+	UPROPERTY(EditDefaultsOnly)
+	FLinearColor Green;
+
+	UPROPERTY(EditDefaultsOnly)
+	FLinearColor Blue;
+
+	UPROPERTY(EditDefaultsOnly)
+	FLinearColor Purple;
 };

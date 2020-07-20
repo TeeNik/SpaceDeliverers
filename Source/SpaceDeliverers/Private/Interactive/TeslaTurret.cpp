@@ -6,11 +6,21 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Utils/TagStrings.h"
 #include "HealthComponent.h"
+#include "Components/BoxComponent.h"
 
 ATeslaTurret::ATeslaTurret() {
 	PrimaryActorTick.bCanEverTick = true;
+
+	//RootPoint = CreateDefaultSubobject<USceneComponent>(TEXT("RootPoint"));
+	//RootComponent = Box;
+
+	//Mesh->SetRelativeLocation(FVector::ZeroVector);
+	//Box->SetRelativeLocation(FVector::ZeroVector);
+
 	SourcePoint = CreateDefaultSubobject<USceneComponent>(TEXT("SourcePoint"));
 	SourcePoint->SetupAttachment(RootComponent);
+	SmokeParticle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("SmokeParticle"));
+	SmokeParticle->SetupAttachment(RootComponent);
 }
 
 void ATeslaTurret::Tick(float DeltaTime)
@@ -35,8 +45,6 @@ void ATeslaTurret::Tick(float DeltaTime)
 			lightning->DestroyComponent();
 			lightning = nullptr;
 			if (IsValid(Target)) {
-				GLog->Log("Damage " + Target->GetName());
-				//UE_LOG(LogTemp, Log, TEXT("Damage:"+ Target->GetName()));
 				Target->GetHealthComponent()->TakeDamage(Damage);
 			}
 		}
@@ -46,6 +54,12 @@ void ATeslaTurret::Tick(float DeltaTime)
 	}
 }
 
+void ATeslaTurret::CrashReached()
+{
+	IDestructible::CrashReached();
+	SmokeParticle->SetVisibility(true);
+}
+
 void ATeslaTurret::DestroyReached()
 {
 	Destroy();
@@ -53,7 +67,6 @@ void ATeslaTurret::DestroyReached()
 
 void ATeslaTurret::Attack() {
 	if (IsValid(Target)) {
-		UE_LOG(LogTemp, Log, TEXT("Attack"));
 		lightning = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), LightingParticle, SourcePoint->GetComponentLocation());
 		lightning->SetBeamTargetPoint(0, Target->GetActorLocation(), 0);
 		lightning->SetWorldScale3D(FVector(2, 2, 2));
@@ -73,7 +86,6 @@ void ATeslaTurret::LookForTarget()
 			AEnemyShip* ship = Cast<AEnemyShip>(It->GetActor());
 			if (IsValid(ship)) {
 				Target = ship;
-				GLog->Log("LookForTarget " + ship->GetName());
 				ship->OnDeathCallback.AddDynamic(this, &ATeslaTurret::OnTargetDestroy);
 				LastAttack = seconds + AttackRate;
 				break;
@@ -102,5 +114,4 @@ void ATeslaTurret::OnTargetDestroy(AEnemyShip* ship)
 	float seconds = GetWorld()->GetTimeSeconds();
 	LastCheck = seconds + CheckRate;
 	LastAttack = seconds + AttackRate;
-	UE_LOG(LogTemp, Log, TEXT("OnTargetDestroy"));
 }

@@ -18,6 +18,7 @@ public:
 	ATeslaTurret();
 
 	virtual void DestroyReached() override;
+	virtual void CrashReached() override;
 
 protected:
 	virtual void Tick(float DeltaTime) override;
@@ -39,6 +40,12 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* SourcePoint;
+
+	//UPROPERTY(EditDefaultsOnly)
+	//USceneComponent* RootPoint;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
+	UParticleSystemComponent* SmokeParticle;
 
 	UPROPERTY(EditDefaultsOnly)
 	UParticleSystem* LightingParticle;

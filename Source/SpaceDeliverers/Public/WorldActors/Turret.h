@@ -59,7 +59,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyShip, meta = (AllowPrivateAccess = "true"))
 	UParticleSystemComponent* SmokeParticle;
-	
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UCameraShake> CameraShake;
 

@@ -31,29 +31,18 @@ void UInteractionComponent::OnFire()
 	if (Interactive != NULL) {
 		float time = Interactive->GetInteractionTime();
 		auto* character = Cast<ASpaceDeliverersCharacter>(GetOwner());
-		
 
 		InstrumentType instrumentType = Instrument != nullptr ? Instrument->GetType() : InstrumentType::None;
-		//bool hasInstrument = Instrument != NULL;
-		//if (hasInstrument)
-		//{
-		//	Instrument->Use();
-		//}
-
 		if (Interactive->Interact(this, character)) {
 			OnInstrumentUsed.Broadcast((int)instrumentType);
 
-			//if (hasInstrument) {
+			//if (time > 0) {
+			//	character->DisableMovement(time);
+			//	auto* GM = Cast<ASpaceDeliverersGameMode>(GetWorld()->GetAuthGameMode());
+			//	if (IsValid(GM)) {
+			//		GM->GetBaseController()->GetMainWidget()->ShowActionProgress(time);
+			//	}
 			//}
-			
-			if (time > 0) {
-				character->DisableMovement(time);
-				auto* GM = Cast<ASpaceDeliverersGameMode>(GetWorld()->GetAuthGameMode());
-				if (IsValid(GM)) {
-					GM->GetBaseController()->GetMainWidget()->ShowActionProgress(time);
-				}
-				//Show Interaction ()
-			}
 		}
 	}
 }

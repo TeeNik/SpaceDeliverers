@@ -68,6 +68,7 @@ void ASpaceDeliverersCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ASpaceDeliverersCharacter::LookUpAtRate);
 	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnFire);
 	PlayerInputComponent->BindAction("RMB", IE_Pressed, this, &ASpaceDeliverersCharacter::OnRelease);
+	PlayerInputComponent->BindAction("Esc", IE_Pressed, this, &ASpaceDeliverersCharacter::OnEscPressed);
 }
 
 void ASpaceDeliverersCharacter::BeginPlay()
@@ -204,4 +205,9 @@ void ASpaceDeliverersCharacter::StartCameraAnimation()
 void ASpaceDeliverersCharacter::OnCameraAnimationEnd()
 {
 	IsRotationEnabled = true;
+}
+
+void ASpaceDeliverersCharacter::OnEscPressed()
+{
+	FGenericPlatformMisc::RequestExit(false);
 }

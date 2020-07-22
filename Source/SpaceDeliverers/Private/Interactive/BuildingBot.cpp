@@ -5,7 +5,6 @@
 #include "GameFramework/Character.h"
 #include "Builder.h"
 #include "BuilderWidget.h"
-#include "AIController.h"
 #include "SpaceLevelScript.h"
 #include "BuildingPlatform.h"
 #include "BuildingData.h"

@@ -70,12 +70,6 @@ bool ATurret::Interact(UInteractionComponent* interComp, ACharacter* character)
 		CharacterPos = ShootingPerson->GetActorLocation();
 		ShootingPerson->SetActorLocation(FVector(10000, 10000, 10000));
 
-		APlayerCameraManager* cm = pc->PlayerCameraManager;
-		UE_LOG(LogTemp, Log, TEXT("ViewYawMin: %d"), cm->ViewYawMin);
-		UE_LOG(LogTemp, Log, TEXT("ViewYawMax: %d"), cm->ViewYawMax);
-		UE_LOG(LogTemp, Log, TEXT("ViewPitchMin: %d"), cm->ViewPitchMin);
-		UE_LOG(LogTemp, Log, TEXT("ViewPitchMax: %d"), cm->ViewPitchMax);
-
 		pc->PlayerCameraManager->ViewYawMin = -180;
 		pc->PlayerCameraManager->ViewYawMax = 0;
 		pc->PlayerCameraManager->ViewPitchMin = 0;
@@ -159,14 +153,7 @@ void ATurret::Release()
 
 		SetActorRotation(InitialRotation);
 		ShootingPerson->SetActorLocation(CharacterPos);
-		ShootingPerson = NULL;
-
-		UE_LOG(LogTemp, Log, TEXT("Release"));
-		APlayerCameraManager* cm = pc->PlayerCameraManager;
-		UE_LOG(LogTemp, Log, TEXT("ViewYawMin: %d"), cm->ViewYawMin);
-		UE_LOG(LogTemp, Log, TEXT("ViewYawMax: %d"), cm->ViewYawMax);
-		UE_LOG(LogTemp, Log, TEXT("ViewPitchMin: %d"), cm->ViewPitchMin);
-		UE_LOG(LogTemp, Log, TEXT("ViewPitchMax: %d"), cm->ViewPitchMax);
+		ShootingPerson = nullptr;
 
 		pc->PlayerCameraManager->ViewYawMin = 0;
 		pc->PlayerCameraManager->ViewYawMax = 359;

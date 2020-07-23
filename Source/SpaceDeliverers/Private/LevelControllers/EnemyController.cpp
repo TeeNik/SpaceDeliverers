@@ -104,9 +104,7 @@ void UEnemyController::UpdateBotSpawn(float seconds)
 	bool hasFreeTargets = false;
 	for (auto* platform : Platforms)
 	{
-		if (!platform->IsFree() && !platform->IsBotTarget 
-								&& !platform->GetIsBuildingProcess()
-								&& seconds > BotSpawnTime)
+		if (platform->GetCanBeEnemyTarget() && seconds > BotSpawnTime)
 		{
 			AActor* point = GetFarthestBotPoint();
 			FVector position = point->GetActorLocation();

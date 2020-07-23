@@ -28,6 +28,8 @@ public:
 	virtual void OnSelect(class UInteractionComponent* interComp) override;
 	virtual void OnDeselect() override;
 
+	FORCEINLINE bool IsPossessedByPlayer() { return ShootingPerson != nullptr; }
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "ATurret")
 	void OnDestroy();
 

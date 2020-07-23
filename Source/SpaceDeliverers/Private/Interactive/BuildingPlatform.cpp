@@ -3,6 +3,7 @@
 #include "Instrument.h"
 #include "Builder.h"
 #include "Engine/World.h"
+#include "Turret.h"
 #include "Components/StaticMeshComponent.h"
 #include "Materials/MaterialInterface.h"
 #include "SpaceLevelScript.h"
@@ -16,7 +17,9 @@ ABuildingPlatform::ABuildingPlatform() {
 
 void ABuildingPlatform::OnSelect(UInteractionComponent * interComp) {
 	auto instrument = interComp->GetInstrument();
-	if (instrument != nullptr && instrument->GetType() == InstrumentType::Builder && PreviewActor == nullptr && PlacedActor == nullptr) {
+	if (instrument != nullptr && instrument->GetType() == InstrumentType::Builder 
+							  && PreviewActor == nullptr 
+							  && PlacedActor == nullptr) {
 		Super::OnSelect(interComp);
 
 		const ABuilder* builder = Cast<ABuilder>(instrument);
@@ -50,6 +53,20 @@ void ABuildingPlatform::OnDeselect()
 		PreviewActor->Destroy();
 		PreviewActor = nullptr;
 	}
+}
+
+bool ABuildingPlatform::GetCanBeEnemyTarget()
+{
+	bool canBeTarget = PlacedActor != nullptr && !IsBuildingProcess && !IsBotTarget;
+
+	if (canBeTarget) {
+		ATurret* turret = Cast<ATurret>(PlacedActor);
+		if (turret != nullptr)
+		{
+			canBeTarget = !turret->IsPossessedByPlayer();
+		}
+	}
+	return canBeTarget;
 }
 
 bool ABuildingPlatform::Interact(UInteractionComponent* interComp, ACharacter* character)

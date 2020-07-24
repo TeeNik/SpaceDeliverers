@@ -16,9 +16,6 @@ public:
 	virtual void OnDeselect() override;
 	virtual bool Interact(class UInteractionComponent* interComp, class ACharacter* character) override;
 
-	//inline bool IsFree() { return PlacedActor == nullptr; }
-	//inline bool GetIsBuildingProcess() { return IsBuildingProcess; }
-
 	bool GetCanBeEnemyTarget();
 
 	void DestroyByBot();

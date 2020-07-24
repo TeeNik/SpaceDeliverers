@@ -185,7 +185,6 @@ void ASpaceDeliverersCharacter::StartCameraAnimation()
 	ASpaceLevelScript* level = Cast<ASpaceLevelScript>(GetWorld()->GetLevelScriptActor());
 	const AActor* cameraStartPoint = level->GetPlayerCameraStart();
 	FVector startLocation = GetTransform().InverseTransformPosition(GetActorLocation());
-	//FRotator startRotation = GetTransform().InverseTransformRotation(GetActorRotation());
 
 	FollowCamera->SetWorldLocation(cameraStartPoint->GetActorLocation());
 	FollowCamera->SetWorldRotation(cameraStartPoint->GetActorRotation());

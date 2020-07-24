@@ -132,7 +132,11 @@ void ATurret::Fire()
 			shot->SetTargetTag(TagStrings::EnemyShipTag);
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(CameraShake, 1);
 			--CurrentAmmo;
-			UGameplayStatics::PlaySoundAtLocation(this, ShootSound, SpawnLocation);
+
+			if (ShootSound != nullptr)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, ShootSound, SpawnLocation);
+			}
 			
 			if (CurrentAmmo == 0) {
 				IsDestroying = true;
